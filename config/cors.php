@@ -29,6 +29,7 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => false,
+    // To ensure that application's CORS configuration is returning the Access-Control-Allow-Credentials header set to true
+    'supports_credentials' => true,
 
 ];
