@@ -1,8 +1,24 @@
 <?php
 
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
+
+
+
+
+
+
+
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -25,5 +41,52 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->statefulApi();
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+
+        // Start of render customized error message
+        $exceptions->render(function (Throwable $e, Request $request) {
+
+            if ($request->is('api/*')) {
+
+                // Custom response for all exceptions
+                $response = [
+                    'success' => false,
+                    'message' => 'An error occurred. Please try again later.',
+                    // Avoid exposing error details in production
+                    'error' => config('app.debug') ? $e->getMessage() : 'Internal Server Error',
+                ];
+
+                // Set a default status code
+                $statusCode = 500;
+
+                // Customize response for different exception types
+                if ($e instanceof ModelNotFoundException) {
+                    $response['message'] = 'Resource not found.';
+                    $statusCode = 404;
+                } elseif($e instanceof NotFoundHttpException) {
+                    $response['message'] = 'Endpoint not found.';
+                    $statusCode = 404;
+                } elseif ($e instanceof AuthenticationException) {
+                    $response['message'] = 'Unauthenticated.';
+                    $statusCode = 401;
+                } elseif ($e instanceof AuthorizationException) {
+                    $response['message'] = 'Unauthorized.';
+                    $statusCode = 403;
+                } elseif ($e instanceof ValidationException) {
+                    $response['message'] = 'Validation failed.';
+                    $response['errors'] = $e->errors();
+                    $statusCode = 422;
+                }
+
+                // Check if the request expects a JSON response
+                if ($request->expectsJson()) {
+                    return response()->json($response, $statusCode);
+                }
+
+                return response()->json($response, $statusCode);
+
+            }
+
+        });
+        // End of render customized error message
+
     })->create();
