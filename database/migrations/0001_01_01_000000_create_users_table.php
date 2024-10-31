@@ -15,11 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('name')->comment('username');
             $table->string('email')->unique();
+            $table->string('email_verified')->default(false);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
 
             $table->string('first_name');
             $table->string('last_name');
+            $table->string('phone_number')->nullable();
             $table->string('security_question');
             $table->string('answer');
             $table->enum('gender', ['male', 'female', 'other'])->nullable();
@@ -29,7 +31,7 @@ return new class extends Migration
             $table->enum('membership_status', ['free', 'trial', 'premium', 'gold', 'annual'])->default('free');
 
             $table->enum('role', ['user', 'admin'])->default('user');
-            $table->foreignId('assigned_by')->constrained('users')->default('system');
+            $table->foreignId('assigned_by')->nullable()->constrained('users');
 
             $table->rememberToken();
             $table->timestamps();
