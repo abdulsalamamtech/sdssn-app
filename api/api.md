@@ -13,7 +13,8 @@
     - password
     - security_question
     - answer
-
+    
+    - phone_number
     - gender
     - dob
     - address
@@ -22,6 +23,16 @@
 
     - role (user|admin)
     - assigned_by (admin user_id)
+
+
+    $ relationships (user)
+        - has_one (social)
+        - has_many (certificates)
+        - has_many (projects)
+
+    $ relationships (admin)
+        - has_many (podcast)
+
 
 
 ### socials
@@ -34,22 +45,42 @@
     - instagram
 
 
+    $ relationships (user)
+        - belongs_to (user)
+
+
+
 ### assets (all file storage details)
     - id
     - title
     - path
     - url
-    - type (image, audio)
-    - file_size
+    - type (image|audio|video)
+    - file_size 
+
+
+    $ relationships
+        - belongs_to (certificate)
+        - belongs_to (projects)
+        - belongs_to (podcast)
+
 
 
 ### certificates (added by admin, belongs to user)
     - id
-    - user_id (admin user_id)
+    - added_id (admin user_id)
+    - belong_to (user_id)
     - asset_id (the certificate file)
     - course
     - details
-    - belong_to (user_id)
+
+
+    $ relationships (user)
+        - belongs_to (users) = belongs_to (user_id)
+
+    $ relationships (admin)
+        - belongs_to (users) = added_by (user_id)
+    
 
 
 ### projects (map|discussion)
@@ -70,13 +101,34 @@
     - deleted_at
     - deleted_by (admin user_id)
 
+    $ relationships (user)
+        - belongs_to (users)
+
+    $ relationships (admin)
+        - belongs_to (users) = approved_by (user_id)
+
+    $ relationships 
+        - has_many (comments)
+    
+
+
 
 ### comments
     - id
-    - podcast_id
+    - user_id
+    - project_id
     - content
     
     - likes
+
+
+    $ relationships (user)
+        - belongs_to (users) = belongs_to (user_id)
+
+    $ relationships
+        - belongs_to (project)
+    
+
 
 ### podcast (admin)
     - id
@@ -90,8 +142,17 @@
     - likes
     - shares
 
+    $ relationships (user)
+        - belongs_to (users)
+    
 
+
+= belongs_to (user_id)
+
+    $ relationships (admin)
+        - belongs_to (users) = added_by (user_id)
 ### messages
+    - id
     - full_name
     - phone_number
     - email
@@ -99,3 +160,4 @@
 
 
 ## events (admin)
+    - comming soon
