@@ -1,0 +1,50 @@
+
+POST http://127.0.0.1:8000/api/register/
+content-type: application/json
+
+{
+    "name": "amtech",
+    "email": "abdulsalamamtech@gmail.com",
+    "password": "12345678",
+    "password_confirmation": "12345678",
+    "first_name": "amtech",
+    "last_name": "digital",
+    "security_question": "what is your name",
+    "answer": "amtech"
+}
+
+
+###
+
+
+POST http://127.0.0.1:8000/api/login/
+content-type: application/json
+
+{
+    "email": "abdulsalamamtech@gmail.com",
+    "password": "12345678"
+}
+
+
+###
+
+POST http://127.0.0.1:8000/api/logout/
+content-type: application/json
+Authorization: Bearer 11|tvj2e4SOxjQpe5zpd80RZ5vlRc5J6XMBWmlWPD8v8668cf3e
+
+{
+    "email": "amtech@gmail.com",
+    "password": "12345678"
+}
+
+
+###
+
+GET http://127.0.0.1:8000/user/
+content-type: application/json
+Authorization: Bearer 11|tvj2e4SOxjQpe5zpd80RZ5vlRc5J6XMBWmlWPD8v8668cf3e
+
+{
+    "email": "amtech@gmail.com",
+    "password": "12345678"
+}
