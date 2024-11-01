@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 
+// Registration security questions route
 Route::get('/security-questions', function (Request $request) {
     $questions = [
         "What is the name of your first pet?",
@@ -26,6 +27,8 @@ Route::get('/security-questions', function (Request $request) {
 
 });
 
+
+// Get the authenticated user
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
