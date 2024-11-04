@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\UserProfile;
+use App\Http\Controllers\Api\UserSocial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
+
 
 
 // Registration security questions route
@@ -62,16 +65,6 @@ Route::post('logout', [AuthController::class, 'logout'])
     ->middleware('auth:sanctum');
 
 
-
-Route::get('/profile', function (Request $request) {
-    // Only verified users may access this route...
-
-    return $request->all();
-
-})->middleware(['auth:sanctum', 'verified']);
-
-
-
 // Artisan routes
 Route::get('/artisan', function (Request $request) {
 
@@ -106,4 +99,27 @@ Route::get('/artisan', function (Request $request) {
 });
 
 
+
+
+
+
+
+
+// User profile and social media information
+Route::group(['prefix' => 'profile','middleware' => ['auth:sanctum','verified']], function() {
+    // User Profile
+    Route::get('/', [UserProfile::class, 'show']);
+    Route::put('/', [UserProfile::class, 'update']);
+
+    // User Socials
+    Route::get('/socials', [UserSocial::class, 'show']);
+    Route::put('/socials', [UserSocial::class, 'update']);
+});
+
+
+
+Route::get('info', function (Request $request){
+    $user = $request->user();
+    return $user ?? 'no message available';
+})->middleware(['auth:sanctum']);
 
