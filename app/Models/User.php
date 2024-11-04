@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Api\Social;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -34,7 +35,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'membership_status',
         'role',
         'assigned_by',
-        
+
         'email_verified',
         'email_verified_at',
     ];
@@ -62,5 +63,12 @@ class User extends Authenticatable implements MustVerifyEmail
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
+    }
+
+
+    // Social Media
+    public function social()
+    {
+        return $this->hasOne(Social::class, 'user_id', 'id');
     }
 }
