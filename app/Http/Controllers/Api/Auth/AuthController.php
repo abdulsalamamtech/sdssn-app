@@ -20,8 +20,11 @@ class AuthController extends Controller
             // Create user
             $user = User::create($request->validated());
 
+            // Create social media record
+            $user->social()->create();
+
             // Dispatch event
-            event(new Registered($user));
+            // event(new Registered($user));
             info('Registered', $user->toArray());
 
             // Generate token
@@ -63,7 +66,7 @@ class AuthController extends Controller
 
         // Return response
         return response()->json([
-            'success' => 'true',
+            'success' => true,
             'message' => 'User login successful',
             'data' => $user,
             'token' => $token,
@@ -83,7 +86,7 @@ class AuthController extends Controller
 
         // return response
         return response()->json([
-            'success' => 'true',
+            'success' => true,
             'message' => 'Logout successful',
             'user' => $user
         ], 200);
