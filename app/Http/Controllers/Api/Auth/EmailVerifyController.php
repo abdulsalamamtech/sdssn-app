@@ -8,6 +8,15 @@ use Illuminate\Http\Request;
 
 class EmailVerifyController extends Controller
 {
+
+
+    protected function redirectUrl(){
+        return [
+            'success' => 'https://sdssn.vercel.app/auth/verify-email-success',
+            'error' => 'username'
+        ];
+    }
+
     /**
      * Handle the incoming request.
      */
@@ -39,9 +48,14 @@ class EmailVerifyController extends Controller
         // Check if the user exists and the email has been verified
         if($user->email_verified_at != null && $user->email){
 
-            $message = 'Email already verified';
-            $status_code = 200;
-            return response()->json(['success' => true,'message' => $message], $status_code);
+            // Redirect to success page
+            return redirect($this->redirectUrl()['success']);
+
+            // Redirect to success page
+            // $message = 'Email already verified';
+            // $status_code = 200;
+
+            // return response()->json(['success' => true,'message' => $message], $status_code);
 
         }
 
@@ -79,6 +93,9 @@ class EmailVerifyController extends Controller
 
                 $message = 'Email verified successfully';
                 $status_code = 200;
+
+                // Redirect to success page
+                return redirect($this->redirectUrl()['success']);
 
         }
 
