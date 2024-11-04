@@ -24,7 +24,7 @@ class AuthController extends Controller
             $user->social()->create();
 
             // Dispatch event
-            // event(new Registered($user));
+            event(new Registered($user));
             info('Registered', $user->toArray());
 
             // Generate token
