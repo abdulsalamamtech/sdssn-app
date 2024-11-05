@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\UpdateUserSocialRequest;
+use App\Models\Api\Social;
 use Illuminate\Http\Request;
 
 class UserSocial extends Controller
@@ -46,9 +47,9 @@ class UserSocial extends Controller
     {
         $data = $request->validated();
         $user = $request->user();
-        $user->social()->updateOrCreate($data);
-        $user_social = $user->social;
-
+        $user_social = $user->social()->updateOrCreate(
+            ['user_id' => $user->id], $data
+        );
 
         if(!$user_social){
             return $this->sendError([], 'unable to update', 500);
