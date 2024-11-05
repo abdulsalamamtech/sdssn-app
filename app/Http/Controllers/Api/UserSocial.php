@@ -46,7 +46,7 @@ class UserSocial extends Controller
     {
         $data = $request->validated();
         $user = $request->user();
-        $user->social()->update($data);
+        $user->social()->updateOrCreate($data);
         $user_social = $user->social;
 
 
