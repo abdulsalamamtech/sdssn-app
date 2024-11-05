@@ -40,7 +40,7 @@ Authorization: Bearer 6|UI83SlqBp1WEr8bVHi7m8bOVl1vfUV0LZssrfmq0f48d6b9a
 # Get login user information
 GET http://127.0.0.1:8000/api/user/
 content-type: application/json
-Authorization: Bearer 6|UI83SlqBp1WEr8bVHi7m8bOVl1vfUV0LZssrfmq0f48d6b9a
+Authorization: Bearer 1|xsnyqOVfWaeZCRwQbryrwOEPwFsLRSHikEPnk1b358218e7c
 
 
 
@@ -56,7 +56,7 @@ Authorization: Bearer 6|UI83SlqBp1WEr8bVHi7m8bOVl1vfUV0LZssrfmq0f48d6b9a
 # Get user profile information
 GET http://127.0.0.1:8000/api/profile
 content-type: application/json
-Authorization: Bearer 6|UI83SlqBp1WEr8bVHi7m8bOVl1vfUV0LZssrfmq0f48d6b9a
+Authorization: Bearer 1|xsnyqOVfWaeZCRwQbryrwOEPwFsLRSHikEPnk1b358218e7c
 
 
 ###
@@ -76,16 +76,19 @@ Authorization: Bearer 6|UI83SlqBp1WEr8bVHi7m8bOVl1vfUV0LZssrfmq0f48d6b9a
 # Get user social media information
 GET http://127.0.0.1:8000/api/profile/socials/
 content-type: application/json
-Authorization: Bearer 6|UI83SlqBp1WEr8bVHi7m8bOVl1vfUV0LZssrfmq0f48d6b9a
+Authorization: Bearer 1|xsnyqOVfWaeZCRwQbryrwOEPwFsLRSHikEPnk1b358218e7c
 
 
 ###
 # Update user social media information
-PUT http://127.0.0.1:8000/api/profile/socials/
+PUT http://127.0.0.1:8001/api/profile/socials/
 content-type: application/json
-Authorization: Bearer 6|UI83SlqBp1WEr8bVHi7m8bOVl1vfUV0LZssrfmq0f48d6b9a
+Authorization: Bearer 2|ZKshZd0T0PUJJcbygpcZjs97cqpGR6O74QUDCCVCf78b6b72
 
 {
     "facebook": "https://www.facebook.com/amtech",
-    "github": "https://github.com/amtech"
+    "github": "https://github.com/amtech",
+    "twitter": "https://twitter.com/amtech/"
 }
+
+
