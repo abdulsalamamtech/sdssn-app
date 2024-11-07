@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\UserProfile;
 use App\Http\Controllers\Api\UserSocial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -116,6 +118,30 @@ Route::group(['prefix' => 'profile','middleware' => ['auth:sanctum','verified']]
     Route::put('/socials', [UserSocial::class, 'update']);
 });
 
+
+// Projects routes
+Route::group(['prefix' => 'projects','middleware' => ['auth:sanctum','verified']], function() {
+
+
+    // Projects route
+    Route::get('/', [ProjectController::class, 'index']);
+    Route::get('/{project}', [ProjectController::class,'show']);
+    Route::post('/', [ProjectController::class, 'store']);
+    Route::put('/{project}', [ProjectController::class, 'update']);
+    Route::delete('/{project}', [ProjectController::class, 'destroy']);
+
+    // Comments route
+    // Route::post('/{project}/comments', [CommentController::class,'store']);
+    // Route::delete('/{project}/comments/{comment}', [CommentController::class, 'destroy']);
+
+    // User Profile
+    // Route::get('/', [UserProfile::class, 'show']);
+    // Route::put('/', [UserProfile::class, 'update']);
+
+    // User Socials
+    // Route::get('/socials', [UserSocial::class, 'show']);
+    // Route::put('/socials', [UserSocial::class, 'update']);
+});
 
 
 Route::get('info', function (Request $request){

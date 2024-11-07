@@ -68,11 +68,11 @@
 
 ### certificates (added by admin, belongs to user)
     - id
-    - added_id (admin user_id)
+    - added_by (admin user_id)
     - belong_to (user_id)
     - asset_id (the certificate file)
     - course
-    - details
+    - description
 
 
     $ relationships (user)
@@ -86,7 +86,7 @@
 ### projects (map|discussion)
     - id
     - user_id
-    - banner
+    - banner_id (on the assets table)
     - title
     - description
     - tags

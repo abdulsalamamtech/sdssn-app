@@ -92,3 +92,18 @@ Authorization: Bearer 2|ZKshZd0T0PUJJcbygpcZjs97cqpGR6O74QUDCCVCf78b6b72
 }
 
 
+
+###
+# Project
+
+POST http://127.0.0.1:8000/api/project/
+content-type: application/json
+Authorization: Bearer 1|xsnyqOVfWaeZCRwQbryrwOEPwFsLRSHikEPnk1b358218e7c
+
+{
+    "title": "Amtech's First Project",
+    "description": "This is my first project",
+    "category": "Web Development",
+    "status": 100000,
+    "duration": 30
+}
