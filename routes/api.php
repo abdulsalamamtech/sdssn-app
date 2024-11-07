@@ -103,7 +103,12 @@ Route::get('/artisan', function (Request $request) {
 });
 
 
+Route::get('/link-storage', function () {
 
+    Artisan::call('storage:link');
+
+    return response()->json(['message' => 'Storage linked'], 201);
+});
 
 
 
