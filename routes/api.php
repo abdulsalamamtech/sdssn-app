@@ -95,6 +95,8 @@ Route::get('/artisan', function (Request $request) {
     Artisan::call('cache:clear');
     Artisan::call('optimize:clear');
     Artisan::call('migrate');
+    Artisan::call('storage:link');
+
 
     return ['artisan' => 'successfully deployed ' . $deploy];
 
