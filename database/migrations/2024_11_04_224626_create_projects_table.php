@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('tags')->nullable();
+            $table->string('video_url')->nullable();
             $table->enum('category', ['map', 'discussion', 'link']);
             $table->enum('status', ['public', 'private', 'draft'])->default('draft');
             $table->unsignedBigInteger('views')->default(0);
