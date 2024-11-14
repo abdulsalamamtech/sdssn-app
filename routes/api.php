@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\UserProfile;
 use App\Http\Controllers\Api\UserSocial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -155,4 +157,8 @@ Route::get('info', function (Request $request){
     $user = $request->user();
     return $user ?? 'no message available';
 })->middleware(['auth:sanctum']);
+
+
+
+Route::apiResource('projects.comments', CommentController::class);
 
