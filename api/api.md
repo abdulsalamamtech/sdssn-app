@@ -89,6 +89,7 @@
     - banner_id (on the assets table)
     - title
     - description
+    - video_url
     - tags
     - category (map|discussion)
     - status (public|private|draft)
