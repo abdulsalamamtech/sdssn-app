@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\StoreProjectRequest;
+use App\Http\Requests\Api\UpdateProjectRequest;
 use App\Models\Api\Project;
 use App\Models\Assets;
 use Illuminate\Http\Request;
@@ -69,50 +70,72 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateProjectRequest $request, Project $project)
     {
-        //
+        $data = $request->validated();
+
+        // if($request->banner){
+        //     // delete old banner
+        //     $banner = Assets::find($project->banner_id);
+        //     $banner->delete();
+        //     // upload new banner
+        //     $upload =  $this->uploadImage($request);
+        //     $data['banner_id'] = $upload['id'];
+        // }
+
+
+        $project->update($data);
+        $project->load(['comments', 'banner']);
+
+        if (!$project) {
+            return $this->sendError([], 'unable to update project', 500);
+        }
+
+        return $this->sendSuccess($project, 'project updated', 200);
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Project $project)
     {
-        //
+        return $this->sendSuccess($project, 'project deleted', 200);
+
     }
 
 
     // upload image
-    protected function uploadImage($request)
-    {
+    // protected function uploadImage($request)
+    // {
 
-        // Save the file to disk
-        $path = $request->file('banner')->store('images', 'public');
+    //     // Save the file to disk
+    //     $path = $request->file('banner')->store('images', 'public');
 
-        // Get the public URL for accessing the uploaded file
-        $url = Storage::url($path);
+    //     // Get the public URL for accessing the uploaded file
+    //     $url = Storage::url($path);
 
-        $file = $request->file('banner');
-        $originName = $file->getClientOriginalName();
-        $originExt = $file->extension();
+    //     $file = $request->file('banner');
+    //     $originName = $file->getClientOriginalName();
+    //     $originExt = $file->extension();
 
-        // $fileName = time() . '.' . $originExt;
-        // $file->storeAs('public/images/', $fileName);
-        // $upload = $file->move(public_path('assets'), $fileName);
-        // $file->storeAs('public/assets', $fileName);
-        // return asset('public/assets/'. $fileName);
-        // $request->file('banner')->storeAs('assets', $fileName);
+    //     // $fileName = time() . '.' . $originExt;
+    //     // $file->storeAs('public/images/', $fileName);
+    //     // $upload = $file->move(public_path('assets'), $fileName);
+    //     // $file->storeAs('public/assets', $fileName);
+    //     // return asset('public/assets/'. $fileName);
+    //     // $request->file('banner')->storeAs('assets', $fileName);
 
 
-        return [
-            'path' => $url,
-            'name' => $originName,
-            'ext' => $originExt,
-            'size' => $file->getSize(),
-            'type' => $file->getMimeType(),
-            'url' => url($url)
-        ];
+    //     return [
+    //         'path' => $url,
+    //         'name' => $originName,
+    //         'ext' => $originExt,
+    //         'size' => $file->getSize(),
+    //         'type' => $file->getMimeType(),
+    //         'url' => url($url)
+    //     ];
 
-    }
+    // }
+    
 }
