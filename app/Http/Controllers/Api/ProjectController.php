@@ -32,7 +32,7 @@ class ProjectController extends Controller
     public function store(StoreProjectRequest $request)
     {
         $data = $request->validated();
-        $upload =  $this->uploadImage($request);
+        $upload =  $this->uploadImage($request, 'banner');
         $user = $request->user();
 
         // Add assets
@@ -70,10 +70,11 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProjectRequest $request, Project $project)
+    public function update(Project $project, UpdateProjectRequest $request)
     {
-        $data = $request->validated();
+        // $data = $request->validated();
 
+        return [$project, $request];
         // if($request->banner){
         //     // delete old banner
         //     $banner = Assets::find($project->banner_id);
@@ -137,5 +138,5 @@ class ProjectController extends Controller
     //     ];
 
     // }
-    
+
 }
