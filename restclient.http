@@ -33,14 +33,14 @@ content-type: application/json
 # Logout
 POST http://127.0.0.1:8000/api/logout/
 content-type: application/json
-Authorization: Bearer 6|UI83SlqBp1WEr8bVHi7m8bOVl1vfUV0LZssrfmq0f48d6b9a
+Authorization: Bearer 5|WHSt2cQUi3Rl6BvdjJFMxApEzV4kKpyxmJ1I3t0iafbff6d
 
 
 ###
 # Get login user information
 GET http://127.0.0.1:8000/api/user/
 content-type: application/json
-Authorization: Bearer 1|xsnyqOVfWaeZCRwQbryrwOEPwFsLRSHikEPnk1b358218e7c
+Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 
 
 
@@ -51,12 +51,14 @@ Authorization: Bearer 1|xsnyqOVfWaeZCRwQbryrwOEPwFsLRSHikEPnk1b358218e7c
 # Authorization: Bearer 6|UI83SlqBp1WEr8bVHi7m8bOVl1vfUV0LZssrfmq0f48d6b9a
 
 
+********************************
+
 
 ###
 # Get user profile information
 GET http://127.0.0.1:8000/api/profile
 content-type: application/json
-Authorization: Bearer 1|xsnyqOVfWaeZCRwQbryrwOEPwFsLRSHikEPnk1b358218e7c
+Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 
 
 ###
@@ -76,14 +78,15 @@ Authorization: Bearer 6|UI83SlqBp1WEr8bVHi7m8bOVl1vfUV0LZssrfmq0f48d6b9a
 # Get user social media information
 GET http://127.0.0.1:8000/api/profile/socials/
 content-type: application/json
-Authorization: Bearer 1|xsnyqOVfWaeZCRwQbryrwOEPwFsLRSHikEPnk1b358218e7c
+Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
+
 
 
 ###
 # Update user social media information
-PUT http://127.0.0.1:8001/api/profile/socials/
+PUT http://127.0.0.1:8000/api/profile/socials/
 content-type: application/json
-Authorization: Bearer 2|ZKshZd0T0PUJJcbygpcZjs97cqpGR6O74QUDCCVCf78b6b72
+Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 
 {
     "facebook": "https://www.facebook.com/amtech",
@@ -93,17 +96,143 @@ Authorization: Bearer 2|ZKshZd0T0PUJJcbygpcZjs97cqpGR6O74QUDCCVCf78b6b72
 
 
 
-###
-# Project
 
-POST http://127.0.0.1:8000/api/project/
+********************************
+
+
+
+###
+# Get all certificate
+GET http://127.0.0.1:8000/api/certificates
 content-type: application/json
-Authorization: Bearer 1|xsnyqOVfWaeZCRwQbryrwOEPwFsLRSHikEPnk1b358218e7c
+Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
+
+
+###
+# Create certificate
+POST http://127.0.0.1:8000/api/certificates
+content-type: application/json
+Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
+
+{
+    "belong_to": 1,
+    "certificate": "binary image file",
+    "course": "project management",
+    "description": "3month project management course"
+}
+
+
+###
+# Update certificate
+PUT http://127.0.0.1:8000/api/certificates/1
+content-type: application/json
+Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
+
+{
+    "certificate": "binary image file",
+    "course": "project management",
+    "description": "3month project management course"
+}
+
+
+
+********************************
+
+
+
+###
+# Get all Projects
+
+GET http://127.0.0.1:8000/api/projects
+content-type: application/json
+
+
+
+###
+# Get one Project
+
+GET http://127.0.0.1:8000/api/projects/3
+content-type: application/json
+
+
+###
+# Create Projects
+
+POST http://127.0.0.1:8000/api/projects
+content-type: application/json
+Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
+
+{
+    "banner": "banary image file",
+    "title": "Amtech's First Project",
+    "description": "This is my first project",
+    "category": "Web Development",
+    "video_url": "https://www.youtube.com/shorts/wGoJEWZuixg?feature=share",
+    "category": "link",
+    "tags": "dev, project, first",
+    "status": "public"
+}
+
+
+
+
+###
+# Update Project (need to be dubug)
+
+PATCH  http://127.0.0.1:8000/api/projects/3
+content-type: application/json
+Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 
 {
     "title": "Amtech's First Project",
     "description": "This is my first project",
     "category": "Web Development",
-    "status": 100000,
-    "duration": 30
+    "video_url": "https://www.youtube.com/shorts/wGoJEWZuixg?feature=share"
 }
+
+
+
+
+********************************
+
+
+
+
+###
+# Get all Comments for a project
+
+GET http://127.0.0.1:8000/api/projects/2/comments
+content-type: application/json
+
+
+
+###
+# Create comment
+
+POST http://127.0.0.1:8000/api/projects/4/comments
+content-type: application/json
+Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
+
+{
+    "content": "This is my first project comment"
+}
+
+
+
+###
+# Update Comment (debug)
+
+PUT http://127.0.0.1:8000/api/projects/2/comments/2
+content-type: application/json
+Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
+
+{
+    "content": "This is my first project",
+}
+
+
+
+
+
+
+********************************
