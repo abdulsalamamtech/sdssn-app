@@ -17,6 +17,7 @@ class CommentController extends Controller
     public function index(Project $project)
     {
         $comments = $project->comments;
+        $comments->load(['user']);
 
         if (!$comments) {
             return $this->sendError([], 'unable to load comments', 500);
@@ -36,6 +37,7 @@ class CommentController extends Controller
         $data['project_id'] = $project->id;
 
         $comment = $project->comments()->create($data);
+        $comment->load(['user']);
 
         if (!$comment) {
             return $this->sendError([], 'unable to create comment', 500);
@@ -50,6 +52,8 @@ class CommentController extends Controller
     public function show(Project $project, Comment $comment)
     {
         $comment = Comment::where('project_id', $project->id)->find($comment);
+        $comment->load(['user']);
+
         if (!$comment) {
             return $this->sendError([], 'comment not found', 404);
         }
@@ -65,6 +69,7 @@ class CommentController extends Controller
         return $request;
         $data = $request->validated();
         $comment = $project->comments()->update($data);
+        $comment->load(['user']);
 
         if (!$comment) {
             return $this->sendError([], 'unable to update comment', 500);

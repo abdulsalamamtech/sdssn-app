@@ -17,7 +17,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $project = Project::with(['comments', 'banner'])->get();
+        $project = Project::with(['user', 'comments.user', 'banner'])->get();
 
         if (!$project) {
             return $this->sendError([], 'unable to load projects', 500);
@@ -42,7 +42,7 @@ class ProjectController extends Controller
 
         // Add project
         $project = Project::create($data);
-        $project->load(['comments', 'banner']);
+        $project->load(['user', 'comments.user', 'banner']);
 
 
         if (!$project) {
@@ -57,7 +57,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        $project->load(['comments', 'banner']);
+        $project->load(['user', 'comments.user', 'banner']);
 
         if (!$project) {
             return $this->sendError([], 'unable to load project', 500);
@@ -86,7 +86,7 @@ class ProjectController extends Controller
 
 
         $project->update($data);
-        $project->load(['comments', 'banner']);
+        $project->load(['user','comments.user', 'banner']);
 
         if (!$project) {
             return $this->sendError([], 'unable to update project', 500);
