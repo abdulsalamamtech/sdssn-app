@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Api\Certificate;
 use App\Models\Api\Social;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -48,6 +49,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
+        'answer'
     ];
 
     /**
@@ -70,5 +72,17 @@ class User extends Authenticatable implements MustVerifyEmail
     public function social()
     {
         return $this->hasOne(Social::class, 'user_id', 'id');
+    }
+
+    // Has many certificates
+    public function certificates()
+    {
+        return $this->hasMany(Certificate::class, 'belong_to', 'id');
+    }
+
+    // Certificates added by admin
+    public function certificateAdded()
+    {
+        return $this->hasMany(Certificate::class, 'added_by', 'id');
     }
 }
