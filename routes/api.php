@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\CertificateController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\UserProfile;
@@ -69,6 +70,9 @@ Route::post('logout', [AuthController::class, 'logout'])
     ->middleware('auth:sanctum');
 
 
+
+
+
 // Artisan routes
 Route::get('/artisan', function (Request $request) {
 
@@ -128,29 +132,28 @@ Route::group(['prefix' => 'profile','middleware' => ['auth:sanctum','verified']]
 });
 
 
+// Certificate
+Route::apiResource('/certificates', CertificateController::class)
+    ->middleware(['auth:sanctum']);
+
+
+// Projects route
+Route::apiResource('/projects', ProjectController::class)->only(['index', 'show']);
 // Projects routes
-Route::group(['prefix' => 'projects','middleware' => ['auth:sanctum','verified']], function() {
+Route::apiResource('/projects', ProjectController::class)
+    ->only(['store', 'update'])
+    ->middleware(['auth:sanctum']);
 
 
-    // Projects route
-    Route::get('/', [ProjectController::class, 'index']);
-    Route::get('/{project}', [ProjectController::class,'show']);
-    Route::post('/', [ProjectController::class, 'store']);
-    Route::put('/{project}', [ProjectController::class, 'update']);
-    Route::delete('/{project}', [ProjectController::class, 'destroy']);
+// Project comments
+Route::apiResource('projects.comments', CommentController::class)
+    ->only(['index', 'show']);
+// Project comments
+Route::apiResource('projects.comments', CommentController::class)
+    ->middleware(['auth:sanctum'])
+    ->only(['store', 'update']);
 
-    // Comments route
-    // Route::post('/{project}/comments', [CommentController::class,'store']);
-    // Route::delete('/{project}/comments/{comment}', [CommentController::class, 'destroy']);
 
-    // User Profile
-    // Route::get('/', [UserProfile::class, 'show']);
-    // Route::put('/', [UserProfile::class, 'update']);
-
-    // User Socials
-    // Route::get('/socials', [UserSocial::class, 'show']);
-    // Route::put('/socials', [UserSocial::class, 'update']);
-});
 
 
 Route::get('info', function (Request $request){
@@ -160,5 +163,15 @@ Route::get('info', function (Request $request){
 
 
 
-Route::apiResource('projects.comments', CommentController::class);
 
+// Route::group(['prefix' => 'projects','middleware' => ['auth:sanctum','verified']], function() {
+//     // Projects route
+//     Route::apiResource('/', ProjectController::class);
+// });
+
+// Route::apiResource('projects.comments', CommentController::class);
+// Route::get('/', [ProjectController::class, 'index']);
+// Route::get('/{project}', [ProjectController::class,'show']);
+// Route::post('/', [ProjectController::class, 'store']);
+// Route::put('/{project}', [ProjectController::class, 'update']);
+// Route::delete('/{project}', [ProjectController::class, 'destroy']);
