@@ -57,6 +57,8 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
+        $project->views++;
+        $project->save();
         $project->load(['user', 'comments.user', 'banner']);
 
         if (!$project) {
@@ -187,4 +189,35 @@ class ProjectController extends Controller
     }
 
 
+    // Like project
+    public function like(Project $project)
+    {
+        $project->likes++;
+        $project->save();
+        $project->load(['user', 'comments.user', 'banner']);
+
+        if (!$project) {
+            return $this->sendError([], 'unable to load project', 500);
+        }
+
+        return $this->sendSuccess($project, 'successful', 200);
+
+    }
+
+
+    // Share project
+    public function share(Project $project)
+    {
+        $project->shares++;
+        $project->save();
+
+        $project->load(['user', 'comments.user', 'banner']);
+
+        if (!$project) {
+            return $this->sendError([], 'unable to load project', 500);
+        }
+
+        return $this->sendSuccess($project, 'successful', 200);
+
+    }
 }

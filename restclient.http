@@ -184,6 +184,25 @@ Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 
 
 
+###
+# Like Projects (need some modification)
+
+PUT http://127.0.0.1:8000/api/projects/4/likes
+content-type: application/json
+Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
+
+
+
+
+###
+# Share Projects
+
+PUT http://127.0.0.1:8000/api/projects/3/shares
+content-type: application/json
+Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
+
+
+
 
 ###
 # Update Project (need to be dubug)

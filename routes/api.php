@@ -142,6 +142,13 @@ Route::apiResource('/certificates', CertificateController::class)
 
 
 
+// Like project
+Route::put('projects/{project}/likes', [ProjectController::class, 'like']);
+// Share project
+Route::put('projects/{project}/shares', [ProjectController::class, 'share']);
+
+
+
 // personal projects routes
     // ->middleware(['auth:sanctum']);
 // Projects route
