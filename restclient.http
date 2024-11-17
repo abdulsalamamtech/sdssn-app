@@ -148,6 +148,15 @@ content-type: application/json
 
 
 
+
+###
+# Get personal Projects
+
+GET http://127.0.0.1:8000/api/projects
+content-type: application/json
+Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
+
+
 ###
 # Get one Project
 
@@ -179,7 +188,7 @@ Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 ###
 # Update Project (need to be dubug)
 
-PATCH  http://127.0.0.1:8000/api/projects/3
+PUT  http://127.0.0.1:8000/api/projects/3
 content-type: application/json
 Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 
@@ -187,7 +196,8 @@ Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
     "title": "Amtech's First Project",
     "description": "This is my first project",
     "category": "Web Development",
-    "video_url": "https://www.youtube.com/shorts/wGoJEWZuixg?feature=share"
+    "video_url": "https://www.youtube.com/shorts/wGoJEWZuixg?feature=share",
+    "likes": 2
 }
 
 

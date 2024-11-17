@@ -143,6 +143,10 @@ Route::apiResource('/projects', ProjectController::class)->only(['index', 'show'
 Route::apiResource('/projects', ProjectController::class)
     ->only(['store', 'update'])
     ->middleware(['auth:sanctum']);
+// personal projects routes
+Route::put('projects/personal', [ProjectController::class, 'personal'])
+    ->middleware(['auth:sanctum']);
+
 
 
 // Project comments
@@ -154,6 +158,7 @@ Route::apiResource('projects.comments', CommentController::class)
     ->only(['store', 'update']);
 
 
+Route::put('projects/{project}/update', [ProjectController::class, 'up']);
 
 
 Route::get('info', function (Request $request){
