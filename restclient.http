@@ -152,7 +152,7 @@ content-type: application/json
 ###
 # Get personal Projects
 
-GET http://127.0.0.1:8000/api/projects/personal
+GET http://127.0.0.1:8000/api/profile/projects
 content-type: application/json
 Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 

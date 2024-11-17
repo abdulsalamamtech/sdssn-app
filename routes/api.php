@@ -129,6 +129,10 @@ Route::group(['prefix' => 'profile','middleware' => ['auth:sanctum','verified']]
     // User Socials
     Route::get('/socials', [UserSocial::class, 'show']);
     Route::put('/socials', [UserSocial::class, 'update']);
+
+    // User Projects
+    Route::get('/projects', [ProjectController::class, 'personal']);
+
 });
 
 
@@ -139,8 +143,7 @@ Route::apiResource('/certificates', CertificateController::class)
 
 
 // personal projects routes
-Route::get('/projects/personal', [ProjectController::class, 'personal'])
-    ->middleware(['auth:sanctum']);
+    // ->middleware(['auth:sanctum']);
 // Projects route
 Route::apiResource('/projects', ProjectController::class)->only(['index', 'show']);
 // Projects routes
