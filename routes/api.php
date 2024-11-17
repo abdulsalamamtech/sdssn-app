@@ -137,15 +137,17 @@ Route::apiResource('/certificates', CertificateController::class)
     ->middleware(['auth:sanctum']);
 
 
+
+// personal projects routes
+Route::get('/projects/personal', [ProjectController::class, 'personal'])
+    ->middleware(['auth:sanctum']);
 // Projects route
 Route::apiResource('/projects', ProjectController::class)->only(['index', 'show']);
 // Projects routes
 Route::apiResource('/projects', ProjectController::class)
     ->only(['store', 'update'])
     ->middleware(['auth:sanctum']);
-// personal projects routes
-Route::put('projects/personal', [ProjectController::class, 'personal'])
-    ->middleware(['auth:sanctum']);
+
 
 
 
