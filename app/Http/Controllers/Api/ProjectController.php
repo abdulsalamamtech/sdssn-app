@@ -98,6 +98,8 @@ class ProjectController extends Controller
         return $this->sendSuccess($project, 'project updated', 200);
 
     }
+
+
     public function up(StoreProjectRequest $request)
     {
 
