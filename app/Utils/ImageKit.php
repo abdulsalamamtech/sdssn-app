@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Libraries;
+namespace App\Utils;
 
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Http;
 
 class Imagekit
 {
@@ -12,13 +13,28 @@ class Imagekit
     {
 
         //  private_key//ewq8iwfkdsvckjvcndxcv
-        $privateKey = env('IMG_KIT_PRIVATE_KEY');
+        // $privateKey = env('IMAGE_KIT_PRIVATE_KEY');
         // 'https://upload.imagekit.io/api/v1/files/upload';
-        $uploadUrl = env('IMG_KIT_UPLOAD_URL');
+        // $uploadUrl = env('IMAGE_KIT_UPLOAD_URL');
+
+
+
+        $secret = env('IMAGE_KIT_PRIVATE_KEY');
+        $url =  env('IMAGE_KIT_UPLOAD_URL');
+        $dir = env('IMAGE_KIT_DIRECTORY');
+
+        $result = [
+            'success' => false,
+            'message' => null,
+            'data' => null,
+            'errors' => null,
+        ];
 
         if (!$file) {
-            return false;
+            $result['message'] = 'upload file is empty';
+            return $result;
         }
+
 
         if ($fileType == 'image' || $fileType == 'images') {
             $folder = 'images';
@@ -30,44 +46,68 @@ class Imagekit
 
         $fileExt = $file->getClientOriginalExtension();
 
+
+        $data =  [
+            'auth' => [$secret, ''],
+            'multipart' => [
+                [
+                    'name' => 'file',
+                    'contents' => fopen($file->getPathname(), 'r'),
+                    'filename' => $file->getClientOriginalName(),
+                ],
+                [
+                    'name' => 'fileName',
+                    'contents' => $folder . '_' . now() . '.' . $fileExt,
+                ],
+                [
+                    'name' => 'folder',
+                    'contents' => $dir ."/".$folder
+                ],
+                [
+                    'name' => 'tags',
+                    'contents' => $folder . ',' . $tags
+                ]
+            ]
+        ];
+
         try {
             // Initialize Guzzle client
             $client = new Client(['verify' => false]);
 
             // Prepare the Guzzle request
             $response = $client->post(
-                $uploadUrl,
-                [
-                    'auth' => [$privateKey, ''],
-                    'multipart' => [
-                        [
-                            'name' => 'file',
-                            'contents' => fopen($file->getPathname(), 'r'),
-                            'filename' => $file->getClientOriginalName(),
-                        ],
-                        [
-                            'name' => 'fileName',
-                            'contents' => $folder . '_' . now() . '.' . $fileExt,
-                        ],
-                        [
-                            'name' => 'folder',
-                            'contents' => $folder
-                        ],
-                        [
-                            'name' => 'tags',
-                            'contents' => $folder . ',' . $tags
-                        ]
-                    ]
-                ]
+                $url,
+               $data
             );
 
+
+
+            // return $response;
+            // return($response->getBody());
+
             // Decode and print the response
-            return json_decode($response->getBody(), true);
+            $response_body = json_decode($response->getBody(), true);
+
+            if(!$response_body){
+
+                $result['message'] = 'Could not upload file';
+
+            }else{
+                $result['success'] = true;
+                $result['message'] = "File uploaded successfully";
+                $result['data'] = $response_body;
+            }
+
+
         } catch (\Exception $exception) {
 
             // $exception->getResponse()->getBody(true);
-            return false;
+            // return false;
+            $result['message'] = 'Server error could not upload file';
+
         }
+
+        return $result;
     }
 
     // Delete File
@@ -148,5 +188,106 @@ class Imagekit
             return false;
         }
     }
+
+
+
+    // Not working has curl timeouts
+    // public function upload($file, $fileType = 'file', $tags = 'file'){
+
+    //     $secret = env('IMAGE_KIT_PRIVATE_KEY');
+    //     $url =  env('IMAGE_KIT_UPLOAD_URL');
+    //     $dir = env('IMAGE_KIT_DIRECTORY');
+
+    //     $result = [
+    //         'success' => false,
+    //         'message' => null,
+    //         'data' => null,
+    //         'errors' => null,
+    //     ];
+
+    //     if (!$file) {
+    //         return false;
+    //     }
+
+    //     if ($fileType == 'image' || $fileType == 'images') {
+    //         $folder = 'images';
+    //     } elseif ($fileType == 'video' || $fileType == 'videos') {
+    //         $folder = 'videos';
+    //     } else {
+    //         $folder = 'files';
+    //     }
+
+    //     $fileExt = $file->getClientOriginalExtension();
+
+    //     $con = $file->getContent();
+    //     $con = base64_encode($con);
+
+    //     $data = [
+    //         'multipart' => [
+    //             [
+    //                 'name' => 'file',
+    //                 // 'contents' => fopen($file->getPathname(), 'r'),
+    //                 // 'contents' => $file->getPathname(),
+    //                 'contents' => $con,
+    //                 'filename' => $file->getClientOriginalName(),
+    //             ],
+    //             // [
+    //             //     'name' => 'fileName',
+    //             //     'contents' => $folder . '_' . now() . '.' . $fileExt,
+    //             // ],
+    //             // [
+    //             //     'name' => 'folder',
+    //             //     'contents' => $dir ."/".$folder
+    //             // ],
+    //             // [
+    //             //     'name' => 'tags',
+    //             //     'contents' => $dir . ',' . $tags
+    //             // ]
+    //         ]
+    //     ];
+
+    //     // $data = [
+    //         // 'file' => $file,
+    //         // 'file' => $file->getRealPath(),
+    //         // 'tags' => $tags,
+    //         // 'folder' => $dir. "/".$folder,
+    //         // 'fileName' => $folder. '_'. now(). '.'. $fileExt,
+    //         // 'useFilenameAsPublicID' => true,
+    //         // 'overwrite' => true,
+    //         // 'metadata' => [
+    //         //     'custom_metadata_key' => 'custom_metadata_value'
+    //         // ],
+    //         // 'conversionOptions' => [
+    //         //     'quality' => 80,
+    //         //     'width' => 800,
+    //         //     'height' => 600
+    //         // ]
+    //         // 'customCoordinates' => 'x,y,width,height'
+    //     // ];
+
+    //     // return $data;
+
+    //     $response = Http::withToken($secret)
+    //         // ->withOptions(['verify' => false])
+    //         // ->timeout(30)
+    //         ->withHeaders([
+    //             'Authorization' => 'Bearer '.$secret,
+    //             'Content-Type' => 'application/json'
+    //         ])->post($url, $data);
+
+    //     // return $response;
+
+    //     if(!$response->successful()){
+
+    //         $result['message'] = 'Could not upload file';
+
+    //     }else{
+    //         $result['success'] = true;
+    //         $result['message'] = "File uploaded successfully";
+    //         $result['data'] = $response->body();
+    //     }
+
+    //     return $result;
+    // }
 
 }
