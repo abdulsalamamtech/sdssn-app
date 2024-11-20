@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\StorePodcastRequest;
 use App\Models\Api\Podcast;
+use App\Models\Assets;
 use Illuminate\Http\Request;
 
 class PodcastController extends Controller
@@ -12,23 +15,40 @@ class PodcastController extends Controller
      */
     public function index()
     {
-        //
+        $project = Podcast::with(['user', 'comments.user', 'banner'])->get();
+
+        if (!$project) {
+            return $this->sendError([], 'unable to load projects', 500);
+        }
+
+        return $this->sendSuccess($project, 'successful', 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePodcastRequest $request)
     {
-        //
+        $data = $request->validated();
+        $upload =  $this->uploadImage($request, 'banner');
+        $user = $request->user();
+
+        // Add assets
+        $banner = Assets::create($upload);
+        $data['banner_id'] = $banner->id;
+        $data['user_id'] = $user->id ?? 1;
+
+        // Add project
+        $project = Podcast::create($data);
+        $project->load(['user', 'comments.user', 'banner']);
+
+
+        if (!$project) {
+            return $this->sendError([], 'unable to update project', 500);
+        }
+
+        return $this->sendSuccess($project, 'project created', 201);
     }
 
     /**
@@ -39,13 +59,6 @@ class PodcastController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Podcast $podcast)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.

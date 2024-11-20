@@ -87,9 +87,9 @@
     - id
     - user_id
     - banner_id (on the assets table)
+    - slug (unique-title)
     - title
     - description
-    - video_url
     - tags
     - category (map|discussion)
     - status (public|private|draft)
@@ -129,16 +129,25 @@
     $ relationships
         - belongs_to (project)
     
+## project_likes 
+    - coming soon
+
+    - project_id
+    - user_id
 
 
 ### podcast (admin)
     - id
     - asset_id
     - banner
+    - slug (unique-title)
     - title
     - description
     - type (audio|video)
 
+    - video_url
+    - audio_url
+    
     - views
     - likes
     - shares
@@ -152,6 +161,22 @@
 
     $ relationships (admin)
         - belongs_to (users) = added_by (user_id)
+
+### podcast_comments
+    - id
+    - user_id
+    - project_id
+    - content
+    
+    - likes
+
+
+    $ relationships (user)
+        - belongs_to (users) = belongs_to (user_id)
+
+    $ relationships
+        - belongs_to (project)
+
 ### messages
     - id
     - full_name
@@ -161,4 +186,4 @@
 
 
 ## events (admin)
-    - comming soon
+    - coming soon

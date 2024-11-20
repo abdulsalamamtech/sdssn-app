@@ -1,3 +1,9 @@
+####################
+# SDSSN APP
+
+
+@token = 8|pqRMmlPKKbZFTG67sxoea47BEsc95jmNbVdklABGadad2ff0
+
 ###
 # Register
 
@@ -36,6 +42,7 @@ content-type: application/json
 Authorization: Bearer 5|WHSt2cQUi3Rl6BvdjJFMxApEzV4kKpyxmJ1I3t0iafbff6d
 
 
+
 ###
 # Get login user information
 GET http://127.0.0.1:8000/api/user/
@@ -44,14 +51,7 @@ Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 
 
 
-###
-# Get login user profile
-# GET http://127.0.0.1:8000/api/info
-# content-type: application/json
-# Authorization: Bearer 6|UI83SlqBp1WEr8bVHi7m8bOVl1vfUV0LZssrfmq0f48d6b9a
-
-
-********************************
+####################
 
 
 ###
@@ -65,7 +65,7 @@ Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 # Update user profile information
 PUT http://127.0.0.1:8000/api/profile
 content-type: application/json
-Authorization: Bearer 6|UI83SlqBp1WEr8bVHi7m8bOVl1vfUV0LZssrfmq0f48d6b9a
+Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 
 {
     "phone_number": "+2349091929394",
@@ -85,20 +85,18 @@ Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 ###
 # Update user social media information
 PUT http://127.0.0.1:8000/api/profile/socials/
-content-type: application/json
+Content-Type: application/json
 Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 
 {
-    "facebook": "https://www.facebook.com/amtech",
-    "github": "https://github.com/amtech",
-    "twitter": "https://twitter.com/amtech/"
+    "facebook": "https://www.facebook.com/amtechdig",
+    "github": "https://github.com/amtechdig",
+    "twitter": "https://twitter.com/amtechdig/"
 }
 
 
 
-
-********************************
-
+####################
 
 
 ###
@@ -136,8 +134,7 @@ Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 
 
 
-********************************
-
+####################
 
 
 ###
@@ -160,16 +157,16 @@ Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 ###
 # Get one Project
 
-GET http://127.0.0.1:8000/api/projects/3
-content-type: application/json
+GET http://127.0.0.1:8000/api/projects/4
+Content-Type: application/json
 
 
 ###
 # Create Projects
 
 POST http://127.0.0.1:8000/api/projects
-content-type: application/json
-Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
+Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
     "banner": "banary image file",
@@ -193,7 +190,6 @@ Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 
 
 
-
 ###
 # Share Projects
 
@@ -202,27 +198,18 @@ content-type: application/json
 Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 
 
-
-
 ###
 # Update Project (need to be dubug)
 
-PUT  http://127.0.0.1:8000/api/projects/3
-content-type: application/json
+PUT  http://127.0.0.1:8000/api/projects/4
+Content-Type: application/json
 Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 
 {
-    "title": "Amtech's First Project",
-    "description": "This is my first project",
-    "category": "Web Development",
-    "video_url": "https://www.youtube.com/shorts/wGoJEWZuixg?feature=share",
+    "title": "Amtech's First Project update",
+    "description": "This is my first project now",
     "likes": 2
 }
-
-
-
-
-********************************
 
 
 
@@ -230,7 +217,7 @@ Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 ###
 # Get all Comments for a project
 
-GET http://127.0.0.1:8000/api/projects/2/comments
+GET http://127.0.0.1:8000/api/projects/1/comments
 content-type: application/json
 
 
@@ -238,25 +225,47 @@ content-type: application/json
 ###
 # Create comment
 
-POST http://127.0.0.1:8000/api/projects/4/comments
+POST http://127.0.0.1:8000/api/projects/1/comments
 content-type: application/json
-Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
+Authorization: Bearer {{token}}
 
 {
-    "content": "This is my first project comment"
+    "content": "This another project comment now ggg"
 }
 
 
 
 ###
-# Update Comment (debug)
+# Update Comment
 
-PUT http://127.0.0.1:8000/api/projects/2/comments/2
+PUT http://127.0.0.1:8000/api/projects/4/comments/6/
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "content": "This is my first project"
+}
+
+
+
+
+###
+# Get login user profile
+GET http://127.0.0.1:8000/api/info
+content-type: application/json
+Authorization: Bearer {{token}}
+
+
+
+###
+# Upload file
+
+POST http://127.0.0.1:8000/api/upload/
 content-type: application/json
 Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 
 {
-    "content": "This is my first project",
+    "image": "file:///home/amtech/Downloads/oladayo-ims-buk-logo.jpg"
 }
 
 
@@ -264,4 +273,36 @@ Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 
 
 
-********************************
+
+###
+# Create Podcast (dev)
+
+POST  http://127.0.0.1:8000/api/podcasts/
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "title": "Amtech's First Project",
+    "description": "This is my first project",
+    "category": "video",
+    "video_url": "https://www.youtube.com/shorts/wGoJEWZuixg?feature=share",
+    "likes": 2
+}
+
+
+
+
+###
+# Update Podcast (dev)
+
+PUT  http://127.0.0.1:8000/api/podcasts/4
+Content-Type: application/json
+Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
+
+{
+    "title": "Amtech's First Project",
+    "description": "This is my first project",
+    "category": "video",
+    "video_url": "https://www.youtube.com/shorts/wGoJEWZuixg?feature=share",
+    "likes": 2
+}

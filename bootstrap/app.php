@@ -1,5 +1,7 @@
 <?php
 
+use \App\Http\Middleware\ForceJsonParsing;
+use \App\Http\Middleware\LogActivities;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
@@ -8,9 +10,13 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
+
+
 
 
 
@@ -30,8 +36,16 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->api(prepend: [
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+
             // 'throttle:api',
             // \Illuminate\Routing\Middleware\SubstituteBindings::class,
+
+            // Other middleware for parsing request content
+            ForceJsonParsing::class,
+
+            // Log laravel Activities
+            LogActivities::class,
+
         ]);
 
         $middleware->alias([
@@ -46,6 +60,10 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // Start of render customized error message
         $exceptions->render(function (Throwable $e, Request $request) {
+
+            Log::info('Request:', $request->all() ?? $request->getContent());
+            Log::info('Raw Input: ' . $request->getContent());
+            Log::error('Error:', [$e?->getMessage(), $e?->getTraceAsString()]);
 
             if ($request->is('api/*')) {
 

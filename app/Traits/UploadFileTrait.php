@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Utils\ImageKit;
 use Illuminate\Support\Facades\Storage;
 
 trait UploadFileTrait
@@ -77,6 +78,39 @@ trait UploadFileTrait
             'size' => $file->getSize(),
             'hosted_at' => 'directory', // cloudinary | imagekit
             // 'ext' => $originExt,
+        ];
+
+    }
+
+
+    public function uploadToImageKit($request, $fileName, $fileType = 'image')
+    {
+
+        // return "uploadToImageKit";
+        if (!$request->file($fileName)) {
+            return;
+        }
+
+        $file = $request->file($fileName);
+        $originName = $file->getClientOriginalName();
+        $originExt = $file->extension();
+
+        $upload = new ImageKit();
+        $res =  $upload->uploadFile($file, $fileType);
+
+        if (!$res['success'] == true) {
+            return;
+        }
+
+        return [
+            'original_name' => $originName,
+            'name' => $fileName,
+            'type' => $file->getMimeType(),
+            'path' => $res['data']['filePath'],
+            'file_id' => $res['data']['fileId'],
+            'url' => $res['data']['url'],
+            'size' => $file->getSize(),
+            'hosted_at' => 'imagekit', // cloudinary | imagekit
         ];
 
     }

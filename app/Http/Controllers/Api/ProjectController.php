@@ -32,7 +32,8 @@ class ProjectController extends Controller
     public function store(StoreProjectRequest $request)
     {
         $data = $request->validated();
-        $upload =  $this->uploadImage($request, 'banner');
+        // $upload =  $this->uploadImage($request, 'banner');
+        $upload = $this->uploadToImageKit($request,'banner');
         $user = $request->user();
 
         // Add assets
@@ -72,14 +73,13 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(UpdateProjectRequest $request, Project $project)
     {
+
+        // return [$request->getContent(), $request->all(), $project];
+
         $data = $request->all();
 
-        return $data;
-        // return "Yest";
-        // dd($request);
-        // return [$project, $data];
         // if($request->banner){
         //     // delete old banner
         //     $banner = Assets::find($project->banner_id);
@@ -88,6 +88,20 @@ class ProjectController extends Controller
         //     $upload =  $this->uploadImage($request);
         //     $data['banner_id'] = $upload['id'];
         // }
+
+        if($request->banner){
+
+            // Upload the banner
+            // $upload =  $this->uploadImage($request, 'banner');
+            // $user = $request->user();
+
+
+            // // Add assets
+            // $banner = Assets::create($upload);
+            // $data['banner_id'] = $banner->id;
+            // $data['user_id'] = $user->id;
+
+        }
 
 
         $project->update($data);
@@ -102,33 +116,6 @@ class ProjectController extends Controller
     }
 
 
-    public function up(StoreProjectRequest $request)
-    {
-
-        return $request->all();
-
-        $data = $request->validated();
-        $upload =  $this->uploadImage($request, 'banner');
-        $user = $request->user();
-
-        // Add assets
-        $banner = Assets::create($upload);
-        $data['banner_id'] = $banner->id;
-        $data['user_id'] = $user->id ?? 1;
-
-        // Add project
-        $project = Project::create($data);
-        $project->load(['user', 'comments.user', 'banner']);
-
-
-        if (!$project) {
-            return $this->sendError([], 'unable to update project', 500);
-        }
-
-        return $this->sendSuccess($project, 'project created', 201);
-    }
-
-
     /**
      * Remove the specified resource from storage.
      */
@@ -137,40 +124,6 @@ class ProjectController extends Controller
         return $this->sendSuccess($project, 'project deleted', 200);
 
     }
-
-
-    // upload image
-    // protected function uploadImage($request)
-    // {
-
-    //     // Save the file to disk
-    //     $path = $request->file('banner')->store('images', 'public');
-
-    //     // Get the public URL for accessing the uploaded file
-    //     $url = Storage::url($path);
-
-    //     $file = $request->file('banner');
-    //     $originName = $file->getClientOriginalName();
-    //     $originExt = $file->extension();
-
-    //     // $fileName = time() . '.' . $originExt;
-    //     // $file->storeAs('public/images/', $fileName);
-    //     // $upload = $file->move(public_path('assets'), $fileName);
-    //     // $file->storeAs('public/assets', $fileName);
-    //     // return asset('public/assets/'. $fileName);
-    //     // $request->file('banner')->storeAs('assets', $fileName);
-
-
-    //     return [
-    //         'path' => $url,
-    //         'name' => $originName,
-    //         'ext' => $originExt,
-    //         'size' => $file->getSize(),
-    //         'type' => $file->getMimeType(),
-    //         'url' => url($url)
-    //     ];
-
-    // }
 
 
     // show user project
@@ -190,8 +143,10 @@ class ProjectController extends Controller
 
 
     // Like project
-    public function like(Project $project)
+    public function like(Request $request, Project $project)
     {
+
+        return [$request->all(), $request->getContent(), $project];
         $project->likes++;
         $project->save();
         $project->load(['user', 'comments.user', 'banner']);
@@ -220,4 +175,6 @@ class ProjectController extends Controller
         return $this->sendSuccess($project, 'successful', 200);
 
     }
+
+
 }

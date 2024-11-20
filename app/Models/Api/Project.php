@@ -17,7 +17,6 @@ class Project extends Model
         'banner_id',
         'title',
         'description',
-        'video_url',
         'tags',
         'category',
         'status',

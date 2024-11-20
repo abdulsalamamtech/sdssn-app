@@ -3,12 +3,21 @@
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\CertificateController;
 use App\Http\Controllers\Api\CommentController;
+use App\Http\Controllers\Api\PodcastCommentController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\UserProfile;
 use App\Http\Controllers\Api\UserSocial;
+use App\Http\Controllers\Api\PodcastController;
+use App\Utils\ImageKit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
+
+
+
+
+
+
 
 
 
@@ -73,7 +82,7 @@ Route::post('logout', [AuthController::class, 'logout'])
 
 
 
-// Artisan routes
+// Artisan routes for local development and testing
 Route::get('/artisan', function (Request $request) {
 
     // For testing purposes
@@ -109,6 +118,7 @@ Route::get('/artisan', function (Request $request) {
 });
 
 
+// Link storage to public directory
 Route::get('/link-storage', function () {
 
     Artisan::call('storage:link');
@@ -149,17 +159,26 @@ Route::put('projects/{project}/shares', [ProjectController::class, 'share']);
 
 
 
-// personal projects routes
-    // ->middleware(['auth:sanctum']);
-// Projects route
-Route::apiResource('/projects', ProjectController::class)->only(['index', 'show']);
-// Projects routes
-Route::apiResource('/projects', ProjectController::class)
-    ->only(['store', 'update'])
-    ->middleware(['auth:sanctum']);
+
+// Route::group(['middleware' => ['auth:sanctum','verified']], function() {
+//     // User Profile
+//     Route::post('/projects', [ProjectController::class, 'store']);
+//     Route::patch('/projects/{project}', [ProjectController::class, 'up']);
+//     Route::put('/projects/{project}', [ProjectController::class, 'update']);
+
+//     Route::put('/now/{project}/now', [ProjectController::class, 'now']);
+
+
+// });
 
 
 
+// Project routes
+Route::apiResource('projects', ProjectController::class)
+    ->only(['index', 'show']);
+Route::apiResource('projects', ProjectController::class)
+        ->middleware(['auth:sanctum'])
+        ->only(['store', 'update', 'delete']);
 
 // Project comments
 Route::apiResource('projects.comments', CommentController::class)
@@ -170,7 +189,26 @@ Route::apiResource('projects.comments', CommentController::class)
     ->only(['store', 'update']);
 
 
-Route::put('projects/{project}/update', [ProjectController::class, 'up']);
+
+
+    Route::apiResource('podcasts', PodcastController::class);
+
+// Podcast routes
+// Route::apiResource('podcasts', PodcastController::class)
+//     ->only(['index', 'show']);
+// Route::apiResource('podcasts', PodcastController::class)
+//         ->middleware(['auth:sanctum'])
+//         ->only(['store', 'update', 'delete']);
+
+// Podcast comments
+Route::apiResource('podcasts.comments', PodcastCommentController::class)
+    ->only(['index', 'show']);
+// Podcast comments
+Route::apiResource('podcasts.comments', PodcastCommentController::class)
+    ->middleware(['auth:sanctum'])
+    ->only(['store', 'update']);
+
+
 
 
 Route::get('info', function (Request $request){
@@ -192,3 +230,34 @@ Route::get('info', function (Request $request){
 // Route::post('/', [ProjectController::class, 'store']);
 // Route::put('/{project}', [ProjectController::class, 'update']);
 // Route::delete('/{project}', [ProjectController::class, 'destroy']);
+
+
+Route::post('/upload', function (Request $request) {
+
+
+    // $data = json_decode($request->getContent(), true);
+    // return [$data, $request->getContent(), $request->all()["file"], "success"];
+
+    $file = $request->file('image');
+
+    // $con = $file->getContent();
+    // $con = base64_encode($con);
+    // return $con;
+
+
+    // return $file;
+    $upload = new ImageKit();
+    $res =  $upload->uploadFile($file, 'images');
+    // $res =  $upload->upload($file, 'images');
+
+    // uploadToImageKit($request, $fileName = 'image')
+    return $res;
+
+    return response()->json([
+        'method' => $request->method(),
+        'all' => $request->all(),
+        'content' => $request->getContent(),
+        'data' => $data
+    ]);
+
+});

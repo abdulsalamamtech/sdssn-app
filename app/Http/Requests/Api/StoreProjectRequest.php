@@ -25,7 +25,6 @@ class StoreProjectRequest extends FormRequest
             'banner' => ['required','image','mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             'title' => ['required','string'],
             'description' => ['required','string'],
-            'video_url' => ['nullable','string'],
             'tags' => ['required','string'],
             'category' => ['required','string'],
             'status' => ['required','string'],

@@ -29,7 +29,7 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Project $project, StoreCommentRequest $request)
+    public function store( StoreCommentRequest $request, Project $project)
     {
         $user = $request->user();
         $data = $request->validated();
@@ -64,11 +64,22 @@ class CommentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Project $project, UpdateCommentRequest $request)
+    public function update( UpdateCommentRequest $request, Project $project, Comment $comment)
     {
-        return $request;
+
+
+        $user = $request->user();
         $data = $request->validated();
-        $comment = $project->comments()->update($data);
+
+        $comment->where('project_id', $project->id)
+                ->where('user_id', $user->id)
+                ->update($data);
+
+        $comment = Comment::where('id', $comment->id)
+                    ->where('project_id', $project->id)
+                    ->where('user_id', $user->id)
+                    ->get();
+
         $comment->load(['user']);
 
         if (!$comment) {
@@ -77,6 +88,7 @@ class CommentController extends Controller
 
         return $this->sendSuccess($comment, 'comment updated', 201);
     }
+
 
     /**
      * Remove the specified resource from storage.
