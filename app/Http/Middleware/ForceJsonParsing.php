@@ -21,7 +21,7 @@ class ForceJsonParsing
         Log::info('All Input: ' . json_encode($request->all()));
         Log::info('Raw Input: ' . $request->getContent());
         $data = json_decode($request->getContent(), true);
-        Log::info('Data: ' . $data);
+        Log::info('Data: ' . json_encode($data));
 
         // Check if the method is one of the affected methods and the content type is JSON
         if (
