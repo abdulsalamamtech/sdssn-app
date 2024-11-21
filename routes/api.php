@@ -158,12 +158,14 @@ Route::put('projects/{project}/likes', [ProjectController::class, 'like']);
 Route::put('projects/{project}/shares', [ProjectController::class, 'share']);
 
 
-
+// Update Project
+Route::post('projects/{project}/update', [ProjectController::class, 'update'])
+    ->middleware(['auth:sanctum', 'verified']);
 
 // Project routes
 Route::apiResource('projects', ProjectController::class)
         ->middleware(['auth:sanctum', 'verified'])
-        ->only(['store', 'update', 'destroy']);
+        ->only(['store', 'destroy']);
 
 // Project routes
 Route::apiResource('projects', ProjectController::class)
