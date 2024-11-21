@@ -67,10 +67,6 @@ class CommentController extends Controller
     public function update( UpdateCommentRequest $request, Project $project, Comment $comment)
     {
 
-
-
-        return [$request->all(), $project];
-
         $user = $request->user();
         $data = $request->validated();
 

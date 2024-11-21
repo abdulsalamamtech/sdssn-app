@@ -23,7 +23,7 @@ class StoreProjectRequest extends FormRequest
     {
         return [
             'banner' => ['required','image','mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-            'title' => ['required','string'],
+            'title' => ['required','string', 'max:100'],
             'description' => ['required','string'],
             'tags' => ['required','string'],
             'category' => ['required','string'],

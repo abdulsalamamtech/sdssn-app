@@ -76,6 +76,9 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
+
+        // return [$request->all()];
+
         $data = $request->validated();
         $user = $request->user();
 
@@ -85,6 +88,7 @@ class ProjectController extends Controller
 
         if($request->banner){
 
+            // Delete the previously uploaded banner
             // Update the code to delete the previously uploaded banner
             $upload = $this->uploadToImageKit($request,'banner');
 

@@ -203,10 +203,10 @@ Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 
 PUT  http://127.0.0.1:8000/api/projects/4
 Content-Type: application/json
-Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
+Authorization: Bearer {{token}}
 
 {
-    "title": "Amtech's First Project update",
+    "title": "First Project update",
     "description": "This is my first project now",
     "likes": 2
 }
@@ -238,12 +238,12 @@ Authorization: Bearer {{token}}
 ###
 # Update Comment
 
-PUT http://127.0.0.1:8000/api/projects/4/comments/6/
+PUT http://127.0.0.1:8000/api/projects/1/comments/19/
 content-type: application/json
 Authorization: Bearer {{token}}
 
 {
-    "content": "This is my first project"
+    "content": "This is my first updated project"
 }
 
 
