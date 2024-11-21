@@ -160,6 +160,28 @@ Route::put('projects/{project}/shares', [ProjectController::class, 'share']);
 
 
 
+// Project routes
+Route::apiResource('projects', ProjectController::class)
+        ->middleware(['auth:sanctum', 'verified'])
+        ->only(['store', 'update', 'destroy']);
+
+// Project routes
+Route::apiResource('projects', ProjectController::class)
+    ->only(['index', 'show']);
+
+
+// Project comments
+Route::apiResource('projects.comments', CommentController::class)
+    ->middleware(['auth:sanctum'])
+    ->only(['store', 'update', 'destroy']);
+// Project comments
+Route::apiResource('projects.comments', CommentController::class)
+    ->only(['index', 'show']);
+
+
+
+
+
 // Route::group(['middleware' => ['auth:sanctum','verified']], function() {
 //     // User Profile
 //     Route::post('/projects', [ProjectController::class, 'store']);
@@ -171,27 +193,27 @@ Route::put('projects/{project}/shares', [ProjectController::class, 'share']);
 
 // });
 
+// Route::apiResource('projects', ProjectController::class)
+//         ->middleware(['auth:sanctum', 'verified'])
+//         ->only(['store', 'update']);
 
 
-// Project routes
-Route::apiResource('projects', ProjectController::class)
-    ->only(['index', 'show']);
-Route::apiResource('projects', ProjectController::class)
-        ->middleware(['auth:sanctum'])
-        ->only(['store', 'update', 'delete']);
+// Route::resource('photos', PhotoController::class)->only([
+//     'index', 'show'
+// ]);
 
-// Project comments
-Route::apiResource('projects.comments', CommentController::class)
-    ->only(['index', 'show']);
-// Project comments
-Route::apiResource('projects.comments', CommentController::class)
-    ->middleware(['auth:sanctum'])
-    ->only(['store', 'update']);
+// Route::resource('photos', PhotoController::class)->except([
+//     'create', 'store', 'update', 'destroy'
+// ]);
+
+
+
 
 
 
 
     Route::apiResource('podcasts', PodcastController::class);
+
 
 // Podcast routes
 // Route::apiResource('podcasts', PodcastController::class)

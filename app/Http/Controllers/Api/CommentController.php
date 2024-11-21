@@ -68,6 +68,9 @@ class CommentController extends Controller
     {
 
 
+
+        return [$request->all(), $project];
+
         $user = $request->user();
         $data = $request->validated();
 

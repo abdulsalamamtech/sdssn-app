@@ -32,14 +32,15 @@ class ProjectController extends Controller
     public function store(StoreProjectRequest $request)
     {
         $data = $request->validated();
+        $user = $request->user();
+
         // $upload =  $this->uploadImage($request, 'banner');
         $upload = $this->uploadToImageKit($request,'banner');
-        $user = $request->user();
 
         // Add assets
         $banner = Assets::create($upload);
         $data['banner_id'] = $banner->id;
-        $data['user_id'] = $user->id ?? 1;
+        $data['user_id'] = $user->id;
 
         // Add project
         $project = Project::create($data);
@@ -75,34 +76,23 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
+        $data = $request->validated();
+        $user = $request->user();
 
-        // return [$request->getContent(), $request->all(), $project];
-
-        $data = $request->all();
-
-        // if($request->banner){
-        //     // delete old banner
-        //     $banner = Assets::find($project->banner_id);
-        //     $banner->delete();
-        //     // upload new banner
-        //     $upload =  $this->uploadImage($request);
-        //     $data['banner_id'] = $upload['id'];
-        // }
+        if ($user->id != $project->user_id) {
+            return $this->sendError([], 'you are unauthorize', 401);
+        }
 
         if($request->banner){
 
-            // Upload the banner
-            // $upload =  $this->uploadImage($request, 'banner');
-            // $user = $request->user();
+            // Update the code to delete the previously uploaded banner
+            $upload = $this->uploadToImageKit($request,'banner');
 
-
-            // // Add assets
-            // $banner = Assets::create($upload);
-            // $data['banner_id'] = $banner->id;
-            // $data['user_id'] = $user->id;
+            // Add assets
+            $banner = Assets::create($upload);
+            $data['banner_id'] = $banner->id;
 
         }
-
 
         $project->update($data);
         $project->load(['user','comments.user', 'banner']);
@@ -121,6 +111,15 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+
+        $user = request()->user();
+
+        if ($user->id != $project->user_id) {
+            return $this->sendError([], 'you are unauthorize', 401);
+        }
+
+        $project->delete();
+
         return $this->sendSuccess($project, 'project deleted', 200);
 
     }
@@ -146,7 +145,6 @@ class ProjectController extends Controller
     public function like(Request $request, Project $project)
     {
 
-        return [$request->all(), $request->getContent(), $project];
         $project->likes++;
         $project->save();
         $project->load(['user', 'comments.user', 'banner']);
@@ -163,6 +161,7 @@ class ProjectController extends Controller
     // Share project
     public function share(Project $project)
     {
+
         $project->shares++;
         $project->save();
 
@@ -175,6 +174,7 @@ class ProjectController extends Controller
         return $this->sendSuccess($project, 'successful', 200);
 
     }
+
 
 
 }

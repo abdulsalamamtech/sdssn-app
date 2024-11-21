@@ -41,7 +41,7 @@ return Application::configure(basePath: dirname(__DIR__))
             // \Illuminate\Routing\Middleware\SubstituteBindings::class,
 
             // Other middleware for parsing request content
-            ForceJsonParsing::class,
+            // ForceJsonParsing::class,
 
             // Log laravel Activities
             LogActivities::class,

@@ -26,8 +26,8 @@ class ForceJsonParsing
         // Check if the method is one of the affected methods and the content type is JSON
         if (
             in_array($request->method(), ['POST', 'PUT', 'PATCH']) &&
-            empty($request->all()) ||
-            $request->header('Content-Type') === 'application/json'
+            empty($request->all())
+            // || $request->header('Content-Type') === 'application/json'
         ) {
 
             if (is_array($data)) {
