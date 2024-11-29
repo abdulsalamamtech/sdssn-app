@@ -1,6 +1,22 @@
 
 
+```php
 
+use Illuminate\Support\Facades\DB;  
+
+try {  
+    DB::beginTransaction();  
+
+    // Your database operations here  
+    // e.g. Create, Update, or Delete Models  
+
+    DB::commit();  
+} catch (\Exception $e) {  
+    DB::rollBack();  
+    // Handle the error, e.g. log it or return a response  
+}
+
+```
 
 ```php
 

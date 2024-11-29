@@ -1,20 +1,19 @@
 <?php
 
+use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\CertificateController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\PodcastCommentController;
+use App\Http\Controllers\Api\PodcastController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\UserProfile;
 use App\Http\Controllers\Api\UserSocial;
-use App\Http\Controllers\Api\PodcastController;
+use App\Models\Api\Certificate;
 use App\Utils\ImageKit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
-
-
-
 
 
 
@@ -47,26 +46,23 @@ Route::get('/security-questions', function (Request $request) {
 
 // Get the authenticated user
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-    return $request->user();
+
+    $message = "Authenticated";
+    $statusCode = 200;
+    $user =  $request->user();
+    return response()->json([
+        'success' => false,
+        'message' => $message,
+        'data' => $user
+    ], $statusCode);
+
 });
 
 
-// API test route
-Route::get('/', function (Request $request) {
-    return [
-        'success' => true,
-        'message' => 'api is live',
-        'data' => [
-            'date' => now()->format('Y-m-d H:i:s'),
-            'request' => $request->all(),
-            'environment' => config('app.env'),
-            'debug' => config('app.debug')
-        ],
-        'Laravel' => app()->version()
-    ];
-});
 
 
+
+// AUTHENTICATION ROUTES
 // Authentication routes
 // Register route
 Route::post('register', [AuthController::class, 'register'])
@@ -82,6 +78,121 @@ Route::post('logout', [AuthController::class, 'logout'])
 
 
 
+// PROFILE ROUTES
+// User profile, social media, projects, podcasts, certificates, information
+Route::group(['prefix' => 'profile','middleware' => ['auth:sanctum','verified']], function() {
+    // User Profile
+    Route::get('/', [UserProfile::class, 'show']);
+    Route::put('/', [UserProfile::class, 'update']);
+
+    // User Socials
+    Route::get('/socials', [UserSocial::class, 'show']);
+    Route::put('/socials', [UserSocial::class, 'update']);
+
+    // User Projects
+    Route::get('/projects', [ProjectController::class, 'personal']);
+
+    // User Podcasts [admin only]
+    Route::get('/podcasts', [PodcastController::class, 'personal']);
+
+    // User certificates
+    Route::get('/certificates', [PodcastController::class, 'personal']);
+
+    // User certificates approved [admin only]
+    Route::get('/certificates/approved', [PodcastController::class, 'approved']);
+
+
+});
+
+
+
+
+
+// AUTH ROUTES RESOURCES
+Route::group(['middleware' => ['auth:sanctum','verified']], function() {
+
+    // PROJECTS
+    // Project routes
+    Route::apiResource('projects', ProjectController::class)
+        ->only(['store', 'destroy']);
+    // Update Project
+    Route::post('projects/{project}/update', [ProjectController::class, 'update']);
+    Route::put('projects/{project}', [ProjectController::class, 'update']);
+    // Project comments
+    Route::apiResource('projects.comments', CommentController::class)
+        ->only(['store', 'update', 'destroy']);
+    // Like project
+    Route::put('projects/{project}/likes', [ProjectController::class, 'like']);
+    // Share project
+    Route::put('projects/{project}/shares', [ProjectController::class, 'share']);
+
+
+    // PODCAST
+    // Update podcast
+    Route::post('podcasts/{podcast}/update', [PodcastController::class, 'update']);
+    Route::put('podcasts/{podcast}', [PodcastController::class, 'update']);
+    // Podcast comments
+    Route::apiResource('podcasts.comments', PodcastCommentController::class)
+        ->only(['store', 'update', 'destroy']);
+    // Like podcast
+    Route::put('podcasts/{podcast}/likes', [PodcastController::class, 'like']);
+    // Share podcast
+    Route::put('podcasts/{podcast}/shares', [PodcastController::class, 'share']);
+
+});
+
+
+
+
+
+
+// ADMIN ROUTES
+Route::group(['prefix' => 'admin','middleware' => ['auth:sanctum','verified', 'admin']], function() {
+    // Admin dashboard route
+    Route::apiResource('/', AdminController::class);
+    // Users routes
+    Route::get('/users', [AdminController::class, 'users']);
+    // Approve project
+    Route::put('projects/{project}/approve', [ProjectController::class, 'approve']);
+    // Approved projects
+    Route::get('projects/approved', [ProjectController::class, 'approved']);
+    // Force delete project
+    Route::delete('projects/{project}/delete-from-trash', [ProjectController::class, 'forceDelete']);
+    // Get deleted trash projects
+    Route::get('projects/trash', [ProjectController::class, 'trash']);
+    // Podcast routes [admin]
+    Route::apiResource('podcasts', PodcastController::class);
+    // Certificate routes [admin]
+    Route::apiResource('/certificates', CertificateController::class);
+
+});
+
+
+
+// LOCATIONS ROUTES
+// Get user locations
+Route::get('/locations', [AdminController::class, 'locations']);
+
+
+
+// GENERAL PUBLIC ROUTES
+// Project routes
+Route::apiResource('projects', ProjectController::class)
+    ->only(['index', 'show']);
+
+// Project comments
+Route::apiResource('projects.comments', CommentController::class)
+    ->only(['index', 'show']);
+
+// Podcast comments
+Route::apiResource('podcasts.comments', PodcastCommentController::class)
+    ->only(['index', 'show']);
+
+
+
+
+
+// DEPLOYMENT ROUTES
 // Artisan routes for local development and testing
 Route::get('/artisan', function (Request $request) {
 
@@ -117,7 +228,6 @@ Route::get('/artisan', function (Request $request) {
 
 });
 
-
 // Link storage to public directory
 Route::get('/link-storage', function () {
 
@@ -130,132 +240,7 @@ Route::get('/link-storage', function () {
 
 
 
-// User profile and social media information
-Route::group(['prefix' => 'profile','middleware' => ['auth:sanctum','verified']], function() {
-    // User Profile
-    Route::get('/', [UserProfile::class, 'show']);
-    Route::put('/', [UserProfile::class, 'update']);
-
-    // User Socials
-    Route::get('/socials', [UserSocial::class, 'show']);
-    Route::put('/socials', [UserSocial::class, 'update']);
-
-    // User Projects
-    Route::get('/projects', [ProjectController::class, 'personal']);
-
-});
-
-
-// Certificate
-Route::apiResource('/certificates', CertificateController::class)
-    ->middleware(['auth:sanctum']);
-
-
-
-// Like project
-Route::put('projects/{project}/likes', [ProjectController::class, 'like']);
-// Share project
-Route::put('projects/{project}/shares', [ProjectController::class, 'share']);
-
-
-// Update Project
-Route::post('projects/{project}/update', [ProjectController::class, 'update'])
-    ->middleware(['auth:sanctum', 'verified']);
-
-// Project routes
-Route::apiResource('projects', ProjectController::class)
-        ->middleware(['auth:sanctum', 'verified'])
-        ->only(['store', 'destroy']);
-
-// Project routes
-Route::apiResource('projects', ProjectController::class)
-    ->only(['index', 'show']);
-
-
-// Project comments
-Route::apiResource('projects.comments', CommentController::class)
-    ->middleware(['auth:sanctum'])
-    ->only(['store', 'update', 'destroy']);
-// Project comments
-Route::apiResource('projects.comments', CommentController::class)
-    ->only(['index', 'show']);
-
-
-
-
-
-// Route::group(['middleware' => ['auth:sanctum','verified']], function() {
-//     // User Profile
-//     Route::post('/projects', [ProjectController::class, 'store']);
-//     Route::patch('/projects/{project}', [ProjectController::class, 'up']);
-//     Route::put('/projects/{project}', [ProjectController::class, 'update']);
-
-//     Route::put('/now/{project}/now', [ProjectController::class, 'now']);
-
-
-// });
-
-// Route::apiResource('projects', ProjectController::class)
-//         ->middleware(['auth:sanctum', 'verified'])
-//         ->only(['store', 'update']);
-
-
-// Route::resource('photos', PhotoController::class)->only([
-//     'index', 'show'
-// ]);
-
-// Route::resource('photos', PhotoController::class)->except([
-//     'create', 'store', 'update', 'destroy'
-// ]);
-
-
-
-
-
-
-
-    Route::apiResource('podcasts', PodcastController::class);
-
-
-// Podcast routes
-// Route::apiResource('podcasts', PodcastController::class)
-//     ->only(['index', 'show']);
-// Route::apiResource('podcasts', PodcastController::class)
-//         ->middleware(['auth:sanctum'])
-//         ->only(['store', 'update', 'delete']);
-
-// Podcast comments
-Route::apiResource('podcasts.comments', PodcastCommentController::class)
-    ->only(['index', 'show']);
-// Podcast comments
-Route::apiResource('podcasts.comments', PodcastCommentController::class)
-    ->middleware(['auth:sanctum'])
-    ->only(['store', 'update']);
-
-
-
-
-Route::get('info', function (Request $request){
-    $user = $request->user();
-    return $user ?? 'no message available';
-})->middleware(['auth:sanctum']);
-
-
-
-
-// Route::group(['prefix' => 'projects','middleware' => ['auth:sanctum','verified']], function() {
-//     // Projects route
-//     Route::apiResource('/', ProjectController::class);
-// });
-
-// Route::apiResource('projects.comments', CommentController::class);
-// Route::get('/', [ProjectController::class, 'index']);
-// Route::get('/{project}', [ProjectController::class,'show']);
-// Route::post('/', [ProjectController::class, 'store']);
-// Route::put('/{project}', [ProjectController::class, 'update']);
-// Route::delete('/{project}', [ProjectController::class, 'destroy']);
-
-
+// TEST ROUTES
 Route::post('/upload', function (Request $request) {
 
 
@@ -285,3 +270,9 @@ Route::post('/upload', function (Request $request) {
     ]);
 
 });
+
+Route::get('info', function (Request $request){
+    $user = $request->user();
+    return $user ?? 'no message';
+})->middleware(['auth:sanctum']);
+

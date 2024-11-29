@@ -1,5 +1,6 @@
 <?php
 
+use \App\Http\Middleware\AdminMiddleware;
 use \App\Http\Middleware\ForceJsonParsing;
 use \App\Http\Middleware\LogActivities;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 
 
 
@@ -50,7 +52,10 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'verified' => \App\Http\Middleware\EnsureEmailIsVerified::class,
+            'admin' => AdminMiddleware::class,
         ]);
+
+
 
 
         //Incoming requests from your SPA can authenticate using Laravel's session cookies

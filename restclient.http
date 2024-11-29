@@ -2,7 +2,7 @@
 # SDSSN APP
 
 
-@token = 8|pqRMmlPKKbZFTG67sxoea47BEsc95jmNbVdklABGadad2ff0
+@token = 10|PCnme9viukmSGMYFKsJMquy1f9c13sC8pudH9oVF6c054777
 
 ###
 # Register
@@ -39,7 +39,7 @@ content-type: application/json
 # Logout
 POST http://127.0.0.1:8000/api/logout/
 content-type: application/json
-Authorization: Bearer 5|WHSt2cQUi3Rl6BvdjJFMxApEzV4kKpyxmJ1I3t0iafbff6d
+Authorization: Bearer {{token}}
 
 
 
@@ -47,7 +47,7 @@ Authorization: Bearer 5|WHSt2cQUi3Rl6BvdjJFMxApEzV4kKpyxmJ1I3t0iafbff6d
 # Get login user information
 GET http://127.0.0.1:8000/api/user/
 content-type: application/json
-Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
+Authorization: Bearer {{token}}
 
 
 
@@ -58,19 +58,19 @@ Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 # Get user profile information
 GET http://127.0.0.1:8000/api/profile
 content-type: application/json
-Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
+Authorization: Bearer {{token}}
 
 
 ###
 # Update user profile information
 PUT http://127.0.0.1:8000/api/profile
 content-type: application/json
-Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
+Authorization: Bearer {{token}}
 
 {
     "phone_number": "+2349091929394",
     "gender": "male",
-    "dob": "2002-09-01"
+    "dob": "09-01-2009"
 }
 
 
@@ -78,7 +78,7 @@ Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 # Get user social media information
 GET http://127.0.0.1:8000/api/profile/socials/
 content-type: application/json
-Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
+Authorization: Bearer {{token}}
 
 
 
@@ -86,7 +86,7 @@ Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 # Update user social media information
 PUT http://127.0.0.1:8000/api/profile/socials/
 Content-Type: application/json
-Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
+Authorization: Bearer {{token}}
 
 {
     "facebook": "https://www.facebook.com/amtechdig",
@@ -100,17 +100,17 @@ Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 
 
 ###
-# Get all certificate
+# Get all certificate [admin]
 GET http://127.0.0.1:8000/api/certificates
 content-type: application/json
-Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
+Authorization: Bearer {{token}}
 
 
 ###
-# Create certificate
+# Create certificate [admin]
 POST http://127.0.0.1:8000/api/certificates
 content-type: application/json
-Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
+Authorization: Bearer {{ token }}
 
 {
     "belong_to": 1,
@@ -121,10 +121,10 @@ Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 
 
 ###
-# Update certificate
+# Update certificate [admin]
 PUT http://127.0.0.1:8000/api/certificates/1
 content-type: application/json
-Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
+Authorization: Bearer {{ token }}
 
 {
     "certificate": "binary image file",
@@ -145,13 +145,12 @@ content-type: application/json
 
 
 
-
 ###
 # Get personal Projects
 
 GET http://127.0.0.1:8000/api/profile/projects
 content-type: application/json
-Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
+Authorization: Bearer {{ token }}
 
 
 ###
@@ -182,12 +181,20 @@ Authorization: Bearer {{token}}
 
 
 ###
+# Approve Projects (public to approved) [admin]
+
+PUT http://127.0.0.1:8000/api/projects/4/approve
+content-type: application/json
+Authorization: Bearer {{token}}
+
+.
+
+###
 # Like Projects (need some modification)
 
 PUT http://127.0.0.1:8000/api/projects/4/likes
 content-type: application/json
-Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
-
+Authorization: Bearer {{token}}
 
 
 ###
@@ -195,7 +202,7 @@ Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 
 PUT http://127.0.0.1:8000/api/projects/3/shares
 content-type: application/json
-Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
+Authorization: Bearer {{ token }}
 
 
 ###
@@ -262,7 +269,7 @@ Authorization: Bearer {{token}}
 
 POST http://127.0.0.1:8000/api/upload/
 content-type: application/json
-Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
+Authorization: Bearer {{token}}
 
 {
     "image": "file:///home/amtech/Downloads/oladayo-ims-buk-logo.jpg"
@@ -275,21 +282,37 @@ Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 
 
 ###
-# Create Podcast (dev)
+# Create Podcast (video) [admin]
 
 POST  http://127.0.0.1:8000/api/podcasts/
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
+    "banner": "image file",
     "title": "Amtech's First Project",
     "description": "This is my first project",
     "category": "video",
     "video_url": "https://www.youtube.com/shorts/wGoJEWZuixg?feature=share",
-    "likes": 2
+    "tags": "video podcast"
 }
 
 
+###
+# Create Podcast (audio) [admin]
+
+POST  http://127.0.0.1:8000/api/podcasts/
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "banner": "image file",
+    "title": "Amtech's First Project",
+    "description": "This is my first project",
+    "category": "video",
+    "audio_url": "https://www.youtube.com/shorts/wGoJEWZuixg?feature=share",
+    "tags": "video podcast"
+}
 
 
 ###
@@ -303,6 +326,4 @@ Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
     "title": "Amtech's First Project",
     "description": "This is my first project",
     "category": "video",
-    "video_url": "https://www.youtube.com/shorts/wGoJEWZuixg?feature=share",
-    "likes": 2
 }

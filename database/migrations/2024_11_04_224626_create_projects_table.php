@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('banner_id')->nullable()->constrained('assets')->onDelete('cascade');
+            $table->string('slug');
             $table->string('title');
             $table->text('description');
             $table->string('tags')->nullable();

@@ -29,7 +29,6 @@ class StorePodcastRequest extends FormRequest
             'audio_url' => ['nullable','string'],
             'tags' => ['required','string'],
             'category' => ['required','string'],
-            'status' => ['required','string'],
             // 'approved_by' => ['required','string'],
             // 'views' => ['required','integer'],
             // 'likes' => ['required','integer'],

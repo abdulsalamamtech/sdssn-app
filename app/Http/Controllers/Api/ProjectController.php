@@ -9,6 +9,7 @@ use App\Models\Api\Project;
 use App\Models\Assets;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -17,13 +18,18 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $project = Project::with(['user', 'comments.user', 'banner'])->get();
+        $projects = Project::whereNotNull('approved_by')
+            ->where('status', 'public')
+            ->with(['user', 'comments.user', 'banner'])
+            ->get();
 
-        if (!$project) {
+            return $projects;
+
+        if (!$projects) {
             return $this->sendError([], 'unable to load projects', 500);
         }
 
-        return $this->sendSuccess($project, 'successful', 200);
+        return $this->sendSuccess($projects, 'successful', 200);
     }
 
     /**
@@ -41,6 +47,20 @@ class ProjectController extends Controller
         $banner = Assets::create($upload);
         $data['banner_id'] = $banner->id;
         $data['user_id'] = $user->id;
+
+        // Generate slug
+        $title = $data['title'];
+        $slug = Str::slug($title);
+
+        $slug_fund = Project::where('slug', $slug)->first();
+        // $data['slug'] = $slug;
+        // if($slug_fund){
+        //     $data['slug'] = $slug.'-'.rand(100,999);
+        // }
+        ($slug_fund)
+        ?$data['slug'] = $slug.'-'.rand(100,999)
+        :$data['slug'] = $slug;
+
 
         // Add project
         $project = Project::create($data);
@@ -77,10 +97,24 @@ class ProjectController extends Controller
     public function update(UpdateProjectRequest $request, Project $project)
     {
 
-        // return [$request->all()];
-
         $data = $request->validated();
         $user = $request->user();
+
+        if($project->title != $data['title']){
+            // Generate slug
+            $title = $data['title'];
+            $slug = Str::slug($title);
+
+            $slug_fund = Project::where('slug', $slug)->first();
+            // $data['slug'] = $slug;
+            // if($slug_fund){
+            //     $data['slug'] = $slug.'-'.rand(100,999);
+            // }
+            ($slug_fund)
+            ?$data['slug'] = $slug.'-'.rand(100,999)
+            :$data['slug'] = $slug;
+        }
+
 
         if ($user->id != $project->user_id) {
             return $this->sendError([], 'you are unauthorize', 401);
@@ -118,7 +152,7 @@ class ProjectController extends Controller
 
         $user = request()->user();
 
-        if ($user->id != $project->user_id) {
+        if ($user->id != $project->user_id || $user->role != 'admin') {
             return $this->sendError([], 'you are unauthorize', 401);
         }
 
@@ -180,5 +214,85 @@ class ProjectController extends Controller
     }
 
 
+     // Approve project
+    public function approve(Request $request, Project $project)
+    {
+        $user = $request->user();
 
+        // ['public', 'private', 'draft']
+        if($project->status == 'public'){
+            $project->approved_by = $user->id;
+        }
+        $project->save();
+
+
+        if (!$project) {
+            return $this->sendError([], 'unable to load project', 500);
+        }
+
+        return $this->sendSuccess($project, 'project approved successfully', 200);
+
+    }
+
+    // Approve public project
+    public function approved(Request $request)
+    {
+
+        $user = $request->user();
+
+        $project = Project::where('approved_by', $user->id)->with(['user', 'comments.user', 'banner'])->get();
+
+        if (!$project) {
+            return $this->sendError([], 'unable to load projects', 500);
+        }
+
+        return $this->sendSuccess($project, 'successful', 200);
+    }
+
+    // Force delete
+    public function forceDelete(Request $request, $project)
+    {
+        $user = $request->user();
+
+        if ($user->role != 'admin') {
+            return $this->sendError([], 'you are unauthorize', 401);
+        }
+
+        Project::where('id', $project)->forceDelete();
+
+        return $this->sendSuccess($project, 'project deleted from trash', 200);
+    }
+
+    // Restore deleted project
+    public function restore(Request $request, $project)
+    {
+        $user = $request->user();
+
+        if ($user->role != 'admin') {
+            return $this->sendError([], 'you are unauthorize', 401);
+        }
+
+        Project::where('id', $project)->restore();
+
+        return $this->sendSuccess($project, 'project restored successfully', 200);
+    }
+
+    // Get trashed project
+    public function trash(Request $request)
+    {
+
+        $user = $request->user();
+
+        if ($user->role != 'admin') {
+            return $this->sendError([], 'you are unauthorize', 401);
+        }
+
+        $project = Project::onlyTrashed()->with(['user', 'comments.user', 'banner'])->get();
+
+        if (!$project) {
+            return $this->sendError([], 'unable to load trashed projects', 500);
+        }
+
+        return $this->sendSuccess($project, 'successful', 200);
+    }
 }

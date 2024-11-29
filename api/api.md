@@ -13,6 +13,7 @@
     - password
     - security_question
     - answer
+    - profession
     
     - phone_number
     - gender
@@ -143,7 +144,8 @@
     - slug (unique-title)
     - title
     - description
-    - type (audio|video)
+    - tags
+    - category (audio|video)
 
     - video_url
     - audio_url
@@ -155,9 +157,9 @@
     $ relationships (user)
         - belongs_to (users)
     
+        - belongs_to (user_id)
 
 
-= belongs_to (user_id)
 
     $ relationships (admin)
         - belongs_to (users) = added_by (user_id)

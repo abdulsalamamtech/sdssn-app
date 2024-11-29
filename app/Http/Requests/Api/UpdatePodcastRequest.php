@@ -29,8 +29,8 @@ class UpdatePodcastRequest extends FormRequest
             'audio_url' => ['nullable','string'],
             'tags' => ['nullable','string'],
             'category' => ['nullable','string'],
-            'status' => ['nullable','string'],
-            'approved_by' => ['nullable','string']
+            // 'status' => ['nullable','string'],
+            // 'approved_by' => ['nullable','string']
         ];
     }
 }

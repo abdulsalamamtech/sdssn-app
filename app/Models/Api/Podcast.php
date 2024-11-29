@@ -17,12 +17,12 @@ class Podcast extends Model
         'user_id',
         'banner_id',
         'title',
+        'slug', // [title]
         'description',
         'category', //['audio', 'video']
         'video_url',
         'audio_url',
         'tags',
-        'status',
         'views',
         'likes',
         'shares',

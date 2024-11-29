@@ -24,10 +24,11 @@ return new class extends Migration
             $table->string('phone_number')->nullable();
             $table->string('security_question');
             $table->string('answer');
+            $table->string('profession')->nullable();
             $table->enum('gender', ['male', 'female', 'other'])->nullable();
             $table->date('dob')->nullable();
             $table->string('address')->nullable();
-            $table->string('state')->nullable();
+            $table->string('state');
             $table->enum('membership_status', ['free', 'trial', 'premium', 'gold', 'annual'])->default('free');
 
             $table->enum('role', ['user', 'admin'])->default('user');

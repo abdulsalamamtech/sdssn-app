@@ -36,7 +36,9 @@ class CertificateController extends Controller
         $data['added_by'] = $user->id;
 
         // Upload data
-        $upload =  $this->uploadImage($request, 'certificate');
+        // $upload =  $this->uploadImage($request, 'certificate');
+        $upload = $this->uploadToImageKit($request,'certificate');
+
 
         // Add assets
         $asset = Assets::create($upload);
@@ -72,8 +74,10 @@ class CertificateController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Certificate $certificate, UpdateCertificateRequest $request)
+    public function update(UpdateCertificateRequest $request, Certificate $certificate)
     {
+
+        return [$certificate, $request];
 
         $user = $request->user();
         $data = $request->validated();
@@ -108,4 +112,35 @@ class CertificateController extends Controller
     {
         //
     }
+
+
+    // show user project
+    public function personal(Request $request)
+    {
+
+        $user = $request->user();
+
+        $certificate = Certificate::where('belong_to', $user->id)->with(['user', 'certificate', 'addedBy'])->get();
+
+        if (!$certificate) {
+            return $this->sendError([], 'unable to load your certificate', 500);
+        }
+
+        return $this->sendSuccess($certificate, 'successful', 200);
+    }
+
+    public function approved(Request $request)
+    {
+
+        $user = $request->user();
+
+        $certificate = Certificate::where('added_by', $user->id)->with(['user', 'certificate', 'addedBy'])->get();
+
+        if (!$certificate) {
+            return $this->sendError([], 'unable to load your approved certificate', 500);
+        }
+
+        return $this->sendSuccess($certificate, 'successful', 200);
+    }
+
 }
