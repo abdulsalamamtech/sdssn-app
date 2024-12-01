@@ -295,4 +295,37 @@ class ProjectController extends Controller
 
         return $this->sendSuccess($project, 'successful', 200);
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        if(!$query){
+            return $this->sendError([], 'invalid search query', 400);
+        }
+
+        // return $query;
+        $podcasts = Project::whereNotNull('approved_by')
+            ->where('status', 'public')
+            ->whereAny([
+                'title',
+                'slug',
+                'category',
+                'description',
+                'tags',
+                'created_at',
+            ], 'like', '%' . $query . '%')
+            ->with(['user', 'comments.user', 'banner'])
+            ->latest()
+            ->limit(20)
+            ->get();
+
+        if (!$podcasts) {
+            return $this->sendError([], 'unable to load podcast', 500);
+        }
+
+        return $this->sendSuccess($podcasts, 'successful', 200);
+
+    }
+
 }

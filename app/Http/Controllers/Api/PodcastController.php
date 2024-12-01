@@ -222,6 +222,7 @@ class PodcastController extends Controller
     }
 
 
+
     public function audio(Podcast $podcast)
     {
         $podcasts = Podcast::where('category', 'audio')->latest()->get();
@@ -234,4 +235,35 @@ class PodcastController extends Controller
         return $this->sendSuccess($podcasts, 'successful', 200);
 
     }
+
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        if(!$query){
+            return $this->sendError([], 'invalid search query', 400);
+        }
+
+        $podcasts = Podcast::whereAny([
+                'title',
+                'slug',
+                'category',
+                'description',
+                'tags',
+                'created_at',
+            ], 'like', '%' . $query . '%')
+            ->with(['user', 'podcastComments.user', 'banner'])
+            ->latest()
+            ->limit(20)
+            ->get();
+
+        if (!$podcasts) {
+            return $this->sendError([], 'unable to load podcast', 500);
+        }
+
+        return $this->sendSuccess($podcasts, 'successful', 200);
+
+    }
+
 }

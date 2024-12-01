@@ -186,34 +186,36 @@ Route::get('/locations', [AdminController::class, 'locations']);
 
 // GENERAL PUBLIC ROUTES
 // Projects routes
-Route::get('/projects/title/{project:slug}', [PodcastController::class, 'show']);
-
 Route::apiResource('projects', ProjectController::class)
-    ->only(['index', 'show']);
-
+->only(['index', 'show']);
 // Projects comments
 Route::apiResource('projects.comments', CommentController::class)
-    ->only(['index', 'show']);
+->only(['index', 'show']);
 
+// Search for projects
+Route::get('/projects/search/query', [ProjectController::class, 'search']);
 
-
+Route::get('/projects/title/{project:slug}', [ProjectController::class, 'show']);
 
 
 // GENERAL PUBLIC ROUTES
 // Podcasts routes
 Route::apiResource('podcasts', PodcastController::class)
     ->only(['index', 'show']);
-
-Route::get('/podcasts/category/video', [PodcastController::class, 'video']);
-Route::get('/podcasts/category/audio', [PodcastController::class, 'audio']);
-Route::get('/podcasts/title/{podcast:slug}', [PodcastController::class, 'show']);
-
-
-
-
 // Podcasts comments
 Route::apiResource('podcasts.comments', PodcastCommentController::class)
     ->only(['index', 'show']);
+
+// Search for podcast
+Route::get('/podcasts/search/query', [PodcastController::class, 'search']);
+
+Route::get('/podcasts/title/{podcast:slug}', [PodcastController::class, 'show']);
+Route::get('/podcasts/category/video', [PodcastController::class, 'video']);
+Route::get('/podcasts/category/audio', [PodcastController::class, 'audio']);
+
+
+
+
 
 
 
