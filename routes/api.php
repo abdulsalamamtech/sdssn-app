@@ -10,10 +10,12 @@ use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\UserProfile;
 use App\Http\Controllers\Api\UserSocial;
 use App\Models\Api\Certificate;
+use App\Models\User;
 use App\Utils\ImageKit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -128,6 +130,9 @@ Route::group(['middleware' => ['auth:sanctum','verified']], function() {
 
 
     // PODCAST
+    // Project routes
+    Route::apiResource('podcasts', PodcastController::class)
+        ->only(['store', 'destroy']);
     // Update podcast
     Route::post('podcasts/{podcast}/update', [PodcastController::class, 'update']);
     Route::put('podcasts/{podcast}', [PodcastController::class, 'update']);
@@ -164,7 +169,8 @@ Route::group(['prefix' => 'admin','middleware' => ['auth:sanctum','verified', 'a
     Route::apiResource('podcasts', PodcastController::class);
     // Certificate routes [admin]
     Route::apiResource('/certificates', CertificateController::class);
-
+    // Membership status routes [admin]
+    Route::get('/memberships', [AdminController::class, 'memberships']);
 });
 
 
@@ -175,16 +181,37 @@ Route::get('/locations', [AdminController::class, 'locations']);
 
 
 
+
+
+
 // GENERAL PUBLIC ROUTES
-// Project routes
+// Projects routes
+Route::get('/projects/title/{project:slug}', [PodcastController::class, 'show']);
+
 Route::apiResource('projects', ProjectController::class)
     ->only(['index', 'show']);
 
-// Project comments
+// Projects comments
 Route::apiResource('projects.comments', CommentController::class)
     ->only(['index', 'show']);
 
-// Podcast comments
+
+
+
+
+// GENERAL PUBLIC ROUTES
+// Podcasts routes
+Route::apiResource('podcasts', PodcastController::class)
+    ->only(['index', 'show']);
+
+Route::get('/podcasts/category/video', [PodcastController::class, 'video']);
+Route::get('/podcasts/category/audio', [PodcastController::class, 'audio']);
+Route::get('/podcasts/title/{podcast:slug}', [PodcastController::class, 'show']);
+
+
+
+
+// Podcasts comments
 Route::apiResource('podcasts.comments', PodcastCommentController::class)
     ->only(['index', 'show']);
 
@@ -236,7 +263,31 @@ Route::get('/link-storage', function () {
     return response()->json(['message' => 'Storage linked'], 201);
 });
 
+// Assign role to user
+Route::get('/assign-role', function (Request $request) {
 
+    // return $request->email;
+    $user = User::where('email', $request->email)->first();
+
+    // return $user;
+
+    if(!$user){
+        return response()->json(['message' => 'User not found'], 201);
+    }
+
+    if(!$request->role){
+        return response()->json(['message' => 'enter a role'], 201);
+    }
+
+    if(!in_array($request->role, ['user', 'admin'])){
+        return response()->json(['message' => 'Invalid role'], 201);
+    }
+    $user->role = $request->role;
+    $user->save();
+
+    $message = $request->role . ' role assign to ' . $request->email;
+    return response()->json(['message' => $message], 201);
+});
 
 
 

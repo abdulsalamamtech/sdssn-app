@@ -133,6 +133,22 @@ class AdminController extends Controller
 
     }
 
+    public function memberships()
+    {
+        $locations = User::select('membership_status', DB::raw('count(*) as total'))
+            ->groupBy('membership_status')
+            ->get();
 
+        // $locations = User::select('state')->groupBy('state')->get();
+
+        $metadata = $this->getMetadata($locations);
+
+        if (!$locations) {
+            return $this->sendError([], 'unable to load locations', 500);
+        }
+
+        return $this->sendSuccess($locations, 'successful', 200, $metadata);
+
+    }
 
 }

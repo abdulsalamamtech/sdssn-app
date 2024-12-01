@@ -17,13 +17,14 @@ class CommentController extends Controller
     public function index(Project $project)
     {
         $comments = $project->comments;
-        $comments->load(['user']);
-
         if (!$comments) {
-            return $this->sendError([], 'unable to load comments', 500);
+            return $this->sendError([], 'unable to load comments', 404);
         }
 
-        return $this->sendSuccess($comments, 'successful', 201);
+        $comments->load(['user']);
+
+
+        return $this->sendSuccess($comments, 'successful', 200);
     }
 
     /**
@@ -43,6 +44,7 @@ class CommentController extends Controller
             return $this->sendError([], 'unable to create comment', 500);
         }
 
+
         return $this->sendSuccess($comment, 'comment created', 201);
     }
 
@@ -51,12 +53,14 @@ class CommentController extends Controller
      */
     public function show(Project $project, Comment $comment)
     {
-        $comment = Comment::where('project_id', $project->id)->find($comment);
-        $comment->load(['user']);
+        $comment = Comment::where('project_id', $project->id)->find($comment->id);
 
         if (!$comment) {
             return $this->sendError([], 'comment not found', 404);
         }
+
+        $comment->load(['user']);
+
 
         return $this->sendSuccess($comment, 'successful', 201);
     }
@@ -71,13 +75,9 @@ class CommentController extends Controller
         $data = $request->validated();
 
         $comment->where('project_id', $project->id)
-                ->where('user_id', $user->id)
-                ->update($data);
-
-        $comment = Comment::where('id', $comment->id)
-                    ->where('project_id', $project->id)
-                    ->where('user_id', $user->id)
-                    ->get();
+                ->where('user_id', $user->id);
+        $comment->content = $data['content'];
+        $comment->save();
 
         $comment->load(['user']);
 

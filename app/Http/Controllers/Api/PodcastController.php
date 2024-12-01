@@ -206,4 +206,32 @@ class PodcastController extends Controller
 
     }
 
+
+
+    public function video()
+    {
+        $podcasts = Podcast::where('category', 'video')->latest()->get();
+        $podcasts->load(['user', 'podcastComments.user', 'banner']);
+
+        if (!$podcasts) {
+            return $this->sendError([], 'unable to load video podcast', 500);
+        }
+
+        return $this->sendSuccess($podcasts, 'successful', 200);
+
+    }
+
+
+    public function audio(Podcast $podcast)
+    {
+        $podcasts = Podcast::where('category', 'audio')->latest()->get();
+        $podcasts->load(['user', 'podcastComments.user', 'banner']);
+
+        if (!$podcasts) {
+            return $this->sendError([], 'unable to load audio podcasts', 500);
+        }
+
+        return $this->sendSuccess($podcasts, 'successful', 200);
+
+    }
 }

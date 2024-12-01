@@ -25,7 +25,7 @@ class PodcastCommentController extends Controller
             return $this->sendError([], 'unable to load podcast comments', 500);
         }
 
-        return $this->sendSuccess($podcast_comments, 'successful', 201);
+        return $this->sendSuccess($podcast_comments, 'successful', 200);
     }
 
     /**
@@ -51,44 +51,46 @@ class PodcastCommentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Podcast $podcast, PodcastComment $podcast_comment)
+    public function show(Podcast $podcast, PodcastComment $comment)
     {
-        $podcast_comment = PodcastComment::where('podcast_id', $podcast->id)->find($podcast_comment);
-        $podcast_comment->load(['user']);
+
+
+        $podcast_comment = PodcastComment::where('podcast_id', $podcast->id)->find($comment->id);
 
         if (!$podcast_comment) {
             return $this->sendError([], 'podcast comment not found', 404);
         }
 
-        return $this->sendSuccess($podcast_comment, 'successful', 201);
+        $podcast_comment->load(['user']);
+
+
+        return $this->sendSuccess($podcast_comment, 'successful', 200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update( UpdateCommentRequest $request, Podcast $Podcast, PodcastComment $PodcastComment)
+    public function update( UpdateCommentRequest $request, Podcast $Podcast, PodcastComment $comment)
     {
+
 
 
         $user = $request->user();
         $data = $request->validated();
 
-        $PodcastComment->where('podcast_id', $Podcast->id)
-                ->where('user_id', $user->id)
-                ->update($data);
+        $comment->where('podcast_id', $Podcast->id)
+                ->where('user_id', $user->id);
 
-        $PodcastComment = PodcastComment::where('id', $PodcastComment->id)
-                    ->where('podcast_id', $Podcast->id)
-                    ->where('user_id', $user->id)
-                    ->get();
+        $comment->content = $data['content'];
+        $comment->save();
 
-        $PodcastComment->load(['user']);
+        $comment->load(['user']);
 
-        if (!$PodcastComment) {
+        if (!$comment) {
             return $this->sendError([], 'unable to update podcast comment', 500);
         }
 
-        return $this->sendSuccess($PodcastComment, 'podcast comment updated', 201);
+        return $this->sendSuccess($comment, 'podcast comment updated', 201);
     }
 
     /**
