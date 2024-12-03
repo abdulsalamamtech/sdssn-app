@@ -1,0 +1,329 @@
+####################
+# SDSSN APP
+
+
+@token = 10|PCnme9viukmSGMYFKsJMquy1f9c13sC8pudH9oVF6c054777
+
+###
+# Register
+
+POST http://127.0.0.1:8000/api/register/
+content-type: application/json
+
+{
+    "name": "amtech",
+    "email": "abdulsalamamtech@gmail.com",
+    "password": "12345678",
+    "password_confirmation": "12345678",
+    "first_name": "amtech",
+    "last_name": "digital",
+    "security_question": "what is your name",
+    "answer": "amtech"
+}
+
+
+
+###
+# Login
+POST http://127.0.0.1:8000/api/login/
+content-type: application/json
+
+{
+    "email": "abdulsalamamtech@gmail.com",
+    "password": "12345678"
+}
+
+
+
+###
+# Logout
+POST http://127.0.0.1:8000/api/logout/
+content-type: application/json
+Authorization: Bearer {{token}}
+
+
+
+###
+# Get login user information
+GET http://127.0.0.1:8000/api/user/
+content-type: application/json
+Authorization: Bearer {{token}}
+
+
+
+####################
+
+
+###
+# Get user profile information
+GET http://127.0.0.1:8000/api/profile
+content-type: application/json
+Authorization: Bearer {{token}}
+
+
+###
+# Update user profile information
+PUT http://127.0.0.1:8000/api/profile
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "phone_number": "+2349091929394",
+    "gender": "male",
+    "dob": "09-01-2009"
+}
+
+
+###
+# Get user social media information
+GET http://127.0.0.1:8000/api/profile/socials/
+content-type: application/json
+Authorization: Bearer {{token}}
+
+
+
+###
+# Update user social media information
+PUT http://127.0.0.1:8000/api/profile/socials/
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "facebook": "https://www.facebook.com/amtechdig",
+    "github": "https://github.com/amtechdig",
+    "twitter": "https://twitter.com/amtechdig/"
+}
+
+
+
+####################
+
+
+###
+# Get all certificate [admin]
+GET http://127.0.0.1:8000/api/certificates
+content-type: application/json
+Authorization: Bearer {{token}}
+
+
+###
+# Create certificate [admin]
+POST http://127.0.0.1:8000/api/certificates
+content-type: application/json
+Authorization: Bearer {{ token }}
+
+{
+    "belong_to": 1,
+    "certificate": "binary image file",
+    "course": "project management",
+    "description": "3month project management course"
+}
+
+
+###
+# Update certificate [admin]
+PUT http://127.0.0.1:8000/api/certificates/1
+content-type: application/json
+Authorization: Bearer {{ token }}
+
+{
+    "certificate": "binary image file",
+    "course": "project management",
+    "description": "3month project management course"
+}
+
+
+
+####################
+
+
+###
+# Get all Projects
+
+GET http://127.0.0.1:8000/api/projects
+content-type: application/json
+
+
+
+###
+# Get personal Projects
+
+GET http://127.0.0.1:8000/api/profile/projects
+content-type: application/json
+Authorization: Bearer {{ token }}
+
+
+###
+# Get one Project
+
+GET http://127.0.0.1:8000/api/projects/4
+Content-Type: application/json
+
+
+###
+# Create Projects
+
+POST http://127.0.0.1:8000/api/projects
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "banner": "banary image file",
+    "title": "Amtech's First Project",
+    "description": "This is my first project",
+    "category": "Web Development",
+    "video_url": "https://www.youtube.com/shorts/wGoJEWZuixg?feature=share",
+    "category": "link",
+    "tags": "dev, project, first",
+    "status": "public"
+}
+
+
+
+###
+# Approve Projects (public to approved) [admin]
+
+PUT http://127.0.0.1:8000/api/projects/4/approve
+content-type: application/json
+Authorization: Bearer {{token}}
+
+.
+
+###
+# Like Projects (need some modification)
+
+PUT http://127.0.0.1:8000/api/projects/4/likes
+content-type: application/json
+Authorization: Bearer {{token}}
+
+
+###
+# Share Projects
+
+PUT http://127.0.0.1:8000/api/projects/3/shares
+content-type: application/json
+Authorization: Bearer {{ token }}
+
+
+###
+# Update Project (need to be dubug)
+
+PUT  http://127.0.0.1:8000/api/projects/4
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "title": "First Project update",
+    "description": "This is my first project now",
+    "likes": 2
+}
+
+
+
+
+###
+# Get all Comments for a project
+
+GET http://127.0.0.1:8000/api/projects/1/comments
+content-type: application/json
+
+
+
+###
+# Create comment
+
+POST http://127.0.0.1:8000/api/projects/1/comments
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "content": "This another project comment now ggg"
+}
+
+
+
+###
+# Update Comment
+
+PUT http://127.0.0.1:8000/api/projects/1/comments/19/
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "content": "This is my first updated project"
+}
+
+
+
+
+###
+# Get login user profile
+GET http://127.0.0.1:8000/api/info
+content-type: application/json
+Authorization: Bearer {{token}}
+
+
+
+###
+# Upload file
+
+POST http://127.0.0.1:8000/api/upload/
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "image": "file:///home/amtech/Downloads/oladayo-ims-buk-logo.jpg"
+}
+
+
+
+
+
+
+
+###
+# Create Podcast (video) [admin]
+
+POST  http://127.0.0.1:8000/api/podcasts/
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "banner": "image file",
+    "title": "Amtech's First Project",
+    "description": "This is my first project",
+    "category": "video",
+    "video_url": "https://www.youtube.com/shorts/wGoJEWZuixg?feature=share",
+    "tags": "video podcast"
+}
+
+
+###
+# Create Podcast (audio) [admin]
+
+POST  http://127.0.0.1:8000/api/podcasts/
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "banner": "image file",
+    "title": "Amtech's First Project",
+    "description": "This is my first project",
+    "category": "video",
+    "audio_url": "https://www.youtube.com/shorts/wGoJEWZuixg?feature=share",
+    "tags": "video podcast"
+}
+
+
+###
+# Update Podcast (dev)
+
+PUT  http://127.0.0.1:8000/api/podcasts/4
+Content-Type: application/json
+Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
+
+{
+    "title": "Amtech's First Project",
+    "description": "This is my first project",
+    "category": "video",
+}
