@@ -18,7 +18,8 @@ content-type: application/json
     "first_name": "amtech",
     "last_name": "digital",
     "security_question": "what is your name",
-    "answer": "amtech"
+    "answer": "amtech",
+    "state": "lagos"
 }
 
 

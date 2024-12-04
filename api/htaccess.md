@@ -9,6 +9,28 @@
 </IfModule>
 
 
+
+
+RewriteEngine On
+RewriteBase /workspace/
+
+RewriteCond %{THE_REQUEST} /public/([^\s?]*) [NC]
+RewriteRule ^ %1 [L,NE,R=302]
+
+RewriteRule ^((?!public/).*)$ public/$1 [L,NC]
+
+
+
+
+
+RewriteEngine On
+RewriteCond %{REQUEST_URI} !^public
+RewriteRule ^(.*)$ public/$1 [L]
+
+
+
+
+
 <IfModule mod_rewrite.c>
     # That was ONLY to protect you from 500 errors
     # if your server did not have mod_rewrite enabled

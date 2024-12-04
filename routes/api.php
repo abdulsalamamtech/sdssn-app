@@ -21,7 +21,9 @@ use Illuminate\Support\Facades\Route;
 
 
 
-
+Route::get('/', function () {
+    return ['Laravel API' => app()->version()];
+});
 
 
 // Registration security questions route
