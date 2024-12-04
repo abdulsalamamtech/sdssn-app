@@ -31,6 +31,7 @@ class RegisterRequest extends FormRequest
             'last_name' => ['required', 'string'],
             'security_question' => ['required', 'string'],
             'answer' => ['required', 'string'],
+            'state' => ['required', 'string'],
         ];
     }
 }
