@@ -125,6 +125,7 @@ Route::group(['middleware' => ['auth:sanctum','verified']], function() {
     // Project comments
     Route::apiResource('projects.comments', CommentController::class)
         ->only(['store', 'update', 'destroy']);
+    
     // Like project
     Route::put('projects/{project}/likes', [ProjectController::class, 'like']);
     // Share project
@@ -141,6 +142,7 @@ Route::group(['middleware' => ['auth:sanctum','verified']], function() {
     // Podcast comments
     Route::apiResource('podcasts.comments', PodcastCommentController::class)
         ->only(['store', 'update', 'destroy']);
+    
     // Like podcast
     Route::put('podcasts/{podcast}/likes', [PodcastController::class, 'like']);
     // Share podcast

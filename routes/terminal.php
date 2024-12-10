@@ -120,12 +120,11 @@ Route::post('/upload', function (Request $request) {
 
 });
 
+
 Route::get('info', function (Request $request){
     $user = $request->user();
     return $user ?? 'no message';
 })->middleware(['auth:sanctum']);
-
-
 
 
 
