@@ -181,7 +181,7 @@ class PodcastController extends Controller
         $podcast->load(['user', 'podcastComments.user', 'banner']);
 
         if (!$podcast) {
-            return $this->sendError([], 'unable to load podcast', 500);
+            return $this->sendError([], 'unable to like podcast', 500);
         }
 
         return $this->sendSuccess($podcast, 'successful', 200);

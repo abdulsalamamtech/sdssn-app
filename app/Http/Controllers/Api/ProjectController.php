@@ -188,7 +188,7 @@ class ProjectController extends Controller
         $project->load(['user', 'comments.user', 'banner']);
 
         if (!$project) {
-            return $this->sendError([], 'unable to load project', 500);
+            return $this->sendError([], 'unable to like project', 500);
         }
 
         return $this->sendSuccess($project, 'successful', 200);
@@ -331,7 +331,8 @@ class ProjectController extends Controller
 
     public function allProjects()
     {
-        $projects = Project::latest()->paginate();
+        $projects = Project::with(['user', 'comments.user', 'banner'])
+            ->latest()->paginate();
 
             // return $projects;
 
