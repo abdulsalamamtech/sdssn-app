@@ -81,7 +81,10 @@ Route::get('/assign-role', function (Request $request) {
     $user->save();
 
     $message = $request->role . ' role assign to ' . $request->email;
-    return response()->json(['message' => $message], 201);
+    return response()->json([
+        'status' => true,
+        'message' => $message
+    ], 201);
 });
 
 
