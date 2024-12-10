@@ -159,16 +159,18 @@ Route::group(['prefix' => 'admin','middleware' => ['auth:sanctum','verified', 'a
     Route::apiResource('/', AdminController::class);
     // Users routes
     Route::get('/users', [AdminController::class, 'users']);
+    // Get all projects
+    Route::get('/projects/all/', [ProjectController::class, 'allProjects']);
     // Approve project
-    Route::put('projects/{project}/approve', [ProjectController::class, 'approve']);
+    Route::put('/projects/{project}/approve', [ProjectController::class, 'approve']);
     // Approved projects
-    Route::get('projects/approved', [ProjectController::class, 'approved']);
+    Route::get('/projects/approved', [ProjectController::class, 'approved']);
     // Force delete project
-    Route::delete('projects/{project}/delete-from-trash', [ProjectController::class, 'forceDelete']);
+    Route::delete('/projects/{project}/delete-from-trash', [ProjectController::class, 'forceDelete']);
     // Get deleted trash projects
-    Route::get('projects/trash', [ProjectController::class, 'trash']);
+    Route::get('/projects/trash', [ProjectController::class, 'trash']);
     // Podcast routes [admin]
-    Route::apiResource('podcasts', PodcastController::class);
+    Route::apiResource('/podcasts', PodcastController::class);
     // Certificate routes [admin]
     Route::apiResource('/certificates', CertificateController::class);
     // Membership status routes [admin]
