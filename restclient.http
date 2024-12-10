@@ -2,7 +2,7 @@
 # SDSSN APP
 
 
-@token = 10|PCnme9viukmSGMYFKsJMquy1f9c13sC8pudH9oVF6c054777
+@token = 2|rWKkLhWglONLIDAcvRFJZU2yO5IdqsAkLJXZxEnm0cf67ae6
 
 ###
 # Register
@@ -328,3 +328,19 @@ Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
     "description": "This is my first project",
     "category": "video",
 }
+
+
+###
+# Get all Projects [admin]
+
+GET http://127.0.0.1:8000/api/admin/projects/all/
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+###
+# Assign role to user [admin]
+
+GET http://127.0.0.1:8000/api/assign-role?email=abdulsalamamtech@gmail.com&role=admin
+Content-Type: application/json
+Authorization: Bearer {{token}}
