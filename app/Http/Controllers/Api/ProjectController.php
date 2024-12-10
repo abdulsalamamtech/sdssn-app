@@ -23,7 +23,7 @@ class ProjectController extends Controller
             ->with(['user', 'comments.user', 'banner'])
             ->get();
 
-            return $projects;
+            // return $projects;
 
         if (!$projects) {
             return $this->sendError([], 'unable to load projects', 500);
