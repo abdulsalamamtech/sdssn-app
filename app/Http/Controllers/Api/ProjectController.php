@@ -328,4 +328,19 @@ class ProjectController extends Controller
 
     }
 
+
+    public function allProjects()
+    {
+        $projects = Project::latest()->paginate();
+
+            // return $projects;
+
+        if (!$projects) {
+            return $this->sendError([], 'unable to load projects', 500);
+        }
+
+        return $this->sendSuccess($projects, 'successful', 200);
+    }
+
+
 }
