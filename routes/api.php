@@ -220,9 +220,7 @@ Route::get('/podcasts/category/video', [PodcastController::class, 'video']);
 Route::get('/podcasts/category/audio', [PodcastController::class, 'audio']);
 
 
-
-
-
-
 // For terminal, artisan and special commands
 require __DIR__.'/terminal.php';
+
+
