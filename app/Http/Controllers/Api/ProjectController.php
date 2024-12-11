@@ -53,10 +53,6 @@ class ProjectController extends Controller
         $slug = Str::slug($title);
 
         $slug_fund = Project::where('slug', $slug)->first();
-        // $data['slug'] = $slug;
-        // if($slug_fund){
-        //     $data['slug'] = $slug.'-'.rand(100,999);
-        // }
         ($slug_fund)
         ?$data['slug'] = $slug.'-'.rand(100,999)
         :$data['slug'] = $slug;

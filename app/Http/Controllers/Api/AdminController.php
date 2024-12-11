@@ -139,8 +139,6 @@ class AdminController extends Controller
             ->groupBy('membership_status')
             ->get();
 
-        // $locations = User::select('state')->groupBy('state')->get();
-
         $metadata = $this->getMetadata($locations);
 
         if (!$locations) {

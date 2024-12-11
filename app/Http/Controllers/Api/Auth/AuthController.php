@@ -8,6 +8,8 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -17,6 +19,8 @@ class AuthController extends Controller
 
         try {
 
+            DB::beginTransaction();            
+            
             // Create user
             $user = User::create($request->validated());
 
@@ -29,6 +33,7 @@ class AuthController extends Controller
 
             // Generate token
             $token = $user->createToken('auth_token')->plainTextToken;
+            DB::commit();
 
             // Return response
             return response()->json([
@@ -42,6 +47,9 @@ class AuthController extends Controller
         } catch (\Throwable $th) {
             //throw $th;
             $message = $th->getMessage();
+
+            DB::rollBack();
+            Log::error('Error rolling back transaction: ', [$message]);
 
             return $this->sendError($th, $message);
         }
