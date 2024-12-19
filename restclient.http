@@ -12,7 +12,7 @@ content-type: application/json
 
 {
     "name": "amtech",
-    "email": "abdulsalamamtech@gmail.com",
+    "email": "abdulsalamam@gmail.com",
     "password": "12345678",
     "password_confirmation": "12345678",
     "first_name": "amtech",
