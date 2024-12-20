@@ -1,0 +1,24 @@
+[2024-12-20 20:17:38] local.ERROR: syntax error, unexpected token ")", expecting ":" {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): syntax error, unexpected token \")\", expecting \":\" at /home/amtech/Desktop/projects/sdssn-app/app/Models/User.php:93)
+[stacktrace]
+#0 {main}
+"} 
+[2024-12-20 20:17:38] local.ERROR: syntax error, unexpected token ")", expecting ":" {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): syntax error, unexpected token \")\", expecting \":\" at /home/amtech/Desktop/projects/sdssn-app/app/Models/User.php:93)
+[stacktrace]
+#0 {main}
+"} 
+[2024-12-20 20:27:33] local.ERROR: syntax error, unexpected token ")", expecting ":" {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): syntax error, unexpected token \")\", expecting \":\" at /home/amtech/Desktop/projects/sdssn-app/app/Models/User.php:100)
+[stacktrace]
+#0 {main}
+"} 
+[2024-12-20 20:27:33] local.ERROR: syntax error, unexpected token ")", expecting ":" {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): syntax error, unexpected token \")\", expecting \":\" at /home/amtech/Desktop/projects/sdssn-app/app/Models/User.php:100)
+[stacktrace]
+#0 {main}
+"} 
+[2024-12-20 20:27:39] local.ERROR: syntax error, unexpected token ")", expecting ":" {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): syntax error, unexpected token \")\", expecting \":\" at /home/amtech/Desktop/projects/sdssn-app/app/Models/User.php:100)
+[stacktrace]
+#0 {main}
+"} 
+[2024-12-20 20:27:39] local.ERROR: syntax error, unexpected token ")", expecting ":" {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): syntax error, unexpected token \")\", expecting \":\" at /home/amtech/Desktop/projects/sdssn-app/app/Models/User.php:100)
+[stacktrace]
+#0 {main}
+"} 

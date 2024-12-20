@@ -109,6 +109,9 @@ Route::group(['prefix' => 'profile','middleware' => ['auth:sanctum','verified']]
 });
 
 
+// User profile information
+Route::get('/profile/{user:name}', [UserProfile::class, 'profile']);
+
 
 
 

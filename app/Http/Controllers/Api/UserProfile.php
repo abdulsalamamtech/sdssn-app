@@ -71,4 +71,16 @@ class UserProfile extends Controller
     {
         //
     }
+    
+    public function profile(User $user){
+
+        $user->load(['social', 'projects', 'picture', 'certificates']);
+    
+        if (!$user) {
+            return $this->sendError([], 'unable to load project', 500);
+        }
+    
+        return $this->sendSuccess($user, 'successful', 200);
+
+    }
 }

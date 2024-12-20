@@ -34,6 +34,9 @@ return new class extends Migration
             $table->enum('role', ['user', 'admin'])->default('user');
             $table->foreignId('assigned_by')->nullable()->constrained('users');
 
+            // Profile picture
+            $table->foreignId('asset_id')->constrained('assets')->onDelete('cascade');
+
             $table->rememberToken();
             $table->timestamps();
 

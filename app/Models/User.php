@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Models\Api\Certificate;
+use App\Models\Api\Project;
 use App\Models\Api\Social;
+use App\Models\Assets;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -86,4 +88,22 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Certificate::class, 'added_by', 'id');
     }
+
+
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
+
+
+    // public function picture()
+    // {
+    //     return $this->hasOne(Assets::class, 'asset_id');
+    // }
+
+        // Picture Image
+        public function picture()
+        {
+            return $this->belongsTo(Assets::class, 'asset_id');
+        }
 }
