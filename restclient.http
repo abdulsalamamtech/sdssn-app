@@ -2,7 +2,8 @@
 # SDSSN APP
 
 
-@token = 11|QV2JnpoyVJ1m98MAGoc5nXtAoM7KauTmIOjUgav10d4e1fe7
+@token = 1|DGGI9JDfgnhw9Ek6b28wWXqCUSvHCUgDjWyFtpv627befaf7                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ####################
+
 
 ###
 # Register
@@ -12,14 +13,17 @@ content-type: application/json
 
 {
     "name": "amtech",
-    "email": "abdulsalamam@gmail.com",
+    "email": "abdulsalamamtech@gmail.com",
     "password": "12345678",
     "password_confirmation": "12345678",
     "first_name": "amtech",
     "last_name": "digital",
     "security_question": "what is your name",
     "answer": "amtech",
-    "state": "lagos"
+    "country": "nigeria",
+    "state": "lagos",
+    "city": "lagos",
+    "address": "lagos"
 }
 
 

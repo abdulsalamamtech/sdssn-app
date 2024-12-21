@@ -12,7 +12,7 @@ class EmailVerifyController extends Controller
 
     protected function redirectUrl(){
         return [
-            'success' => 'https://sdssn.vercel.app/auth/verify-email-success',
+            'success' => config('app.frontend_url') . '/auth/verify-email-success',
             'error' => 'username'
         ];
     }

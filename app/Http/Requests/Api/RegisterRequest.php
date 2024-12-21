@@ -31,7 +31,14 @@ class RegisterRequest extends FormRequest
             'last_name' => ['required', 'string'],
             'security_question' => ['required', 'string'],
             'answer' => ['required', 'string'],
-            'state' => ['required', 'string'],
+            'phone_number' => ['nullable', 'string'],
+            'gender' => ['nullable', 'string'],
+            'dob' => ['nullable', 'date'],
+            'profession' => ['nullable','string'],
+            'address' => ['nullable', 'string'],
+            'city' => ['nullable', 'string'],
+            'state' => ['nullable', 'string'],
+            'country' => ['nullable', 'string'],
         ];
     }
 }

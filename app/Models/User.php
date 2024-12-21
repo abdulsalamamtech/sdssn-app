@@ -34,13 +34,21 @@ class User extends Authenticatable implements MustVerifyEmail
         'gender',
         'dob',
         'address',
+        'city',
         'state',
+        'country',
         'membership_status',
         'role',
         'assigned_by',
 
         'email_verified',
         'email_verified_at',
+
+        'profession',
+        'organization',
+        'organization_category',
+        'organization_role',
+        'asset_id',
     ];
 
     /**
@@ -95,15 +103,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Project::class);
     }
 
-
-    // public function picture()
-    // {
-    //     return $this->hasOne(Assets::class, 'asset_id');
-    // }
-
-        // Picture Image
-        public function picture()
-        {
-            return $this->belongsTo(Assets::class, 'asset_id');
-        }
+    // Picture Image
+    public function picture()
+    {
+        return $this->belongsTo(Assets::class, 'asset_id');
+    }
 }

@@ -29,7 +29,13 @@ class AuthController extends Controller
 
             // Dispatch event
             event(new Registered($user));
-            info('Registered', $user->toArray());
+            // $user->sendEmailVerificationNotification();
+
+
+            // Unset sensitive information
+            $data = $user->toArray();
+            unset($data['password']);
+            info('Registered', $data);
 
             // Generate token
             $token = $user->createToken('auth_token')->plainTextToken;
@@ -64,7 +70,11 @@ class AuthController extends Controller
 
         // Get user
         $user = $request->user();
-        info('Login', $user->toArray());
+
+        // Unset sensitive information
+        $data = $user->toArray();
+        unset($data['password']);
+        info('Login', $data);
 
         // Delete all user tokens
         $user->tokens()->delete();
@@ -88,6 +98,12 @@ class AuthController extends Controller
         // Get user
         $user = $request->user();
         // return $user;
+
+
+        // Unset sensitive information
+        $data = $user->toArray();
+        unset($data['password']);
+        info('Logout', $data);
 
         // Delete all user tokens
         $user->tokens()->delete();

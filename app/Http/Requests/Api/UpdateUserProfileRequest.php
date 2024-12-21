@@ -24,8 +24,8 @@ class UpdateUserProfileRequest extends FormRequest
         return [
             'first_name' => ['nullable', 'string'],
             'last_name' => ['nullable', 'string'],
-            'security_question' => ['nullable', 'string'],
-            'answer' => ['nullable', 'string'],
+            // 'security_question' => ['nullable', 'string'],
+            // 'answer' => ['nullable', 'string'],
             'phone_number' => ['nullable', 'string'],
             'gender' => ['nullable', 'string'],
             'dob' => ['nullable', 'string'],
@@ -34,15 +34,15 @@ class UpdateUserProfileRequest extends FormRequest
             'state' => ['nullable', 'string'],
             'country' => ['nullable', 'string'],
 
+            // "profession": "accountant",
+            // "organization": "Global Finance Ltd",
+            // "organization_category": "banking & finance",
+            // "organization_role": "manager"
             'profession' => ['nullable', 'string'],
             // Organization
             'organization' => ['nullable', 'string'],
             'organization_category' => ['nullable', 'string'],
             'organization_role' => ['nullable', 'string'],
-
-
-            'state' => ['nullable', 'string'],
-            'state' => ['nullable', 'string'],
 
         ];
     }
