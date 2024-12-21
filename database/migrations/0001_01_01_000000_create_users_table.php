@@ -38,7 +38,6 @@ return new class extends Migration
             $table->string('organization_category')->nullable();
             $table->string('organization_role')->nullable();
 
-
             // Role and who assign the role
             $table->enum('role', ['user', 'moderator', 'admin', 'super-admin'])->default('user');
             $table->foreignId('assigned_by')->nullable()->constrained('users');
