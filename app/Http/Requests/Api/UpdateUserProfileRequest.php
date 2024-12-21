@@ -30,7 +30,20 @@ class UpdateUserProfileRequest extends FormRequest
             'gender' => ['nullable', 'string'],
             'dob' => ['nullable', 'string'],
             'address' => ['nullable', 'string'],
+            'city' => ['nullable', 'string'],
             'state' => ['nullable', 'string'],
+            'country' => ['nullable', 'string'],
+
+            'profession' => ['nullable', 'string'],
+            // Organization
+            'organization' => ['nullable', 'string'],
+            'organization_category' => ['nullable', 'string'],
+            'organization_role' => ['nullable', 'string'],
+
+
+            'state' => ['nullable', 'string'],
+            'state' => ['nullable', 'string'],
+
         ];
     }
 }

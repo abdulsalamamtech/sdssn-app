@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('podcast_id')->constrained('podcasts')->onDelete('cascade');
             $table->text('content');
             $table->unsignedBigInteger('likes')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

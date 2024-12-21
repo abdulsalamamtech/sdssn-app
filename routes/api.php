@@ -105,8 +105,18 @@ Route::group(['prefix' => 'profile','middleware' => ['auth:sanctum','verified']]
     // User certificates approved [admin only]
     Route::get('/certificates/approved', [PodcastController::class, 'approved']);
 
+    // For user profile picture
+    // {"picture": "image profile"}
+    Route::post('/picture', [UserProfile::class, 'storePicture']);
+    Route::put('/picture', [UserProfile::class, 'updatePicture']);
+    Route::post('/picture/update', [UserProfile::class, 'updatePicture']);
+
+
+
+
 
 });
+
 
 
 // User profile information

@@ -24,7 +24,7 @@
 
     - role (user|admin)
     - assigned_by (admin user_id)
-
+    - asset_id ( profile picture | assets)
 
     $ relationships (user)
         - has_one (social)

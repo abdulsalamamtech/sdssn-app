@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('asset_id')->constrained('assets')->onDelete('cascade');
             $table->string('course')->nullable();
             $table->string('description')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

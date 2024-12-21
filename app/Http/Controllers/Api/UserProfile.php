@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\UpdateUserProfileRequest;
+use App\Models\Assets;
 use App\Models\User;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
@@ -77,10 +78,63 @@ class UserProfile extends Controller
         $user->load(['social', 'projects', 'picture', 'certificates']);
     
         if (!$user) {
-            return $this->sendError([], 'unable to load project', 500);
+            return $this->sendError([], 'unable to load profile', 500);
         }
     
         return $this->sendSuccess($user, 'successful', 200);
 
     }
+
+
+    public function storePicture(Request $request){
+
+        $user = $request->user();
+
+        $data = $request->validate([
+            'picture' => ['required', 'image', 'max:2048'],
+        ]);
+
+        // $upload =  $this->uploadImage($request, 'banner');
+        $upload = $this->uploadToImageKit($request,'picture');
+
+        // Add assets
+        $picture = Assets::create($upload);
+        $user->update(['asset_id' => $picture]);
+
+        $user->load(['picture']);
+
+        if(!$user){
+            return $this->sendError([], 'unable to store user picture', 500);
+        }
+
+        return $this->sendSuccess($user, 'successful', 200);
+
+    }
+
+
+    public function updatePicture(Request $request){
+
+        $user = $request->user();
+
+        $data = $request->validate([
+            'picture' => ['required', 'image', 'max:2048'],
+        ]);
+
+        // $upload =  $this->uploadImage($request, 'banner');
+        $upload = $this->uploadToImageKit($request,'picture');
+
+        // Add assets
+        $picture = Assets::create($upload);
+        $user->update(['asset_id' => $picture]);
+
+        $user->load(['picture']);
+
+        if(!$user){
+            return $this->sendError([], 'unable to load user picture', 500);
+        }
+
+        return $this->sendSuccess($user, 'successful', 200);
+
+    }
+
 }

@@ -48,6 +48,11 @@ class ProjectController extends Controller
         $data['banner_id'] = $banner->id;
         $data['user_id'] = $user->id;
 
+        // ['public', 'private', 'draft']
+        if($data['status'] == 'public'){
+            $data['approved_by'] = $user->id;
+        }
+
         // Generate slug
         $title = $data['title'];
         $slug = Str::slug($title);
@@ -60,6 +65,8 @@ class ProjectController extends Controller
 
         // Add project
         $project = Project::create($data);
+        
+        
         $project->load(['user', 'comments.user', 'banner']);
 
 
@@ -96,6 +103,12 @@ class ProjectController extends Controller
         $data = $request->validated();
         $user = $request->user();
 
+        // Admin can also edit post
+        if ($user->id != $project->user_id || $user->role != 'admin') {
+            return $this->sendError([], 'you are unauthorize', 401);
+        }
+
+        // Project title as slug
         if($project->title != $data['title']){
             // Generate slug
             $title = $data['title'];
@@ -112,10 +125,7 @@ class ProjectController extends Controller
         }
 
 
-        if ($user->id != $project->user_id) {
-            return $this->sendError([], 'you are unauthorize', 401);
-        }
-
+        // If the banner is updated
         if($request->banner){
 
             // Delete the previously uploaded banner
@@ -126,6 +136,11 @@ class ProjectController extends Controller
             $banner = Assets::create($upload);
             $data['banner_id'] = $banner->id;
 
+        }
+
+        // ['public', 'private', 'draft']
+        if($data['status'] == 'public'){
+            $data['approved_by'] = $user->id;
         }
 
         $project->update($data);

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->comment('username');
+            $table->string('name')->unique()->comment('username');
             $table->string('email')->unique();
             $table->string('email_verified')->default(false);
             $table->timestamp('email_verified_at')->nullable();
@@ -26,18 +26,28 @@ return new class extends Migration
             $table->string('answer');
             $table->string('profession')->nullable();
             $table->enum('gender', ['male', 'female', 'other'])->nullable();
+            $table->enum('membership_status', ['free', 'trial', 'premium', 'gold', 'annual'])->default('free');
             $table->date('dob')->nullable();
             $table->string('address')->nullable();
+            $table->string('city')->nullable()->comment('as city or lga for address');
             $table->string('state');
-            $table->enum('membership_status', ['free', 'trial', 'premium', 'gold', 'annual'])->default('free');
+            $table->string('country')->nullable();
 
-            $table->enum('role', ['user', 'admin'])->default('user');
+            // Organization
+            $table->string('organization')->nullable();
+            $table->string('organization_category')->nullable();
+            $table->string('organization_role')->nullable();
+
+
+            // Role and who assign the role
+            $table->enum('role', ['user', 'moderator', 'admin', 'super-admin'])->default('user');
             $table->foreignId('assigned_by')->nullable()->constrained('users');
 
             // Profile picture
-            $table->foreignId('asset_id')->constrained('assets')->onDelete('cascade');
+            $table->foreignId('asset_id')->nullable()->constrained('assets')->onDelete('cascade');
 
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
 
 
