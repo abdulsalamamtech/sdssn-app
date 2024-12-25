@@ -107,7 +107,7 @@ Route::group(['prefix' => 'profile','middleware' => ['auth:sanctum','verified']]
 
     // For user profile picture
     // {"picture": "image profile"}
-    Route::post('/picture', [UserProfile::class, 'storePicture']);
+    Route::post('/picture', [UserProfile::class, 'updatePicture']);
     Route::put('/picture', [UserProfile::class, 'updatePicture']);
     Route::post('/picture/update', [UserProfile::class, 'updatePicture']);
 

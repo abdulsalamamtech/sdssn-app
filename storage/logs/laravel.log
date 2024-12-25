@@ -6,3 +6,89 @@
 [stacktrace]
 #0 {main}
 "} 
+[2024-12-24 19:49:17] local.INFO: Activities: {"request":{"email":"abdulsalamamtech@gmail.com","password":"12345678"},"ip_address":"127.0.0.1","user_agent":"vscode-restclient","device":"Unknown Device","platform":"Unknown Platform","browser":"Unknown Browser"} 
+[2024-12-24 19:49:19] local.INFO: Login {"id":1,"name":"amtech","email":"abdulsalamamtech@gmail.com","email_verified":"1","email_verified_at":"2024-12-21T07:06:56.000000Z","first_name":"amtech","last_name":"digital","phone_number":null,"profession":null,"gender":null,"membership_status":"free","dob":null,"address":"lagos","city":"lagos","state":"lagos","country":"nigeria","organization":null,"organization_category":null,"organization_role":null,"role":"user","assigned_by":null,"asset_id":null,"deleted_at":null,"created_at":"2024-12-21T07:05:04.000000Z","updated_at":"2024-12-21T07:06:56.000000Z"} 
+[2024-12-24 19:50:31] local.INFO: Activities: {"request":[],"ip_address":"127.0.0.1","user_agent":"vscode-restclient","device":"Unknown Device","platform":"Unknown Platform","browser":"Unknown Browser"} 
+[2024-12-24 19:54:47] local.INFO: Activities: {"request":[],"ip_address":"127.0.0.1","user_agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0","device":"Unknown Device","platform":"Linux","browser":"Chrome"} 
+[2024-12-24 19:54:55] local.INFO: Activities: {"request":[],"ip_address":"127.0.0.1","user_agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0","device":"Unknown Device","platform":"Linux","browser":"Chrome"} 
+[2024-12-24 20:08:38] local.INFO: Activities: {"request":{"email":"abdulsalamamtech@gmail.com","role":"admin"},"ip_address":"127.0.0.1","user_agent":"vscode-restclient","device":"Unknown Device","platform":"Unknown Platform","browser":"Unknown Browser"} 
+[2024-12-24 20:25:31] local.INFO: Request: {"name":"Add your name in the body"} 
+[2024-12-24 20:25:31] local.INFO: Raw Input: {
+	"name": "Add your name in the body"
+}  
+[2024-12-24 20:25:31] local.ERROR: Error: ["The POST method is not supported for route api. Supported methods: GET, HEAD.","#0 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Routing/AbstractRouteCollection.php(107): Illuminate\\Routing\\AbstractRouteCollection->requestMethodNotAllowed()
+#1 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Routing/AbstractRouteCollection.php(41): Illuminate\\Routing\\AbstractRouteCollection->getRouteForMethods()
+#2 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Routing/RouteCollection.php(163): Illuminate\\Routing\\AbstractRouteCollection->handleMatchedRoute()
+#3 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Routing/Router.php(763): Illuminate\\Routing\\RouteCollection->match()
+#4 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Routing/Router.php(750): Illuminate\\Routing\\Router->findRoute()
+#5 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Routing/Router.php(739): Illuminate\\Routing\\Router->dispatchToRoute()
+#6 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(201): Illuminate\\Routing\\Router->dispatch()
+#7 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(144): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}()
+#8 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}()
+#9 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle()
+#10 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle()
+#11 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}()
+#12 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php(51): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle()
+#13 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle()
+#14 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}()
+#15 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): Illuminate\\Http\\Middleware\\ValidatePostSize->handle()
+#16 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php(110): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}()
+#17 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle()
+#18 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php(62): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}()
+#19 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): Illuminate\\Http\\Middleware\\HandleCors->handle()
+#20 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php(58): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}()
+#21 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): Illuminate\\Http\\Middleware\\TrustProxies->handle()
+#22 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/InvokeDeferredCallbacks.php(22): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}()
+#23 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): Illuminate\\Foundation\\Http\\Middleware\\InvokeDeferredCallbacks->handle()
+#24 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(119): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}()
+#25 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(176): Illuminate\\Pipeline\\Pipeline->then()
+#26 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(145): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
+#27 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1190): Illuminate\\Foundation\\Http\\Kernel->handle()
+#28 /home/amtech/Desktop/projects/sdssn-app/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
+#29 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
+#30 {main}"] 
+[2024-12-24 20:27:54] local.INFO: Activities: {"request":[],"ip_address":"127.0.0.1","user_agent":"PostmanRuntime/7.43.0","device":"Unknown Device","platform":"Unknown Platform","browser":"Unknown Browser"} 
+[2024-12-25 16:49:04] local.INFO: Activities: {"request":[],"ip_address":"127.0.0.1","user_agent":"PostmanRuntime/7.43.0","device":"Unknown Device","platform":"Unknown Platform","browser":"Unknown Browser"} 
+[2024-12-25 16:49:04] local.INFO: Request:  
+[2024-12-25 16:49:04] local.INFO: Raw Input:   
+[2024-12-25 16:49:04] local.ERROR: Error: ["Unauthenticated.","#0 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Auth/Middleware/Authenticate.php(88): Illuminate\\Auth\\Middleware\\Authenticate->unauthenticated()
+#1 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Auth/Middleware/Authenticate.php(62): Illuminate\\Auth\\Middleware\\Authenticate->authenticate()
+#2 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): Illuminate\\Auth\\Middleware\\Authenticate->handle()
+#3 /home/amtech/Desktop/projects/sdssn-app/app/Http/Middleware/LogActivities.php(41): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}()
+#4 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): App\\Http\\Middleware\\LogActivities->handle()
+#5 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/sanctum/src/Http/Middleware/EnsureFrontendRequestsAreStateful.php(25): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}()
+#6 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(144): Laravel\\Sanctum\\Http\\Middleware\\EnsureFrontendRequestsAreStateful->Laravel\\Sanctum\\Http\\Middleware\\{closure}()
+#7 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(119): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}()
+#8 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/sanctum/src/Http/Middleware/EnsureFrontendRequestsAreStateful.php(24): Illuminate\\Pipeline\\Pipeline->then()
+#9 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): Laravel\\Sanctum\\Http\\Middleware\\EnsureFrontendRequestsAreStateful->handle()
+#10 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(119): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}()
+#11 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Routing/Router.php(807): Illuminate\\Pipeline\\Pipeline->then()
+#12 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Routing/Router.php(786): Illuminate\\Routing\\Router->runRouteWithinStack()
+#13 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Routing/Router.php(750): Illuminate\\Routing\\Router->runRoute()
+#14 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Routing/Router.php(739): Illuminate\\Routing\\Router->dispatchToRoute()
+#15 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(201): Illuminate\\Routing\\Router->dispatch()
+#16 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(144): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}()
+#17 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}()
+#18 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle()
+#19 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle()
+#20 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}()
+#21 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php(51): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle()
+#22 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle()
+#23 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}()
+#24 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): Illuminate\\Http\\Middleware\\ValidatePostSize->handle()
+#25 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php(110): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}()
+#26 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle()
+#27 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php(62): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}()
+#28 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): Illuminate\\Http\\Middleware\\HandleCors->handle()
+#29 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php(58): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}()
+#30 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): Illuminate\\Http\\Middleware\\TrustProxies->handle()
+#31 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/InvokeDeferredCallbacks.php(22): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}()
+#32 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(183): Illuminate\\Foundation\\Http\\Middleware\\InvokeDeferredCallbacks->handle()
+#33 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(119): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}()
+#34 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(176): Illuminate\\Pipeline\\Pipeline->then()
+#35 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(145): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
+#36 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1190): Illuminate\\Foundation\\Http\\Kernel->handle()
+#37 /home/amtech/Desktop/projects/sdssn-app/public/index.php(17): Illuminate\\Foundation\\Application->handleRequest()
+#38 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('...')
+#39 {main}"] 
+[2024-12-25 16:49:25] local.INFO: Activities: {"request":[],"ip_address":"127.0.0.1","user_agent":"PostmanRuntime/7.43.0","device":"Unknown Device","platform":"Unknown Platform","browser":"Unknown Browser"} 

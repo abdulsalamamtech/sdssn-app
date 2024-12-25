@@ -56,7 +56,17 @@ class UserProfile extends Controller
         $user->update($data);
         $user->load(['social']);
 
-        $user_profile = $user;
+        $user_profile = $user;        $data = $request->validated();
+        $user = $request->user();
+        $user_social = $user->social()->updateOrCreate(
+            ['user_id' => $user->id], $data
+        );
+
+        if(!$user_social){
+            return $this->sendError([], 'unable to update', 500);
+        }
+
+        return $this->sendSuccess($user_social, 'social media information update');
 
         if(!$user_profile){
             return $this->sendError([], 'unable to update profile', 500);
@@ -86,31 +96,6 @@ class UserProfile extends Controller
     }
 
 
-    public function storePicture(Request $request){
-
-        $user = $request->user();
-
-        $data = $request->validate([
-            'picture' => ['required', 'image', 'max:2048'],
-        ]);
-
-        // $upload =  $this->uploadImage($request, 'banner');
-        $upload = $this->uploadToImageKit($request,'picture');
-
-        // Add assets
-        $picture = Assets::create($upload);
-        $user->update(['asset_id' => $picture]);
-
-        $user->load(['picture']);
-
-        if(!$user){
-            return $this->sendError([], 'unable to store user picture', 500);
-        }
-
-        return $this->sendSuccess($user, 'successful', 200);
-
-    }
-
 
     public function updatePicture(Request $request){
 
@@ -125,11 +110,14 @@ class UserProfile extends Controller
 
         // Add assets
         $picture = Assets::create($upload);
-        $user->update(['asset_id' => $picture]);
+
+        $user_picture = $user->picture()->updateOrCreate(
+            ['user_id' => $user->id], ['user_id' => $user->id, 'asset_id' => $picture->id]
+        );
 
         $user->load(['picture']);
 
-        if(!$user){
+        if(!$user_picture){
             return $this->sendError([], 'unable to load user picture', 500);
         }
 

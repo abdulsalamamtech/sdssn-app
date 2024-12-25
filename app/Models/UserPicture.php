@@ -16,4 +16,9 @@ class UserPicture extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function asset()
+    {
+        return $this->belongsTo(Assets::class, 'asset_id');
+    }
 }
