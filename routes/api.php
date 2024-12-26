@@ -143,6 +143,10 @@ Route::group(['middleware' => ['auth:sanctum','verified']], function() {
     // Share project
     Route::put('projects/{project}/shares', [ProjectController::class, 'share']);
 
+    // Project like and share using POST
+    Route::post('projects/{project}/likes', [ProjectController::class, 'like']);
+    Route::post('projects/{project}/shares', [ProjectController::class, 'share']);
+
 
     // PODCAST
     // Project routes
@@ -159,6 +163,11 @@ Route::group(['middleware' => ['auth:sanctum','verified']], function() {
     Route::put('podcasts/{podcast}/likes', [PodcastController::class, 'like']);
     // Share podcast
     Route::put('podcasts/{podcast}/shares', [PodcastController::class, 'share']);
+    
+    
+    // Podcast like and share using POST
+    Route::post('podcasts/{podcast}/likes', [PodcastController::class, 'like']);
+    Route::post('podcasts/{podcast}/shares', [PodcastController::class, 'share']);
 
 });
 
