@@ -34,7 +34,7 @@ class UserProfile extends Controller
     public function show(Request $request)
     {
         $user = $request->user();
-        $user->load(['social']);
+        $user->load(['picture', 'picture.asset','social']);
 
         if(!$user){
             return $this->sendError([], 'unable to load user profile', 500);
@@ -102,7 +102,7 @@ class UserProfile extends Controller
 
         $user = $request->user();
 
-        $data = $request->validate([
+        $request->validate([
             'picture' => ['required', 'image', 'max:2048'],
         ]);
 
