@@ -115,7 +115,7 @@ class UserProfile extends Controller
             ['user_id' => $user->id], ['user_id' => $user->id, 'asset_id' => $picture->id]
         );
 
-        $user->load(['picture']);
+        $user->load(['picture', 'picture.asset']);
 
         if(!$user_picture){
             return $this->sendError([], 'unable to load user picture', 500);

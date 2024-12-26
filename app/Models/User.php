@@ -112,4 +112,16 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(UserPicture::class, 'user_id');
     }
+
+
+    
+    /**
+     * The assets that belong to the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    // public function assets()
+    // {
+    //     return $this->belongsToMany(Assets::class, 'user_pictures', 'user_id', 'asset_id');
+    // }
 }

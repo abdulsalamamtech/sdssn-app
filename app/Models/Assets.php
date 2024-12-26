@@ -21,4 +21,6 @@ class Assets extends Model
         'hosted_at',
         'active',
     ];
+
+
 }
