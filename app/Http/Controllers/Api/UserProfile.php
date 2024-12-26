@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\UpdateUserProfileRequest;
 use App\Models\Assets;
 use App\Models\User;
+use App\Models\UserPicture;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 
@@ -85,7 +86,7 @@ class UserProfile extends Controller
     
     public function profile(User $user){
 
-        $user->load(['social', 'projects', 'picture', 'certificates']);
+        $user->load(['picture', 'picture.asset', 'social', 'projects', 'certificates']);
     
         if (!$user) {
             return $this->sendError([], 'unable to load profile', 500);
@@ -111,7 +112,7 @@ class UserProfile extends Controller
         // Add assets
         $picture = Assets::create($upload);
 
-        $user_picture = $user->picture()->updateOrCreate(
+        $user_picture = UserPicture::updateOrCreate(
             ['user_id' => $user->id], ['user_id' => $user->id, 'asset_id' => $picture->id]
         );
 
