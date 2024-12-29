@@ -215,9 +215,11 @@ Route::group(['prefix' => 'admin','middleware' => ['auth:sanctum','verified', 'a
 // Get user locations
 Route::get('/locations', [AdminController::class, 'locations']);
 
-
+// Get minimal resource
+Route::get('/resources', [AdminController::class, 'resources']);
 // Get application statistics
 Route::get('/statistics', [AdminController::class, 'index']);
+
 
 
 

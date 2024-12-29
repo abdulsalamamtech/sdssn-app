@@ -64,7 +64,53 @@ class AdminController extends Controller
         ];
 
 
-        $data['data'] = [
+        $data['resources'] = [
+            'users' => [
+                'total' => User::count(),
+                'male' => User::where('gender', 'male')->count(),
+                'female' => User::where('gender', 'female')->count(),
+            ],
+            'certificates' => [
+                'total'=> Certificate::all(),
+                'courses' => Certificate::select('course', DB::raw('count(*) as total'))
+                    ->groupBy('course')
+                    ->get()
+            ],
+            'profession' => User::select('profession', DB::raw('count(*) as total'))
+                ->groupBy('profession')
+                ->get(),
+            'membership_status' => User::select('membership_status', DB::raw('count(*) as total'))
+                ->groupBy('membership_status')
+                ->get(),
+            'cities' => User::select('city', DB::raw('count(*) as total'))
+                ->groupBy('city')
+                ->get(),
+            'states' => User::select('state', DB::raw('count(*) as total'))
+                ->groupBy('state')
+                ->get(), 
+            'countries' => User::select('country', DB::raw('count(*) as total'))
+                ->groupBy('country')
+                ->get(),
+            'organizations' => User::select('organization', DB::raw('count(*) as total'))
+                ->groupBy('organization')
+                ->get(),
+            'organization_categories' => User::select('organization_category', DB::raw('count(*) as total'))
+                ->groupBy('organization_category')
+                ->get(),
+            'organization_roles' => User::select('organization_role', DB::raw('count(*) as total'))
+                ->groupBy('organization_role')
+                ->get(),
+        ];
+
+        if (!$data) {
+            return $this->sendError([], 'unable to load data', 500);
+        }
+
+        return $this->sendSuccess($data, 'resource loaded successfully', 200);
+    }
+
+    public function resources(){
+        $data = [
             'users' => [
                 'total' => User::count(),
                 'male' => User::where('gender', 'male')->count(),
