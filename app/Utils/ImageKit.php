@@ -142,11 +142,14 @@ class Imagekit
                 $result['success'] = true;
                 $result['message'] = "Error while removing previous file";
             }
+            return $result;
+            
         } catch (\Exception $exception) {
 
             // $exception->getResponse()->getBody(true);
             $result['success'] = false;
             $result['message'] = "There was an error";
+            return $result;
         }
     }
 
