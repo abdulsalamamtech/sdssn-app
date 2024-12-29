@@ -135,20 +135,20 @@ class Imagekit
             ]);
 
             // Decode response
-            if ($response->getStatusCode() >= 200 && $response->getStatusCode() < 300) {
-                $result['success'] = true;
-                $result['message'] = "Previous file removed successfully";
-            } else {
-                $result['success'] = true;
-                $result['message'] = "Error while removing previous file";
-            }
-            return $result;
-            
+            // if ($response->getStatusCode() >= 200 && $response->getStatusCode() < 300) {
+            //     $result['success'] = true;
+            //     $result['message'] = "Previous file removed successfully";
+            // } else {
+            //     $result['success'] = true;
+            //     $result['message'] = "Error while removing previous file";
+            // }
+            return $result ?? $response;
+
         } catch (\Exception $exception) {
 
             // $exception->getResponse()->getBody(true);
             $result['success'] = false;
-            $result['message'] = "There was an error";
+            $result['message'] = "There was an error deleting the resource";
             return $result;
         }
     }
