@@ -139,23 +139,24 @@ Route::get('/files/upload', function (Request $request) {
 });
 Route::get('/files/delete', function (Request $request) {
 
+    $fileId = $request->file_id ?? '';
+    if (!$fileId) {
+        $result['success'] = false;
+        $result['message'] = "File ID is missing";
+    }
 
-    // $data = json_decode($request->getContent(), true);
-    // return [$data, $request->getContent(), $request->all()["file"], "success"];
 
-    $file = $request->file('image');
+    $removeFile = new ImageKit();
+    $res =  $removeFile->deleteFile($fileId);
 
-    // $con = $file->getContent();
-    // $con = base64_encode($con);
-    // return $con;
+    // check and test this expression
+    // if (!$res['success'] == true) {
+    //     return;
+    // }else{
+    //     return $res;
+    // }
 
-    // return $file;
-    $upload = new ImageKit();
-    $res =  $upload->uploadFile($file, 'images');
-    // $res =  $upload->upload($file, 'images');
-
-    // uploadToImageKit($request, $fileName = 'image')
-    return $res;
+    $data = $res;
 
     return response()->json([
         'method' => $request->method(),
