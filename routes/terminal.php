@@ -156,13 +156,11 @@ Route::get('/files/delete', function (Request $request) {
     //     return $res;
     // }
 
-    $data = $res;
-
     return response()->json([
         'method' => $request->method(),
         'all' => $request->all(),
         'content' => $request->getContent(),
-        'data' => $data
+        'data' => [$result, $res]
     ]);
 
 });
