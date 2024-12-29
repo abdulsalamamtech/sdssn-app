@@ -146,6 +146,7 @@ Route::get('/files/delete', function (Request $request) {
     }
 
 
+    $result['message'] = "Processing file: " . $fileId;
     $removeFile = new ImageKit();
     $res =  $removeFile->deleteFile($fileId);
 
