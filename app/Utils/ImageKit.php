@@ -128,7 +128,7 @@ class Imagekit
         }
 
 
-        try {
+        // try {
             $client = new Client(['verify' => false]);
             $response = $client->delete($deleteUrl . $fileId, [
                 'auth' => [$secret, '']
@@ -144,13 +144,13 @@ class Imagekit
             // }
             return $result ?? $response;
 
-        } catch (\Exception $exception) {
+        // } catch (\Exception $exception) {
 
-            // $exception->getResponse()->getBody(true);
-            $result['success'] = false;
-            $result['message'] = "There was an error deleting the resource";
-            return $result;
-        }
+        //     // $exception->getResponse()->getBody(true);
+        //     $result['success'] = false;
+        //     $result['message'] = "There was an error deleting the resource";
+        //     return $result;
+        // }
     }
 
     // Update File
