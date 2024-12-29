@@ -1,11 +1,13 @@
 <?php
 
+use App\Models\Assets;
 use App\Models\User;
 use App\Utils\ImageKit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\Process\Process;
+
 
 
 
@@ -31,7 +33,10 @@ Route::get('/artisan', function (Request $request) {
     if ($pass && $deploy == 'new' && app()->config('app.env') == 'local') {
 
         // Run artisan commands here...
-        Artisan::call('migrate:fresh');
+        /** 
+         * Don't run this on production
+         * Artisan::call('migrate:fresh');
+        */
         Artisan::call('cache:clear');
         Artisan::call('optimize:clear');
         Artisan::call('config:clear');
@@ -87,12 +92,24 @@ Route::get('/assign-role', function (Request $request) {
         'message' => $message
     ], 201);
     
-});
+})->middleware(['auth:sanctum', 'role:admin']);
 
 
 
 // TEST ROUTES
-Route::post('/upload', function (Request $request) {
+Route::get('/file/upload', function (Request $request) {
+
+    $data = Assets::latest()->paginate(50);
+
+    return response()->json([
+        'method' => $request->method(),
+        'all' => $request->all(),
+        'content' => $request->getContent(),
+        'data' => $data
+    ]);
+
+});
+Route::get('/file/upload', function (Request $request) {
 
 
     // $data = json_decode($request->getContent(), true);
@@ -104,6 +121,33 @@ Route::post('/upload', function (Request $request) {
     // $con = base64_encode($con);
     // return $con;
 
+    // return $file;
+    $upload = new ImageKit();
+    $res =  $upload->uploadFile($file, 'images');
+    // $res =  $upload->upload($file, 'images');
+
+    // uploadToImageKit($request, $fileName = 'image')
+    return $res;
+
+    return response()->json([
+        'method' => $request->method(),
+        'all' => $request->all(),
+        'content' => $request->getContent(),
+        'data' => $data
+    ]);
+
+});
+Route::get('/file/delete', function (Request $request) {
+
+
+    // $data = json_decode($request->getContent(), true);
+    // return [$data, $request->getContent(), $request->all()["file"], "success"];
+
+    $file = $request->file('image');
+
+    // $con = $file->getContent();
+    // $con = base64_encode($con);
+    // return $con;
 
     // return $file;
     $upload = new ImageKit();
@@ -154,7 +198,7 @@ Route::get('/run-terminal', function () {
 Route::get('/run-sequential-commands', function () {
     $commands = [
         ['ls', '..'],
-        ['../storage/', ' sudo chmod -R 775'],
+        // ['../storage/', ' sudo chmod -R 775'],
         ['php', '../artisan', 'config:clear'],
         ['php', '../artisan', 'cache:clear'],
         ['php', '../artisan', 'migrate']
