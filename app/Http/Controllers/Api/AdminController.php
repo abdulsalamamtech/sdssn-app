@@ -65,10 +65,11 @@ class AdminController extends Controller
 
 
         $data['data'] = [
-
-            'total' => User::count(),
-            'male' => User::where('gender', 'male')->count(),
-            'female' => User::where('gender', 'female')->count(),
+            'users' => [
+                'total' => User::count(),
+                'male' => User::where('gender', 'male')->count(),
+                'female' => User::where('gender', 'female')->count(),
+            ],
 
             'profession' => User::select('profession', DB::raw('count(*) as total'))
                 ->groupBy('profession')
