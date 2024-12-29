@@ -217,7 +217,7 @@ Route::get('/locations', [AdminController::class, 'locations']);
 
 
 // Get application statistics
-Route::get('/statistics', [AdminController::class, 'statistics']);
+Route::get('/statistics', [AdminController::class, 'index']);
 
 
 

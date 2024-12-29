@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Api\Certificate;
 use App\Models\Api\Podcast;
 use App\Models\Api\Project;
 use App\Models\Assets;
@@ -20,6 +21,7 @@ class AdminController extends Controller
         $data['users'] = [
             'total' => User::count(),
             'admins' => User::where('role', 'admin')->count(),
+            'moderators' => User::where('role', 'moderator')->count(),
             'users' => User::where('role', 'user')->count(),
             'verified' => User::where('email_verified_at')->count(),
             'pending' => User::whereNot('email_verified_at')->count(),
@@ -52,12 +54,55 @@ class AdminController extends Controller
             'views' => Podcast::sum('views'),
             'videos' => Podcast::where('category', 'video')->count(),
             'audios' => Podcast::where('category', 'audio')->count(),
+            'trash' => Podcast::onlyTrashed()->count(),
         ];
 
         $data['assets'] = [
             'total' => Assets::count(),
             'sizes' => Assets::sum('size'),
             'capacity' => 'KB',
+        ];
+
+
+        $data['data'] = [
+
+            'total' => User::count(),
+            'male' => User::where('gender', 'male')->count(),
+            'female' => User::where('gender', 'female')->count(),
+
+            'profession' => User::select('profession', DB::raw('count(*) as total'))
+                ->groupBy('profession')
+                ->get(),
+            'membership_status' => User::select('membership_status', DB::raw('count(*) as total'))
+                ->groupBy('membership_status')
+                ->get(),
+            'city' => User::select('city', DB::raw('count(*) as total'))
+                ->groupBy('city')
+                ->get(),
+            'state' => User::select('state', DB::raw('count(*) as total'))
+                ->groupBy('state')
+                ->get(), 
+            'country' => User::select('country', DB::raw('count(*) as total'))
+                ->groupBy('country')
+                ->get(),
+            'organization' => User::select('organization', DB::raw('count(*) as total'))
+                ->groupBy('organization')
+                ->get(),
+            'organization_category' => User::select('organization_category', DB::raw('count(*) as total'))
+                ->groupBy('organization_category')
+                ->get(),
+            'organization_role' => User::select('organization_role', DB::raw('count(*) as total'))
+                ->groupBy('organization_role')
+                ->get(),                               
+            'state' => User::select('state', DB::raw('count(*) as total'))
+                            ->groupBy('state')
+                            ->get(),
+            'certificates' => [
+                'total'=> Certificate::all(),
+                'courses' => Certificate::select('courses', DB::raw('count(*) as total'))
+                    ->groupBy('courses')
+                    ->get()
+            ]
         ];
 
         if (!$data) {
