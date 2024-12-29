@@ -114,7 +114,7 @@ class CertificateController extends Controller
     }
 
 
-    // show user project
+    // show certificates added by users
     public function personal(Request $request)
     {
 

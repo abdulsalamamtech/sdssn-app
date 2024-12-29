@@ -99,8 +99,8 @@ class AdminController extends Controller
                             ->get(),
             'certificates' => [
                 'total'=> Certificate::all(),
-                'courses' => Certificate::select('courses', DB::raw('count(*) as total'))
-                    ->groupBy('courses')
+                'courses' => Certificate::select('course', DB::raw('count(*) as total'))
+                    ->groupBy('course')
                     ->get()
             ]
         ];
