@@ -144,17 +144,19 @@ class Imagekit
             // }
 
             // Decode and print the response
-            $response_body = json_decode($response->getBody(), true);
+            return $response_body = json_decode($response->getBody(), true);
 
-            if(!$response_body){
+            // if(!$response_body){
 
-                $result['message'] = 'Could not modify file';
+            //     $result['message'] = 'Could not modify file';
 
-            }else{
-                $result['success'] = true;
-                $result['message'] = "File modified successfully";
-                $result['data'] = $response_body;
-            }
+            // }else{
+            //     $result['success'] = true;
+            //     $result['message'] = "File modified successfully";
+            //     $result['data'] = $response_body;
+            // }
+
+
 
         } catch (\Exception $exception) {
 
