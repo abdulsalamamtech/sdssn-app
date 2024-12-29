@@ -103,6 +103,8 @@ class ProjectController extends Controller
         $data = $request->validated();
         $user = $request->user();
 
+        return [$data, $user];
+
         // Admin can also edit post
         if ($user->id != $project->user_id || $user->role != 'admin') {
             return $this->sendError([], 'you are unauthorize', 401);
