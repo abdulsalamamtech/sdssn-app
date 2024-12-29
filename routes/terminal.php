@@ -97,7 +97,7 @@ Route::get('/assign-role', function (Request $request) {
 
 
 // TEST ROUTES
-Route::get('/file/upload', function (Request $request) {
+Route::get('/files', function (Request $request) {
 
     $data = Assets::latest()->paginate(50);
 
@@ -109,7 +109,7 @@ Route::get('/file/upload', function (Request $request) {
     ]);
 
 });
-Route::get('/file/upload', function (Request $request) {
+Route::get('/files/upload', function (Request $request) {
 
 
     // $data = json_decode($request->getContent(), true);
@@ -137,7 +137,7 @@ Route::get('/file/upload', function (Request $request) {
     ]);
 
 });
-Route::get('/file/delete', function (Request $request) {
+Route::get('/files/delete', function (Request $request) {
 
 
     // $data = json_decode($request->getContent(), true);
