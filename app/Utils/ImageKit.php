@@ -135,28 +135,13 @@ class Imagekit
             ]);
 
             // Decode response
-            // if ($response->getStatusCode() >= 200 && $response->getStatusCode() < 300) {
-            //     $result['success'] = true;
-            //     $result['message'] = "Previous file removed successfully";
-            // } else {
-            //     $result['success'] = true;
-            //     $result['message'] = "Error while removing previous file";
-            // }
-
-            // Decode and print the response
-            return $response_body = json_decode($response->getBody(), true);
-
-            // if(!$response_body){
-
-            //     $result['message'] = 'Could not modify file';
-
-            // }else{
-            //     $result['success'] = true;
-            //     $result['message'] = "File modified successfully";
-            //     $result['data'] = $response_body;
-            // }
-
-
+            if ($response->getStatusCode() >= 200 && $response->getStatusCode() < 300) {
+                $result['success'] = true;
+                $result['message'] = "Previous file removed successfully";
+            } else {
+                $result['success'] = true;
+                $result['message'] = "Error while removing previous file";
+            }
 
         } catch (\Exception $exception) {
 
