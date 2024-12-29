@@ -34,7 +34,8 @@ class UserProfile extends Controller
     public function show(Request $request)
     {
         $user = $request->user();
-        $user->load(['picture', 'picture.asset','social']);
+        $user->load(['picture', 'picture.asset', 'social', 'projects', 'certificates']);
+
 
         if(!$user){
             return $this->sendError([], 'unable to load user profile', 500);

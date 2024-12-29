@@ -38,7 +38,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'state',
         'country',
         'membership_status',
-        'role',
+        'role',             // ['user', 'moderator', 'admin', 'super-admin']
         'assigned_by',
 
         'email_verified',

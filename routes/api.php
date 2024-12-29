@@ -48,6 +48,17 @@ Route::get('/security-questions', function (Request $request) {
 });
 
 
+// Get available roles
+Route::get('/available-roles', function (Request $request) {
+    $roles = ['user', 'moderator', 'admin', 'super-admin'];
+
+    $message = 'Available roles retrieved successfully';
+
+    return response()->json(['success' => true,'message' => $message, 'data' => $roles], 200);
+
+});
+
+
 // Get the authenticated user
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 
@@ -117,10 +128,8 @@ Route::group(['prefix' => 'profile','middleware' => ['auth:sanctum','verified']]
 });
 
 
-
 // User profile information
 Route::get('/profile/{user:name}', [UserProfile::class, 'profile']);
-
 
 
 

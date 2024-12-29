@@ -28,7 +28,7 @@ Route::get('/artisan', function (Request $request) {
     }
 
     // For new deployment
-    if ($pass && $deploy == 'new') {
+    if ($pass && $deploy == 'new' && app()->config('app.env') == 'local') {
 
         // Run artisan commands here...
         Artisan::call('migrate:fresh');
@@ -74,9 +74,10 @@ Route::get('/assign-role', function (Request $request) {
         return response()->json(['message' => 'enter a role'], 201);
     }
 
-    if(!in_array($request->role, ['user', 'admin'])){
+    if(!in_array($request->role, ['user', 'moderator', 'admin', 'super-admin'])){
         return response()->json(['message' => 'Invalid role'], 201);
     }
+
     $user->role = $request->role;
     $user->save();
 
@@ -85,6 +86,7 @@ Route::get('/assign-role', function (Request $request) {
         'status' => true,
         'message' => $message
     ], 201);
+    
 });
 
 

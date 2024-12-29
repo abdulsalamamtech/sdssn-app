@@ -115,31 +115,38 @@ class Imagekit
     {
 
         //  private_key//ewq8iwfkdsvckjvcndxcv
-        $privateKey = env('IMG_KIT_PRIVATE_KEY');
+        // $privateKey = env('IMG_KIT_PRIVATE_KEY');
+
         // 'https://api.imagekit.io/v1/files/' . $fileId;
-        $deleteUrl = env('IMG_KIT_DELETE_URL');
+        $deleteUrl = 'https://api.imagekit.io/v1/files/';
+        $secret = env('IMAGE_KIT_PRIVATE_KEY');
+
 
         if (!$fileId) {
-            return false;
+            $result['success'] = false;
+            $result['message'] = "File ID is missing";
         }
 
 
         try {
             $client = new Client(['verify' => false]);
             $response = $client->delete($deleteUrl . $fileId, [
-                'auth' => [$privateKey, '']
+                'auth' => [$secret, '']
             ]);
 
             // Decode response
             if ($response->getStatusCode() >= 200 && $response->getStatusCode() < 300) {
-                return true;
+                $result['success'] = true;
+                $result['message'] = "Previous file removed successfully";
             } else {
-                return false;
+                $result['success'] = true;
+                $result['message'] = "Error while removing previous file";
             }
         } catch (\Exception $exception) {
 
             // $exception->getResponse()->getBody(true);
-            return false;
+            $result['success'] = false;
+            $result['message'] = "There was an error";
         }
     }
 

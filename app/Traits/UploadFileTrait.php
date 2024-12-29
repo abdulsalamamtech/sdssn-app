@@ -115,4 +115,30 @@ trait UploadFileTrait
 
     }
 
+
+
+    // Delete File
+    public function deleteImageKitFile($fileId)
+    {
+
+
+        if (!$fileId) {
+            $result['success'] = false;
+            $result['message'] = "File ID is missing";
+        }
+
+
+        $removeFile = new ImageKit();
+        $res =  $removeFile->deleteFile($fileId);
+
+        // check and test this expression
+        if (!$res['success'] == true) {
+            return;
+        }else{
+            return $res;
+        }
+
+
+    }
+
 }

@@ -136,6 +136,11 @@ class ProjectController extends Controller
             $banner = Assets::create($upload);
             $data['banner_id'] = $banner->id;
 
+            // Delete previously uploaded file
+            $fileId = $project->banner->assets->fileId;
+            $previousFile = $this->deleteImageKitFile($fileId);
+            Assets::where('file_id', $fileId)->delete();
+
         }
 
         // ['public', 'private', 'draft']
@@ -245,7 +250,7 @@ class ProjectController extends Controller
 
     }
 
-    // Approve public project
+    // User approved public project
     public function approved(Request $request)
     {
 

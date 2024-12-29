@@ -17,7 +17,7 @@ class AdminMiddleware
     {
 
         // Add roles you want to allow access to
-        $accessible = ['admin', 'dev', 'super-admin'];
+        $accessible = ['admin', 'dev', 'super-admin', 'moderator'];
         if (!$request->user()
             || $request->user()->role != 'admin'
             || !in_array($request->user()->role, $accessible)

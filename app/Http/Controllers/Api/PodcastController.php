@@ -154,7 +154,15 @@ class PodcastController extends Controller
      */
     public function destroy(Podcast $podcast)
     {
-        //
+        $user = request()->user();
+
+        if ($user->id != $podcast->user_id || $user->role != 'admin') {
+            return $this->sendError([], 'you are unauthorize', 401);
+        }
+
+        $podcast->delete();
+
+        return $this->sendSuccess($podcast, 'podcast deleted', 200);        
     }
 
     // show user project
