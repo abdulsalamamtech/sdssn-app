@@ -216,6 +216,11 @@ Route::group(['prefix' => 'admin','middleware' => ['auth:sanctum','verified', 'a
 Route::get('/locations', [AdminController::class, 'locations']);
 
 
+// Get application statistics
+Route::get('/statistics', [AdminController::class, 'statistics']);
+
+
+
 
 
 
