@@ -70,40 +70,36 @@ class AdminController extends Controller
                 'male' => User::where('gender', 'male')->count(),
                 'female' => User::where('gender', 'female')->count(),
             ],
-
+            'certificates' => [
+                'total'=> Certificate::all(),
+                'courses' => Certificate::select('course', DB::raw('count(*) as total'))
+                    ->groupBy('course')
+                    ->get()
+            ],
             'profession' => User::select('profession', DB::raw('count(*) as total'))
                 ->groupBy('profession')
                 ->get(),
             'membership_status' => User::select('membership_status', DB::raw('count(*) as total'))
                 ->groupBy('membership_status')
                 ->get(),
-            'city' => User::select('city', DB::raw('count(*) as total'))
+            'cities' => User::select('city', DB::raw('count(*) as total'))
                 ->groupBy('city')
                 ->get(),
-            'state' => User::select('state', DB::raw('count(*) as total'))
+            'states' => User::select('state', DB::raw('count(*) as total'))
                 ->groupBy('state')
                 ->get(), 
-            'country' => User::select('country', DB::raw('count(*) as total'))
+            'countries' => User::select('country', DB::raw('count(*) as total'))
                 ->groupBy('country')
                 ->get(),
-            'organization' => User::select('organization', DB::raw('count(*) as total'))
+            'organizations' => User::select('organization', DB::raw('count(*) as total'))
                 ->groupBy('organization')
                 ->get(),
-            'organization_category' => User::select('organization_category', DB::raw('count(*) as total'))
+            'organization_categories' => User::select('organization_category', DB::raw('count(*) as total'))
                 ->groupBy('organization_category')
                 ->get(),
-            'organization_role' => User::select('organization_role', DB::raw('count(*) as total'))
+            'organization_roles' => User::select('organization_role', DB::raw('count(*) as total'))
                 ->groupBy('organization_role')
-                ->get(),                               
-            'state' => User::select('state', DB::raw('count(*) as total'))
-                            ->groupBy('state')
-                            ->get(),
-            'certificates' => [
-                'total'=> Certificate::all(),
-                'courses' => Certificate::select('course', DB::raw('count(*) as total'))
-                    ->groupBy('course')
-                    ->get()
-            ]
+                ->get(),
         ];
 
         if (!$data) {
