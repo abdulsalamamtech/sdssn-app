@@ -151,7 +151,7 @@ Route::get('/files/delete', function (Request $request) {
     $res =  $removeFile->deleteFile($fileId);
 
     // check and test this expression
-    // if (!$res['success'] == true) {
+    // if ($res && $res['success'] == true) {
     //     return;
     // }else{
     //     return $res;

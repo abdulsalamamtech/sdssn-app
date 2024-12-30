@@ -139,7 +139,7 @@ class Imagekit
                 $result['success'] = true;
                 $result['message'] = "Previous file removed successfully";
             } else {
-                $result['success'] = true;
+                $result['success'] = false;
                 $result['message'] = "Error while removing previous file";
             }
 

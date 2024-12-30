@@ -130,6 +130,11 @@ class PodcastController extends Controller
                 $banner = Assets::create($upload);
                 $data['banner_id'] = $banner->id;
 
+                // Delete previously uploaded file
+                $fileId = $podcast->banner->assets->fileId;
+                $previousFile = $this->deleteImageKitFile($fileId);
+                Assets::where('file_id', $fileId)->delete();
+
             }
 
             $podcast->update($data);

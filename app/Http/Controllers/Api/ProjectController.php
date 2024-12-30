@@ -109,7 +109,6 @@ class ProjectController extends Controller
         if ($user->id != $project->user_id || $user->role != 'admin') {
             // return $this->sendError([], 'you are unauthorize', 401);
             return $this->sendError($debug, 'you are unauthorize', 401);
-
         }
 
         // Project title as slug

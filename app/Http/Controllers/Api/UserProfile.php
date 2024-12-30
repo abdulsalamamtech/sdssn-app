@@ -118,6 +118,13 @@ class UserProfile extends Controller
             ['user_id' => $user->id], ['user_id' => $user->id, 'asset_id' => $picture->id]
         );
 
+        // Delete previously uploaded file
+        $fileId = $user?->picture?->asset?->fileId;
+        if($fileId){
+            $previousFile = $this->deleteImageKitFile($fileId);
+            Assets::where('file_id', $fileId)->delete();
+        }
+
         $user->load(['picture', 'picture.asset']);
 
         if(!$user_picture){

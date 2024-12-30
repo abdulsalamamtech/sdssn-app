@@ -129,14 +129,10 @@ trait UploadFileTrait
 
 
         $removeFile = new ImageKit();
-        $res =  $removeFile->deleteFile($fileId);
+        $result =  $removeFile->deleteFile($fileId);
 
         // check and test this expression
-        if (!$res['success'] == true) {
-            return;
-        }else{
-            return $res;
-        }
+        return $result;
 
 
     }
