@@ -15,15 +15,14 @@ return [
     |
     */
 
-    'paths' => ['*'],
+    'paths' => ['*', 'api/*', 'sanctum/csrf-cookie'],
 
     'allowed_methods' => ['*'],
 
     'allowed_origins' => [
             env('FRONTEND_URL',  'http://localhost:3000'),
-            'https://sdssn.vercel.app',
             'https://sdssn.org',
-            'http://sdssn.org',
+            'https://sdssn.vercel.app',
             'http://localhost:3000',
         ],
 

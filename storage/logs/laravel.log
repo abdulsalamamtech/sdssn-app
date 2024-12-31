@@ -612,3 +612,49 @@ Stack trace:
 [stacktrace]
 #0 {main}
 "} 
+[2024-12-31 11:14:13] laravel.EMERGENCY: Unable to create configured logger. Using emergency logger. {"exception":"[object] (InvalidArgumentException(code: 0): Log [] is not defined. at /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Log/LogManager.php:232)
+[stacktrace]
+#0 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(139): Illuminate\\Log\\LogManager->resolve()
+#1 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(126): Illuminate\\Log\\LogManager->get()
+#2 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(701): Illuminate\\Log\\LogManager->driver()
+#3 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(378): Illuminate\\Log\\LogManager->error()
+#4 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(341): Illuminate\\Foundation\\Exceptions\\Handler->reportThrowable()
+#5 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(620): Illuminate\\Foundation\\Exceptions\\Handler->report()
+#6 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(199): Illuminate\\Foundation\\Console\\Kernel->reportException()
+#7 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#8 {main}
+"} 
+[2024-12-31 11:14:13] laravel.ERROR: syntax error, unexpected single-quoted string "http://sdssn.org", expecting "]" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected single-quoted string \"http://sdssn.org\", expecting \"]\" at /home/amtech/Desktop/projects/sdssn-app/config/cors.php:27)
+[stacktrace]
+#0 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/LoadConfiguration.php(96): Illuminate\\Foundation\\Bootstrap\\LoadConfiguration->Illuminate\\Foundation\\Bootstrap\\{closure}()
+#1 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/LoadConfiguration.php(77): Illuminate\\Foundation\\Bootstrap\\LoadConfiguration->loadConfigurationFile()
+#2 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/LoadConfiguration.php(38): Illuminate\\Foundation\\Bootstrap\\LoadConfiguration->loadConfigurationFiles()
+#3 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(316): Illuminate\\Foundation\\Bootstrap\\LoadConfiguration->bootstrap()
+#4 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(473): Illuminate\\Foundation\\Application->bootstrapWith()
+#5 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(195): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2024-12-31 11:14:13] laravel.EMERGENCY: Unable to create configured logger. Using emergency logger. {"exception":"[object] (InvalidArgumentException(code: 0): Log [] is not defined. at /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Log/LogManager.php:232)
+[stacktrace]
+#0 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(139): Illuminate\\Log\\LogManager->resolve()
+#1 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(126): Illuminate\\Log\\LogManager->get()
+#2 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(701): Illuminate\\Log\\LogManager->driver()
+#3 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(378): Illuminate\\Log\\LogManager->error()
+#4 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(341): Illuminate\\Foundation\\Exceptions\\Handler->reportThrowable()
+#5 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(620): Illuminate\\Foundation\\Exceptions\\Handler->report()
+#6 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(199): Illuminate\\Foundation\\Console\\Kernel->reportException()
+#7 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#8 {main}
+"} 
+[2024-12-31 11:14:13] laravel.ERROR: syntax error, unexpected single-quoted string "http://sdssn.org", expecting "]" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected single-quoted string \"http://sdssn.org\", expecting \"]\" at /home/amtech/Desktop/projects/sdssn-app/config/cors.php:27)
+[stacktrace]
+#0 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/LoadConfiguration.php(96): Illuminate\\Foundation\\Bootstrap\\LoadConfiguration->Illuminate\\Foundation\\Bootstrap\\{closure}()
+#1 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/LoadConfiguration.php(77): Illuminate\\Foundation\\Bootstrap\\LoadConfiguration->loadConfigurationFile()
+#2 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/LoadConfiguration.php(38): Illuminate\\Foundation\\Bootstrap\\LoadConfiguration->loadConfigurationFiles()
+#3 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(316): Illuminate\\Foundation\\Bootstrap\\LoadConfiguration->bootstrap()
+#4 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(473): Illuminate\\Foundation\\Application->bootstrapWith()
+#5 /home/amtech/Desktop/projects/sdssn-app/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(195): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
