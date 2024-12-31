@@ -179,6 +179,19 @@
     $ relationships
         - belongs_to (project)
 
+
+
+### newsletters
+    - id
+    - email
+    - active
+    
+## galleries
+    - id
+    - asset_id
+    - title
+    - description
+
 ### messages
     - id
     - full_name
