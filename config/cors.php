@@ -22,6 +22,8 @@ return [
     'allowed_origins' => [
             env('FRONTEND_URL',  'http://localhost:3000'),
             'https://sdssn.vercel.app',
+            'https://sdssn.org',
+            'http://sdssn.org',
             'http://localhost:3000',
         ],
 
