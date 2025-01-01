@@ -19,7 +19,14 @@ return [
         '%s%s%s',
         'localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,::1',
         Sanctum::currentApplicationUrlWithPort(),
-        env('FRONTEND_URL') ? ','.parse_url(env('FRONTEND_URL'), PHP_URL_HOST) : ''
+        env('FRONTEND_URL') ? ','.parse_url(env('FRONTEND_URL'), PHP_URL_HOST) : '',
+        
+        'http://localhost',
+        'https://sdssn.org',
+        'https://dev.sdssn.org',
+        'https://test.sdssn.org',
+        'https://sdssn.vercel.app',
+        'https://sdssn-frontend.vercel.app',
     ))),
 
     /*
