@@ -12,7 +12,8 @@ class EmailVerifyController extends Controller
 
     protected function redirectUrl(){
         return [
-            'success' => config('app.frontend_url') . '/auth/verify-email-success',
+            // 'success' => config('app.frontend_url') . '/auth/verify-email-success',
+            'success' => env('FRONTEND_URL') ?? env('APP_URL') . '/auth/verify-email-success',
             'error' => 'username'
         ];
     }
