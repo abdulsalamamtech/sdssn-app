@@ -16,7 +16,7 @@ require __DIR__.'/auth.php';
 
 
 Route::get('/mail', function (Request $request){
-    $send = Mail::raw('This is a test email, from: ' . url(), function ($message) {
+    $send = Mail::raw('This is a test email, from: SDSSN', function ($message) {
         $message->to('abdulsalamamtech@gmail.com')->subject('Test Email: ' . now());
     });
     return $send? "done": "fail";
