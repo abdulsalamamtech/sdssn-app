@@ -23,6 +23,9 @@ class ProjectController extends Controller
             ->with(['user', 'comments.user', 'banner'])
             ->get();
 
+            // ->orderBy('created_at', 'desc')
+            // ->paginate(10);
+
             // return $projects;
 
         if (!$projects) {

@@ -7,6 +7,7 @@ use App\Models\Api\Certificate;
 use App\Models\Api\Podcast;
 use App\Models\Api\Project;
 use App\Models\Assets;
+use App\Models\Newsletter;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -100,6 +101,11 @@ class AdminController extends Controller
             'organization_roles' => User::select('organization_role', DB::raw('count(*) as total'))
                 ->groupBy('organization_role')
                 ->get(),
+        ];
+
+        $data['newsletters'] = [
+            'total' => Newsletter::count(),
+            'active' => Newsletter::where('active', 'yes')->count(),
         ];
 
         if (!$data) {

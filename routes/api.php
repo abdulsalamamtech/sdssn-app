@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\PodcastController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\UserProfile;
 use App\Http\Controllers\Api\UserSocial;
+use App\Http\Controllers\NewsletterController;
 use App\Models\Api\Certificate;
 use App\Models\User;
 use App\Utils\ImageKit;
@@ -128,8 +129,6 @@ Route::group(['prefix' => 'profile','middleware' => ['auth:sanctum','verified']]
 });
 
 
-// User profile information
-Route::get('/profile/{user:name}', [UserProfile::class, 'profile']);
 
 
 
@@ -207,8 +206,24 @@ Route::group(['prefix' => 'admin','middleware' => ['auth:sanctum','verified', 'a
     Route::apiResource('/certificates', CertificateController::class);
     // Membership status routes [admin]
     Route::get('/memberships', [AdminController::class, 'memberships']);
+
+
+    // Newsletters
+    Route::apiResource('/newsletters', [NewsletterController::class,'store'])
+    ->only(['index', 'show']);
+
 });
 
+
+
+
+// User profile information
+Route::get('/profile/{user:name}', [UserProfile::class, 'profile']);
+
+
+// Subscribe to newsletter
+Route::post('/newsletters', [NewsletterController::class,'store'])
+    ->only(['store']);
 
 
 // LOCATIONS ROUTES
