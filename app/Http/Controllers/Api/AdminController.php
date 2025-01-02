@@ -7,6 +7,7 @@ use App\Models\Api\Certificate;
 use App\Models\Api\Podcast;
 use App\Models\Api\Project;
 use App\Models\Assets;
+use App\Models\Gallery;
 use App\Models\Newsletter;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -106,6 +107,10 @@ class AdminController extends Controller
         $data['newsletters'] = [
             'total' => Newsletter::count(),
             'active' => Newsletter::where('active', 'yes')->count(),
+        ];
+
+        $data['galleries'] = [
+            'total' => Gallery::count(),
         ];
 
         if (!$data) {
