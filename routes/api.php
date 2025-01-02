@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\CertificateController;
 use App\Http\Controllers\Api\CommentController;
+use App\Http\Controllers\Api\GalleryController;
 use App\Http\Controllers\Api\PodcastCommentController;
 use App\Http\Controllers\Api\PodcastController;
 use App\Http\Controllers\Api\ProjectController;
@@ -209,8 +210,11 @@ Route::group(['prefix' => 'admin','middleware' => ['auth:sanctum','verified', 'a
 
 
     // Newsletters
-    Route::apiResource('/newsletters', [NewsletterController::class,'store'])
+    Route::apiResource('/newsletters', NewsletterController::class)
     ->only(['index', 'show']);
+
+    // Gallery resources
+    Route::apiResource('galleries', GalleryController::class);
 
 });
 
@@ -222,7 +226,7 @@ Route::get('/profile/{user:name}', [UserProfile::class, 'profile']);
 
 
 // Subscribe to newsletter
-Route::post('/newsletters', [NewsletterController::class,'store'])
+Route::apiResource('/newsletters', NewsletterController::class)
     ->only(['store']);
 
 
@@ -234,7 +238,9 @@ Route::get('/resources', [AdminController::class, 'resources']);
 // Get application statistics
 Route::get('/statistics', [AdminController::class, 'index']);
 
-
+// Gallery resources
+Route::apiResource('galleries', GalleryController::class)
+    ->only(['index', 'show']);
 
 
 
