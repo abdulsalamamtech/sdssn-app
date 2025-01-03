@@ -28,13 +28,13 @@ jobs:
 
     - name: Generate SSH Key
       run: |
-        echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_rsa
+        echo "${{ secrets.VPS_PRIVATE_SSH_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
 
     - name: Deploy to VPS
       run: |
-        ssh -o StrictHostKeyChecking=no user@your-server-ip << 'EOF'
-        cd /var/www/your-laravel-app || exit
+        ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }} << 'EOF'
+        cd /htdocs/githubaction.sdssn.org || exit
         git pull origin main # Or rsync the files if not using git on the server
         composer install --no-dev --optimize-autoloader
         php artisan migrate --force
