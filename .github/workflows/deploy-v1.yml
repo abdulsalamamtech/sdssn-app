@@ -1,0 +1,49 @@
+name: Deploy Laravel to VPS
+
+on:
+  push:
+    branches:
+      - main # Update to your deployment branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu 24.04
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Set Up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2' # Adjust based on your Laravel version
+        extensions: mbstring, bcmath, intl, mysql, curl, xml
+        ini-values: post_max_size=256M, upload_max_filesize=256M, memory_limit=512M
+
+    - name: Install Dependencies
+      run: composer install --no-dev --optimize-autoloader
+
+    - name: Set Permissions
+      run: chmod -R 755 storage bootstrap/cache
+
+    - name: Generate SSH Key
+      run: |
+        echo "${{ secrets.VPS_PRIVATE_SSH_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+
+    - name: Deploy to VPS
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }} << 'EOF'
+        cd /htdocs/githubaction.sdssn.org || exit
+        git pull origin main # Or rsync the files if not using git on the server
+        composer install --no-dev --optimize-autoloader
+        php artisan migrate --force
+        exit
+        EOF
+
+    - name: Restart PHP-FPM
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }} << 'EOF'
+        sudo systemctl restart php8.2-fpm # Update PHP version as needed
+        exit
+        EOF
