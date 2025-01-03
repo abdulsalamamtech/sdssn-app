@@ -27,6 +27,9 @@ return [
         'https://test.sdssn.org',
         'https://sdssn.vercel.app',
         'https://sdssn-frontend.vercel.app',
+        'https://reactapp.sdssn.org',
+        'https://static.sdssn.org',
+        'https://node.sdssn.org',
     ))),
 
     /*

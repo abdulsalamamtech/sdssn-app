@@ -27,7 +27,10 @@ return [
             'https://sdssn.vercel.app',
             'https://sdssn-frontend.vercel.app',
             'https://sdssn-test.vercel.app',
-            'http://localhost:3000'
+            'http://localhost:3000',
+            'https://reactapp.sdssn.org',
+            'https://static.sdssn.org',
+            'https://node.sdssn.org',
         ],
 
     'allowed_origins_patterns' => [],

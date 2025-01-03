@@ -123,10 +123,6 @@ Route::group(['prefix' => 'profile','middleware' => ['auth:sanctum','verified']]
     Route::put('/picture', [UserProfile::class, 'updatePicture']);
     Route::post('/picture/update', [UserProfile::class, 'updatePicture']);
 
-
-
-
-
 });
 
 
