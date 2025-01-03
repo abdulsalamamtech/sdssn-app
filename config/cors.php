@@ -31,6 +31,7 @@ return [
             'https://reactapp.sdssn.org',
             'https://static.sdssn.org',
             'https://node.sdssn.org',
+            'https://next.sdssn.org',
         ],
 
     'allowed_origins_patterns' => [],
