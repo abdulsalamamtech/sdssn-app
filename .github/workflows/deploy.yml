@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu 24.04
 
     steps:
     - name: Checkout Code
@@ -38,9 +38,6 @@ jobs:
         git pull origin main # Or rsync the files if not using git on the server
         composer install --no-dev --optimize-autoloader
         php artisan migrate --force
-        php artisan config:cache
-        php artisan route:cache
-        php artisan view:cache
         exit
         EOF
 
