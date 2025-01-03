@@ -17,7 +17,7 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        $galleries = Gallery::with(['user', 'banner'])
+        $galleries = Gallery::with(['banner'])
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
@@ -76,7 +76,7 @@ class GalleryController extends Controller
      */
     public function show(Gallery $gallery)
     {
-        $gallery->load(['user', 'banner']);
+        $gallery->load([ 'banner']);
 
         if (!$gallery) {
             return $this->sendError([], 'unable to load gallery', 500);
