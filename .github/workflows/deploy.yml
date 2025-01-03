@@ -1,33 +1,52 @@
-name: Deploy to VPS
+name: Deploy Laravel to VPS
 
-  on:
-    push:
-      branches:
-        - main
+on:
+  push:
+    branches:
+      - main # Update to your deployment branch
 
-  jobs:
-    deploy:
-      runs-on: ubuntu-latest
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
 
-      steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
 
-      - name: Copy files to VPS
-        uses: appleboy/scp-action@v0.1.5
-        with:
-          host: ${{ secrets.VPS_IP }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_PRIVATE_SSH_KEY }}
-          source: "."
-          target: "/htdocs/githubaction.sdssn.org"
+    - name: Set Up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2' # Adjust based on your Laravel version
+        extensions: mbstring, bcmath, intl, mysql, curl, xml
+        ini-values: post_max_size=256M, upload_max_filesize=256M, memory_limit=512M
 
-      - name: Execute remote command
-        uses: appleboy/ssh-action@v0.1.5
-        with:
-          host: ${{ secrets.VPS_IP }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          script: |
-            cd /htdocs/githubaction.sdssn.org
-            composer install
+    - name: Install Dependencies
+      run: composer install --no-dev --optimize-autoloader
+
+    - name: Set Permissions
+      run: chmod -R 755 storage bootstrap/cache
+
+    - name: Generate SSH Key
+      run: |
+        echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+
+    - name: Deploy to VPS
+      run: |
+        ssh -o StrictHostKeyChecking=no user@your-server-ip << 'EOF'
+        cd /var/www/your-laravel-app || exit
+        git pull origin main # Or rsync the files if not using git on the server
+        composer install --no-dev --optimize-autoloader
+        php artisan migrate --force
+        php artisan config:cache
+        php artisan route:cache
+        php artisan view:cache
+        exit
+        EOF
+
+    - name: Restart PHP-FPM
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }} << 'EOF'
+        sudo systemctl restart php8.2-fpm # Update PHP version as needed
+        exit
+        EOF
