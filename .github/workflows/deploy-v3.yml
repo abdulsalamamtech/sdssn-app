@@ -1,0 +1,42 @@
+name: Deploy
+
+# Trigger the workflow on push and 
+# pull request events on the production branch
+on:
+  push:
+    branches:
+      - production
+  pull_request:
+    branches:
+      - production
+      
+# Authenticate to the the server via ssh 
+# and run our deployment script 
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Deploy to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_IP }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_PRIVATE_SSH_KEY }}
+          script: "cd /htdocs/githubaction.sdssn.org/sdssn-app"
+          run: |
+            echo "Deploying to production server..."
+
+            # Pull the latest changes
+            git fetch origin
+            git reset --hard origin/main
+            git clean -f
+
+            # Install dependencies
+            composer install --no-dev --optimize-autoloader
+
+            # Run Laravel optimization commands
+            php artisan migrate --force
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
