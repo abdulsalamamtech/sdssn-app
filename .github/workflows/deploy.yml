@@ -20,6 +20,7 @@ jobs:
 
     - name: Deploy to VPS
       run: |
+        echo "${{ secrets.VPS}}""
         ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }} << 'EOF'
         # Navigate to the Laravel directory or clone the project on first run
         cd /htdocs/githubaction.sdssn.org || { git clone git@github.com:abdulsalamamtech/sdssn-app.git /htdocs/githubaction.sdssn.org && cd /htdocs/githubaction.sdssn.org/sdssn-app; }
