@@ -1,0 +1,58 @@
+name: Deploy Laravel Application
+
+# Trigger the workflow on push and 
+# pull request events on the production branch
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+      
+# Authenticate to the the server via ssh 
+# and run our deployment script 
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'  # Change this to your desired PHP version
+
+    - name: Install Composer dependencies
+      run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+    - name: Run Laravel tests
+      run: php artisan test
+
+    - name: Sync files to VPS
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.VPS_PRIVATE_SSH_KEY }}
+        SSH_HOST: ${{ secrets.SSH_IP }}
+        SSH_USERNAME: ${{ secrets.SSH_USER }}
+      run: |
+        echo "$SSH_PRIVATE_KEY" > private_key.pem
+        chmod 600 private_key.pem
+        rsync -avz -e "ssh -i private_key.pem -o StrictHostKeyChecking=no" --exclude=node_modules --exclude=vendor . $SSH_USERNAME@$SSH_HOST:/htdocs/githubaction.sdssn.org/sdssn-app
+
+    - name: Install Composer dependencies on VPS
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.VPS_PRIVATE_SSH_KEY }}
+        SSH_HOST: ${{ secrets.SSH_IP }}
+        SSH_USERNAME: ${{ secrets.SSH_USER }}
+      run: |
+        ssh -i private_key.pem -o StrictHostKeyChecking=no $SSH_USERNAME@$SSH_HOST "cd /htdocs/githubaction.sdssn.org/sdssn-app && composer install --no-interaction --prefer-dist --optimize-autoloader"
+
+    - name: Run Laravel migrations on VPS
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.VPS_PRIVATE_SSH_KEY }}
+        SSH_HOST: ${{ secrets.SSH_IP }}
+        SSH_USERNAME: ${{ secrets.SSH_USER }}
+      run: |
+        ssh -i private_key.pem -o StrictHostKeyChecking=no $SSH_USERNAME@$SSH_HOST "cd /htdocs/githubaction.sdssn.org/sdssn-app && php artisan migrate --force"
