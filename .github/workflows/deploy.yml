@@ -1,4 +1,4 @@
-name: Deploy Laravel to VPS
+name: Deploy Laravel SDSSN APP to VPS
 
 on:
   push:
@@ -22,6 +22,7 @@ jobs:
       run: |
         echo "${{ secrets.VPS}}""
         ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }} << 'EOF'
+
         # Navigate to the Laravel directory or clone the project on first run
         cd /htdocs/githubaction.sdssn.org || { git clone git@github.com:abdulsalamamtech/sdssn-app.git /htdocs/githubaction.sdssn.org && cd /htdocs/githubaction.sdssn.org/sdssn-app; }
 
@@ -30,17 +31,19 @@ jobs:
         git pull origin main
 
         # Install dependencies
-        composer install --no-dev --optimize-autoloader
+        # composer install --no-dev --optimize-autoloader
+        composer install
+
 
         # Run Laravel optimization commands
         php artisan migrate --force
-        php artisan config:cache
-        php artisan route:cache
-        php artisan view:cache
+        # php artisan config:cache
+        # php artisan route:cache
+        # php artisan view:cache
 
         # Ensure correct permissions
-        chown -R www-data:www-data /htdocs/githubaction.sdssn.org/sdssn-app
-        chmod -R 755 /htdocs/githubaction.sdssn.org/sdssn-app/storage /htdocs/githubaction.sdssn.org/sdssn-app/bootstrap/cache
+        # chown -R www-data:www-data /htdocs/githubaction.sdssn.org/sdssn-app
+        # chmod -R 755 /htdocs/githubaction.sdssn.org/sdssn-app/storage /htdocs/githubaction.sdssn.org/sdssn-app/bootstrap/cache
 
         exit
         EOF
