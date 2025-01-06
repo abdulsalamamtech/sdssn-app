@@ -9,21 +9,6 @@ use Illuminate\Http\Request;
 
 class UserSocial extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
@@ -59,11 +44,5 @@ class UserSocial extends Controller
         return $this->sendSuccess($user_social, 'social media information update');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+
 }

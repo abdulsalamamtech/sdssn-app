@@ -24,6 +24,7 @@ class UpdateUserProfileRequest extends FormRequest
         return [
             'first_name' => ['nullable', 'string'],
             'last_name' => ['nullable', 'string'],
+            'other_name' => ['nullable', 'string'],
             // 'security_question' => ['nullable', 'string'],
             // 'answer' => ['nullable', 'string'],
             'phone_number' => ['nullable', 'string'],
@@ -43,6 +44,10 @@ class UpdateUserProfileRequest extends FormRequest
             'organization' => ['nullable', 'string'],
             'organization_category' => ['nullable', 'string'],
             'organization_role' => ['nullable', 'string'],
+            'organization_name' => ['nullable', 'string'],
+
+            'qualification' => ['nullable', 'string'],
+            'course' => ['nullable', 'string'],
 
         ];
     }

@@ -12,21 +12,6 @@ use Illuminate\Http\Request;
 
 class UserProfile extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
@@ -55,34 +40,15 @@ class UserProfile extends Controller
         $data = $request->validated();
         $user = $request->user();
         $user->update($data);
-        $user->load(['social']);
-
-        $user_profile = $user;        $data = $request->validated();
-        $user = $request->user();
-        $user_social = $user->social()->updateOrCreate(
-            ['user_id' => $user->id], $data
-        );
-
-        if(!$user_social){
-            return $this->sendError([], 'unable to update', 500);
-        }
-
-        return $this->sendSuccess($user_social, 'social media information update');
-
-        if(!$user_profile){
+      
+        if(!$user){
             return $this->sendError([], 'unable to update profile', 500);
         }
 
-        return $this->sendSuccess($user_profile, 'profile updated', 201);
+        return $this->sendSuccess($user, 'profile updated', 201);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+
     
     public function profile(User $user){
 

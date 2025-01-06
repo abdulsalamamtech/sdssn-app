@@ -74,9 +74,12 @@ content-type: application/json
 Authorization: Bearer {{token}}
 
 {
+    "other_name": "networks",
+    "organization_name": "private",
     "phone_number": "+2349091929394",
     "gender": "male",
-    "dob": "09-01-2009"
+    "dob": "09-01-2000",
+    "city": "ikoyi"
 }
 
 
