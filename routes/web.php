@@ -7,7 +7,22 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return ['Laravel' => app()->version()];
+
+    $data = [
+        'Laravel' => app()->version(),
+        'project' => 'SDSSN',
+        'developers' => [
+            'backend' =>[
+                'name' => 'Abdulsalam Abdulrahman',
+                'email' => 'abdulsalamamtech@gmail.com',
+            ],
+            'frontend' =>[
+                'name' => 'Mayowa Sanusi',
+                'email' => 'mayowa@gmail.com',
+            ]
+        ],
+    ];
+    return $data;
 });
 
 
@@ -16,6 +31,7 @@ require __DIR__.'/auth.php';
 
 
 Route::get('/mail', function (Request $request){
+    
     $send = Mail::raw('This is a test email, from: SDSSN', function ($message) {
         $message->to('abdulsalamamtech@gmail.com')->subject('Test Email: ' . now());
     });

@@ -8,6 +8,7 @@ use App\Http\Requests\Api\UpdateProjectRequest;
 use App\Models\Api\Project;
 use App\Models\Assets;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -106,62 +107,79 @@ class ProjectController extends Controller
         $data = $request->validated();
         $user = $request->user();
 
-        $debug = [$data, $user];
-
-        // Admin can also edit post
-        if ($user->id != $project->user_id || $user->role != 'admin') {
-            // return $this->sendError([], 'you are unauthorize', 401);
-            return $this->sendError($debug, 'you are unauthorize', 401);
+        // Authorized access to the project
+        if(!$this->authorized($user->id, $project->user_id)){
+            return $this->sendError([], 'you are unauthorize!', 401);
         }
 
-        // Project title as slug
-        if($project->title != $data['title']){
-            // Generate slug
-            $title = $data['title'];
-            $slug = Str::slug($title);
+        
+        try {
+            DB::beginTransaction();
+            
+            // Project title as slug
+            if($project->title != $data['title']){
+                // Generate slug
+                $title = $data['title'];
+                $slug = Str::slug($title);
 
-            $slug_fund = Project::where('slug', $slug)->first();
-            // $data['slug'] = $slug;
-            // if($slug_fund){
-            //     $data['slug'] = $slug.'-'.rand(100,999);
-            // }
-            ($slug_fund)
-            ?$data['slug'] = $slug.'-'.rand(100,999)
-            :$data['slug'] = $slug;
+                $slug_fund = Project::where('slug', $slug)->first();
+                
+                ($slug_fund)
+                ?$data['slug'] = $slug.'-'.rand(100,999)
+                :$data['slug'] = $slug;
+            }
+
+
+            // return [$data, $request->banner];
+
+            // If the banner is updated
+            if($request->banner){
+
+                // Upload the image
+                $upload = $this->uploadToImageKit($request,'banner');
+
+                // Add new assets
+                $banner = Assets::create($upload);
+                $data['banner_id'] = $banner->id;
+
+                // Delete previously uploaded file
+                $fileId = $project->banner?->file_id;
+                if($fileId){
+                    $previousFile = $this->deleteImageKitFile($fileId);
+                    $assetFile = Assets::where('file_id', $fileId)?->first();
+                    if($assetFile){
+                        $assetFile->delete();
+                    }     
+                }
+
+            }
+
+            
+            
+            // ['public', 'private', 'draft']
+            if($request->status){
+                if($data['status'] == 'public'){
+                    $data['approved_by'] = $user->id;
+                }
+            }
+            
+
+            $project->update($data);
+            $project->load(['user','comments.user', 'banner']);
+
+            if (!$project) {
+                return $this->sendError([], 'unable to update project', 500);
+            }
+
+            return $this->sendSuccess($project, 'project updated', 200);
+
+            DB::commit();
+        } catch (\Exception $e) {
+            // Handle transaction failure
+            DB::rollBack();
+            return $this->sendError([$e], 'unable to update project, try again later!', 500);
+
         }
-
-
-        // If the banner is updated
-        if($request->banner){
-
-            // Delete the previously uploaded banner
-            // Update the code to delete the previously uploaded banner
-            $upload = $this->uploadToImageKit($request,'banner');
-
-            // Add assets
-            $banner = Assets::create($upload);
-            $data['banner_id'] = $banner->id;
-
-            // Delete previously uploaded file
-            $fileId = $project->banner->assets->fileId;
-            $previousFile = $this->deleteImageKitFile($fileId);
-            Assets::where('file_id', $fileId)->delete();
-
-        }
-
-        // ['public', 'private', 'draft']
-        if($data['status'] == 'public'){
-            $data['approved_by'] = $user->id;
-        }
-
-        $project->update($data);
-        $project->load(['user','comments.user', 'banner']);
-
-        if (!$project) {
-            return $this->sendError([], 'unable to update project', 500);
-        }
-
-        return $this->sendSuccess($project, 'project updated', 200);
 
     }
 
@@ -174,13 +192,23 @@ class ProjectController extends Controller
 
         $user = request()->user();
 
-        if ($user->id != $project->user_id || $user->role != 'admin') {
-            return $this->sendError([], 'you are unauthorize', 401);
+        if(!$this->authorized($user->id, $project->user_id)){
+            return $this->sendError([], 'you are unauthorize!', 401);
         }
 
         $project->delete();
+        return $this->sendSuccess([], 'project deleted!', 200);
 
-        return $this->sendSuccess($project, 'project deleted', 200);
+
+        // Add roles you want to allow access to
+        // $accessible = ['admin', 'dev', 'super-admin', 'moderator'];
+        // if($user->id !== $project->user_id){
+        //     if(!in_array(request()->user()->role, $accessible)){
+        //         return $this->sendError([], 'you are unauthorize!', 401);
+        //     }
+        // }
+        // return $this->sendSuccess([], 'project deleted', 200);
+        
 
     }
 
@@ -253,6 +281,26 @@ class ProjectController extends Controller
         }
 
         return $this->sendSuccess($project, 'project approved successfully', 200);
+
+    }
+
+    // Reject project
+    public function reject(Request $request, Project $project)
+    {
+        $user = $request->user();
+
+        // ['public', 'private', 'draft']
+        if($project->status == 'public'){
+            $project->approved_by = null;
+        }
+        $project->save();
+
+
+        if (!$project) {
+            return $this->sendError([], 'unable to load project', 500);
+        }
+
+        return $this->sendSuccess($project, 'project rejected successfully', 200);
 
     }
 
@@ -366,4 +414,17 @@ class ProjectController extends Controller
     }
 
 
+    // Authorization methods
+    private function authorized($auth_id, $data_user_id){
+        $accessible = ['admin', 'dev', 'super-admin', 'moderator'];
+        // Owner
+        if($auth_id !== $data_user_id){
+            // Admin
+            if(!in_array(request()->user()->role, $accessible)){
+                return false;
+            }
+        }
+        return true;
+        
+    }
 }

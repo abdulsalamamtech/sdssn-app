@@ -108,16 +108,11 @@ class PodcastController extends Controller
                 $slug = Str::slug($title);
 
                 $slug_fund = Podcast::where('slug', $slug)->first();
-                // if($slug_fund){
-                //     $data['slug'] = $slug.'-'.rand(100,999);
-                // }else{
-                //     $data['slug'] = $slug;
-                // }
+                
                 ($slug_fund)
                 ?$data['slug'] = $slug.'-'.rand(100,999)
                 :$data['slug'] = $slug;
             }
-
 
             if ($user->id != $podcast->user_id) {
                 return $this->sendError([], 'you are unauthorize', 401);
@@ -125,18 +120,23 @@ class PodcastController extends Controller
 
             if($request->banner){
 
-                // Delete the previously uploaded banner
-                // Update the code to delete the previously uploaded banner
+
+                // Upload the image
                 $upload = $this->uploadToImageKit($request,'banner');
 
-                // Add assets
+                // Add new assets
                 $banner = Assets::create($upload);
                 $data['banner_id'] = $banner->id;
 
                 // Delete previously uploaded file
-                $fileId = $podcast->banner->assets->fileId;
-                $previousFile = $this->deleteImageKitFile($fileId);
-                Assets::where('file_id', $fileId)->delete();
+                $fileId = $podcast->banner?->file_id;
+                if($fileId){
+                    $previousFile = $this->deleteImageKitFile($fileId);
+                    $assetFile = Assets::where('file_id', $fileId)?->first();
+                    if($assetFile){
+                        $assetFile->delete();
+                    }     
+                }
 
             }
 
@@ -153,6 +153,8 @@ class PodcastController extends Controller
         } catch (\Exception $e) {
             // Handle transaction failure
             DB::rollBack();
+            return $this->sendError([], 'unable to update partner, try again later!', 500);
+
         }
 
     }
@@ -164,13 +166,18 @@ class PodcastController extends Controller
     {
         $user = request()->user();
 
-        if ($user->id != $podcast->user_id || $user->role != 'admin') {
+        if ($user->id == $podcast->user_id 
+        || $user->role == 'super-admin' 
+        || $user->role == 'admin' 
+        || $user->role == 'moderator') {
+
+            $podcast->delete();
+            return $this->sendSuccess([], 'podcast deleted', 200);
+        }else{
+            
             return $this->sendError([], 'you are unauthorize', 401);
         }
-
-        $podcast->delete();
-
-        return $this->sendSuccess($podcast, 'podcast deleted', 200);        
+      
     }
 
     // show user project
@@ -224,6 +231,7 @@ class PodcastController extends Controller
 
 
 
+    // Get video podcasts
     public function video()
     {
         $podcasts = Podcast::where('category', 'video')->latest()->get();
@@ -239,6 +247,7 @@ class PodcastController extends Controller
 
 
 
+    // Get audio podcasts
     public function audio(Podcast $podcast)
     {
         $podcasts = Podcast::where('category', 'audio')->latest()->get();
@@ -253,6 +262,7 @@ class PodcastController extends Controller
     }
 
 
+    // search for podcast
     public function search(Request $request)
     {
         $query = $request->input('query');

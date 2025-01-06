@@ -120,6 +120,7 @@ class AdminController extends Controller
         return $this->sendSuccess($data, 'resource loaded successfully', 200);
     }
 
+    // Get the resource
     public function resources(){
         $data = [
             'users' => [
@@ -169,37 +170,38 @@ class AdminController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    // public function store(Request $request)
+    // {
+    //     //
+    // }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
+    // public function show(string $id)
+    // {
+    //     //
+    // }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+    // public function update(Request $request, string $id)
+    // {
+    //     //
+    // }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
-    }
+    // public function destroy(string $id)
+    // {
+    //     //
+    // }
 
 
 
+    // Get all the users
     public function users()
     {
 
@@ -214,6 +216,8 @@ class AdminController extends Controller
 
     }
 
+
+    // Get location of registered users
     public function locations()
     {
         $locations = User::select('state', DB::raw('count(*) as total'))
@@ -232,6 +236,7 @@ class AdminController extends Controller
 
     }
 
+    // Get memberships of users
     public function memberships()
     {
         $locations = User::select('membership_status', DB::raw('count(*) as total'))
@@ -245,6 +250,38 @@ class AdminController extends Controller
         }
 
         return $this->sendSuccess($locations, 'successful', 200, $metadata);
+
+    }
+
+
+    /**
+     * Update user role [user, admin, moderator]
+     */
+    public function updateRole(Request $request)
+    {
+        // return $request->email;
+        $user = User::where('email', $request->email)->first();
+
+
+        if(!$user){
+            return $this->sendError([], 'user not found', 404);
+        }
+
+        if(!$request->role){
+            return $this->sendError([], 'enter a role', 404);
+
+
+        }
+
+        if(!in_array($request->role, ['user', 'moderator', 'admin', 'super-admin'])){
+            return $this->sendError([], 'invalid role', 402);
+        }
+
+        $user->role = $request->role;
+        $user->save();
+
+        $message = $request->role . ' role assign to ' . $request->email;
+        return $this->sendSuccess($user, $message, 200);
 
     }
 

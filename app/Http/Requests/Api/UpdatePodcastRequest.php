@@ -22,7 +22,7 @@ class UpdatePodcastRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'banner' => ['nullable','image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'banner' => ['nullable','image', 'mimes:jpeg,png,jpg,gif,svg', 'max:5120'],
             'title' => ['nullable','string'],
             'description' => ['nullable','string'],
             'video_url' => ['nullable','string'],

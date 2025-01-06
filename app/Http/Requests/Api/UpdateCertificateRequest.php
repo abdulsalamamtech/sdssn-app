@@ -22,7 +22,7 @@ class UpdateCertificateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'certificate' => ['nullable','image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'certificate' => ['nullable','image', 'mimes:jpeg,png,jpg,gif,svg', 'max:10240'], // 10MB limit
             'course' => ['nullable','string'],
             'description' => ['nullable','string'],
         ];

@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCertificateRequest extends FormRequest
+class PartnerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,9 @@ class StoreCertificateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // 'added_by' => ['required', 'integer'],
-            // 'asset_id' => ['required', 'string'],
-            'belong_to' => ['required', 'integer', 'exists:users,id'],
-            'certificate' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:10240'], // 10MB limit
-            'course' => ['required', 'string'],
-            'description' => ['required', 'string'],
+            'banner' => ['required','image','mimes:jpeg,png,jpg,gif,svg', 'max:5120'], // 5MB limit
+            'name' => ['required','string','max:255'],
+            'description' => ['required','string'],
         ];
     }
 }

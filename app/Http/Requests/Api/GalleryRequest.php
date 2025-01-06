@@ -22,7 +22,8 @@ class GalleryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'banner' => ['required','image','mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            // [1MB 1024, 2MB 2048, 5MB 5120, 10MB 10240]
+            'banner' => ['required','image','mimes:jpeg,png,jpg,gif,svg', 'max:5120'], // 5MB limit
             'title' => ['required','string'],
             'description' => ['nullable','string'],
         ];

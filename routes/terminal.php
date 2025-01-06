@@ -72,15 +72,15 @@ Route::get('/assign-role', function (Request $request) {
     // return $user;
 
     if(!$user){
-        return response()->json(['message' => 'User not found'], 201);
+        return response()->json(['status' => false, 'message' => 'User not found'], 201);
     }
 
     if(!$request->role){
-        return response()->json(['message' => 'enter a role'], 201);
+        return response()->json(['status' => false, 'message' => 'enter a role'], 201);
     }
 
     if(!in_array($request->role, ['user', 'moderator', 'admin', 'super-admin'])){
-        return response()->json(['message' => 'Invalid role'], 201);
+        return response()->json(['status' => false,'message' => 'Invalid role'], 201);
     }
 
     $user->role = $request->role;
@@ -92,7 +92,7 @@ Route::get('/assign-role', function (Request $request) {
         'message' => $message
     ], 201);
     
-})->middleware(['auth:sanctum', 'role:admin']);
+})->middleware(['auth:sanctum']);
 
 
 

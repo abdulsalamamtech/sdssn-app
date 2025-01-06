@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\CertificateController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\GalleryController;
+use App\Http\Controllers\Api\PartnerController;
 use App\Http\Controllers\Api\PodcastCommentController;
 use App\Http\Controllers\Api\PodcastController;
 use App\Http\Controllers\Api\ProjectController;
@@ -24,7 +25,22 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return ['Laravel API' => app()->version()];
+
+    $data = [
+        'Laravel' => app()->version(),
+        'project' => 'SDSSN',
+        'developers' => [
+            'backend' =>[
+                'name' => 'Abdulsalam Abdulrahman',
+                'email' => 'abdulsalamamtech@gmail.com',
+            ],
+            'frontend' =>[
+                'name' => 'Mayowa Sanusi',
+                'email' => 'mayowa@gmail.com',
+            ]
+        ],
+    ];
+    return $data;
 });
 
 
@@ -183,6 +199,7 @@ Route::group(['middleware' => ['auth:sanctum','verified']], function() {
 
 // ADMIN ROUTES
 Route::group(['prefix' => 'admin','middleware' => ['auth:sanctum','verified', 'admin']], function() {
+
     // Admin dashboard route
     Route::apiResource('/', AdminController::class);
     // Users routes
@@ -191,6 +208,8 @@ Route::group(['prefix' => 'admin','middleware' => ['auth:sanctum','verified', 'a
     Route::get('/projects/all/', [ProjectController::class, 'allProjects']);
     // Approve project
     Route::put('/projects/{project}/approve', [ProjectController::class, 'approve']);
+    // Reject project
+    Route::put('/projects/{project}/reject', [ProjectController::class, 'reject']);
     // Approved projects
     Route::get('/projects/approved', [ProjectController::class, 'approved']);
     // Force delete project
@@ -211,6 +230,13 @@ Route::group(['prefix' => 'admin','middleware' => ['auth:sanctum','verified', 'a
 
     // Gallery resources
     Route::apiResource('galleries', GalleryController::class);
+
+    // Assign role to user
+    Route::put('/update-role', [AdminController::class, 'updateRole']);
+
+
+    // Partners routes
+    Route::apiResource('partners', PartnerController::class);
 
 });
 
@@ -238,6 +264,9 @@ Route::get('/statistics', [AdminController::class, 'index']);
 Route::apiResource('galleries', GalleryController::class)
     ->only(['index', 'show']);
 
+// Partners routes
+Route::apiResource('partners', PartnerController::class)
+    ->only(['index', 'show']);
 
 
 

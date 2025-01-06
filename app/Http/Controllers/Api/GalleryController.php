@@ -128,7 +128,7 @@ class GalleryController extends Controller
                 $data['banner_id'] = $banner->id;
 
                 // Delete previously uploaded file
-                $fileId = $gallery->banner->assets->fileId;
+                $fileId = $gallery->banner->file_id;
                 $previousFile = $this->deleteImageKitFile($fileId);
                 Assets::where('file_id', $fileId)->delete();
 

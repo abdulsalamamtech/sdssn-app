@@ -22,7 +22,7 @@ class StoreProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'banner' => ['required','image','mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'banner' => ['required','image','mimes:jpeg,png,jpg,gif,svg', 'max:5048'], // 5MB limit
             'title' => ['required','string', 'max:100'],
             'description' => ['required','string'],
             'tags' => ['required','string'],

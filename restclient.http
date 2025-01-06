@@ -2,7 +2,8 @@
 # SDSSN APP
 
 
-@token = 2|1NFgGuSzlgeKf6EOqUY7sa7nuvXYkBRgiLYtgQk9621a2c75                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ####################
+####################
+@token = 2|Iabog5N4sgccs70HTCKrq1n2AdRXZnj2ZdNsrNCecc40cf1c                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
 
 
 ###
@@ -161,8 +162,16 @@ Authorization: Bearer {{ token }}
 ###
 # Get one Project
 
-GET http://127.0.0.1:8000/api/projects/4
+GET http://127.0.0.1:8000/api/projects/3
 Content-Type: application/json
+
+
+###
+# Delete Project
+
+DELETE http://127.0.0.1:8000/api/projects/1
+content-type: application/json
+Authorization: Bearer {{token}}
 
 
 ###
@@ -188,11 +197,11 @@ Authorization: Bearer {{token}}
 ###
 # Approve Projects (public to approved) [admin]
 
-PUT http://127.0.0.1:8000/api/projects/4/approve
+PUT http://127.0.0.1:8000/api/projects/1/approve
 content-type: application/json
 Authorization: Bearer {{token}}
 
-.
+
 
 ###
 # Like Projects (need some modification)
@@ -213,14 +222,14 @@ Authorization: Bearer {{ token }}
 ###
 # Update Project (need to be dubug)
 
-PUT  http://127.0.0.1:8000/api/projects/4
+PUT  http://127.0.0.1:8000/api/projects/2
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-    "title": "First Project update",
+    "title": "First Project update 1",
     "description": "This is my first project now",
-    "likes": 2
+    "status": "draft"
 }
 
 
@@ -323,7 +332,7 @@ Authorization: Bearer {{token}}
 ###
 # Update Podcast (dev)
 
-PUT  http://127.0.0.1:8000/api/podcasts/4
+PUT  http://127.0.0.1:8000/api/podcasts/14/update
 Content-Type: application/json
 Authorization: Bearer 6|Rvmt8fPs4HDBlJty6vpQ9jq2Aq0PUEjD1pfCX1S43c4afbdc
 
@@ -348,3 +357,62 @@ Authorization: Bearer {{token}}
 GET http://127.0.0.1:8000/api/assign-role?email=abdulsalamamtech@gmail.com&role=admin
 Content-Type: application/json
 Authorization: Bearer {{token}}
+
+{
+    "email": "abdulsalamamtech@gmail.com",
+    "role": "admin1"
+}
+
+
+###
+# Assign role to user [admin]
+
+PUT http://127.0.0.1:8000/api/update-role?email=abdulsalamamtech@gmail.com&role=admin
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "email": "abdulsalamamtech@gmail.com",
+    "role": "admin"
+}
+
+###
+# Subscribe to newsletter
+
+POST http://127.0.0.1:8000/api/newsletters/
+content-type: application/json
+
+{
+    "email": "abdulsalamamtech@gmail"
+}
+
+
+###
+# Get all Subscriber to newsletter
+
+GET http://127.0.0.1:8000/api/admin/newsletters/
+content-type: application/json
+Authorization: Bearer {{token}}
+
+
+
+###
+# Get Partners
+
+GET http://127.0.0.1:8000/api/partners/
+content-type: application/json
+
+
+###
+# Get one Partners
+
+GET http://127.0.0.1:8000/api/partners/1
+content-type: application/json
+
+
+###
+# Get Partners [for admin]
+
+GET http://127.0.0.1:8000/api/admin/partners/
+content-type: application/json
+Authorization: Bearer {{ token }}

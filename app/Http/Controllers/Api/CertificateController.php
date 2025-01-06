@@ -77,26 +77,28 @@ class CertificateController extends Controller
     public function update(UpdateCertificateRequest $request, Certificate $certificate)
     {
 
-        return [$certificate, $request];
-
         $user = $request->user();
         $data = $request->validated();
         $data['added_by'] = $user->id;
 
         if($request->certificate){
 
-            // // Upload data
-            // $upload =  $this->uploadImage($request, 'certificate');
+            // Update the code to delete the previously uploaded banner
+            $upload = $this->uploadToImageKit($request,'certificate');
 
-            // // Add assets
-            // $asset = Assets::create($upload);
-            // // $a = $certificate->
-            // $data['asset_id'] = $asset->id;
+            // Add assets
+            $banner = Assets::create($upload);
+            $data['banner_id'] = $banner->id;
+
+            // Delete previously uploaded file
+            $fileId = $certificate->banner->file_id;
+            $previousFile = $this->deleteImageKitFile($fileId);
+            Assets::where('file_id', $fileId)->delete();
         }
 
         // Add certificate
         $certificate->update($data);
-        $certificate->load(['user', 'addedBy']);
+        $certificate->load(['user', 'addedBy', 'certificate']);
 
         if (!$certificate) {
             return $this->sendError([], 'unable to update certificate', 500);

@@ -134,13 +134,14 @@ class Imagekit
                 'auth' => [$secret, '']
             ]);
 
+
             // Decode response
             if ($response->getStatusCode() >= 200 && $response->getStatusCode() < 300) {
                 $result['success'] = true;
                 $result['message'] = "Previous file removed successfully";
             } else {
                 $result['success'] = false;
-                $result['message'] = "Error while removing previous file";
+                $result['message'] = "Error while removing previous asset file";
             }
 
         } catch (\Exception $exception) {
