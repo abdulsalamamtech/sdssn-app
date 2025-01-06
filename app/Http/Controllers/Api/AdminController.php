@@ -176,12 +176,19 @@ class AdminController extends Controller
     // }
 
     /**
-     * Display the specified resource.
+     * Display all users.
      */
-    // public function show(string $id)
-    // {
-    //     //
-    // }
+    public function allUsers()
+    {
+        $users = User::all();
+        $metadata = $this->getMetadata($users);
+
+        if (!$users) {
+            return $this->sendError([], 'unable to load users', 500);
+        }
+
+        return $this->sendSuccess($users, 'successful', 200, $metadata);
+    }
 
     /**
      * Update the specified resource in storage.

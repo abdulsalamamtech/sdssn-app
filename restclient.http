@@ -13,8 +13,8 @@ POST http://127.0.0.1:8000/api/register/
 content-type: application/json
 
 {
-    "name": "amtech",
-    "email": "abdulsalamamtech@gmail.com",
+    "name": "amtech1110",
+    "email": "abdulsalamamtech1110@gmail.com",
     "password": "12345678",
     "password_confirmation": "12345678",
     "first_name": "amtech",
@@ -419,3 +419,19 @@ content-type: application/json
 GET http://127.0.0.1:8000/api/admin/partners/
 content-type: application/json
 Authorization: Bearer {{ token }}
+
+
+###
+# Get all users per page
+
+GET http://127.0.0.1:8000/api/admin/users/
+content-type: application/json
+Authorization: Bearer {{token}}
+
+
+###
+# Get all users
+
+GET http://127.0.0.1:8000/api/admin/users/all
+content-type: application/json
+Authorization: Bearer {{token}}

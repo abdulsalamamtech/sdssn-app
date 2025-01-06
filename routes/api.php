@@ -204,6 +204,9 @@ Route::group(['prefix' => 'admin','middleware' => ['auth:sanctum','verified', 'a
     Route::apiResource('/', AdminController::class);
     // Users routes
     Route::get('/users', [AdminController::class, 'users']);
+    // Get all users routes
+    Route::get('/users/all', [AdminController::class, 'allUsers']);
+
     // Get all projects
     Route::get('/projects/all/', [ProjectController::class, 'allProjects']);
     // Approve project
