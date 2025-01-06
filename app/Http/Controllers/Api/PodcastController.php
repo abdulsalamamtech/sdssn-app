@@ -147,9 +147,9 @@ class PodcastController extends Controller
                 return $this->sendError([], 'unable to update podcast', 500);
             }
 
+            DB::commit();
             return $this->sendSuccess($podcast, 'podcast updated', 200);
 
-            DB::commit();
         } catch (\Exception $e) {
             // Handle transaction failure
             DB::rollBack();

@@ -171,9 +171,9 @@ class ProjectController extends Controller
                 return $this->sendError([], 'unable to update project', 500);
             }
 
+            DB::commit();
             return $this->sendSuccess($project, 'project updated', 200);
 
-            DB::commit();
         } catch (\Exception $e) {
             // Handle transaction failure
             DB::rollBack();
