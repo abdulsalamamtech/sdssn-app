@@ -3,47 +3,34 @@ name: Deploy Laravel SDSSN APP to VPS
 on:
   push:
     branches:
-      - main # Deployment happens on pushes to the main branch
+      - dev
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v2
 
-    - name: Set Up SSH Key
-      run: |
-        echo "${{ secrets.VPS_PRIVATE_SSH_KEY  }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
+      - name: Set up SSH Key
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.VPS_PRIVATE_SSH_KEY  }}
 
-    - name: Deploy to VPS
-      run: |
-        echo "${{ secrets.VPS}}""
-        ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }} << 'EOF'
-
-        # Navigate to the Laravel directory or clone the project on first run
-        cd /htdocs/githubaction.sdssn.org || { git clone git@github.com:abdulsalamamtech/sdssn-app.git /htdocs/githubaction.sdssn.org && cd /htdocs/githubaction.sdssn.org/sdssn-app; }
-
-        # Pull the latest changes
-        git reset --hard
-        git pull origin main
-
-        # Install dependencies
-        # composer install --no-dev --optimize-autoloader
-        composer install
-
-
-        # Run Laravel optimization commands
-        php artisan migrate --force
-        # php artisan config:cache
-        # php artisan route:cache
-        # php artisan view:cache
-
-        # Ensure correct permissions
-        # chown -R www-data:www-data /htdocs/githubaction.sdssn.org/sdssn-app
-        # chmod -R 755 /htdocs/githubaction.sdssn.org/sdssn-app/storage /htdocs/githubaction.sdssn.org/sdssn-app/bootstrap/cache
-
-        exit
-        EOF
+      - name: Deploy to Staging Server
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }} << 'EOF'
+            cd /htdocs/test.sdssn.org/sdssn-app  # Navigate to the staging folder
+            git fetch origin # Fetch the latest version
+            git reset --hard origin/main  # Reset to the latest commit on main branch
+            git pull origin dev  # Pull the latest changes from main branch
+            git clean -f # Clean the file system
+            composer install  # Install dependencies
+            php artisan migrate --force  # Migrate the database
+            php artisan cache:clear  # Clear the cache
+            php artisan view:clear  # Clear the view cache
+            php artisan route:cache  # Clear the route cache
+            npm install  # Install dependencies
+          exit
+          EOF

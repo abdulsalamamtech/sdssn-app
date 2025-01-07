@@ -36,7 +36,7 @@ Route::get('/', function () {
             ],
             'frontend' =>[
                 'name' => 'Mayowa Sanusi',
-                'email' => 'mayowa@gmail.com',
+                'email' => 'mayowa.u.sunusi@gmail.com',
             ]
         ],
     ];
