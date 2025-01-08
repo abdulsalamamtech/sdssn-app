@@ -435,3 +435,40 @@ Authorization: Bearer {{token}}
 GET http://127.0.0.1:8000/api/admin/users/all
 content-type: application/json
 Authorization: Bearer {{token}}
+
+
+###
+# Send Quest Messages
+
+POST http://127.0.0.1:8000/api/quest-messages
+content-type: application/json
+
+{
+    "full_name": "Abdulsalam A.M",
+    "email": "abdulsalamamtech@gmail.com",
+    "phone_number": "+2349091922467",
+    "message": "hell this is a message"
+}
+
+
+###
+# Get all Quest Messages
+
+GET http://127.0.0.1:8000/api/messages
+content-type: application/json
+
+###
+# Get Quest Message
+
+GET http://127.0.0.1:8000/api/admin/messages/2
+content-type: application/json
+Authorization: Bearer {{token}}
+
+
+
+###
+# Delete Quest Message [Admin]
+
+DELETE http://127.0.0.1:8000/api/admin/messages/2
+content-type: application/json
+Authorization: Bearer {{token}}

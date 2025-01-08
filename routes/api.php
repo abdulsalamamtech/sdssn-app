@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\CertificateController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\GalleryController;
+use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\PartnerController;
 use App\Http\Controllers\Api\PodcastCommentController;
 use App\Http\Controllers\Api\PodcastController;
@@ -18,6 +19,7 @@ use App\Utils\ImageKit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -241,9 +243,17 @@ Route::group(['prefix' => 'admin','middleware' => ['auth:sanctum','verified', 'a
     // Partners routes
     Route::apiResource('partners', PartnerController::class);
 
+    // Quest Messages routes
+    Route::apiResource('messages', MessageController::class);
+    
+    
 });
 
 
+
+
+// Quest Messages route
+Route::post('/quest-messages', [MessageController::class, 'store']);
 
 
 // User profile information
