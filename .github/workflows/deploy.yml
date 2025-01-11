@@ -3,7 +3,7 @@ name: Deploy Laravel SDSSN APP to VPS
 on:
   push:
     branches:
-      - dev
+      - main
 
 jobs:
   deploy:
@@ -21,10 +21,10 @@ jobs:
       - name: Deploy to Staging Server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }} << 'EOF'
-            cd /htdocs/test.sdssn.org/sdssn-app  # Navigate to the staging folder
+            cd htdocs/test.sdssn.org/sdssn-app  # Navigate to the staging folder
             git fetch origin # Fetch the latest version
             git reset --hard origin/main  # Reset to the latest commit on main branch
-            git pull origin dev  # Pull the latest changes from main branch
+            git pull origin main  # Pull the latest changes from main branch
             git clean -f # Clean the file system
             composer install  # Install dependencies
             php artisan migrate --force  # Migrate the database
