@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\PartnerRequest;
 use App\Models\Assets;
 use App\Models\Partner;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class PartnerController extends Controller
      */
     public function index()
     {
-        $partners = Partner::latest()->paginate();
+        $partners = Partner::with(['banner'])->latest()->paginate();
         $metadata = $this->getMetadata($partners);
 
         if (!$partners) {
@@ -27,8 +28,11 @@ class PartnerController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @param string $banner
+     * @param string $name
+     * @param string $description
      */
-    public function store(Request $request)
+    public function store(PartnerRequest $request)
     {
         $data = $request->validated();
         $user = $request->user();
@@ -48,6 +52,7 @@ class PartnerController extends Controller
             if (!$partner) {
                 return $this->sendError([], 'unable to update partner', 500);
             }
+            $partner->load(['banner']);
 
             return $this->sendSuccess($partner, 'partner created', 201);
             DB::commit();
@@ -64,6 +69,8 @@ class PartnerController extends Controller
     public function show(Partner $partner)
     {
 
+        $partner->load(['banner']);
+
         if (!$partner) {
             return $this->sendError([], 'unable to load partner', 500);
         }
@@ -73,6 +80,9 @@ class PartnerController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @param string $banner
+     * @param string $name
+     * @param string $description
      */
     public function update(Request $request, Partner $partner)
     {

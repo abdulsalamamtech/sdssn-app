@@ -42,8 +42,8 @@ return new class extends Migration
             $table->enum('role', ['user', 'moderator', 'admin', 'super-admin'])->default('user');
             $table->foreignId('assigned_by')->nullable()->constrained('users');
 
-            $table->rememberToken();
             $table->softDeletes();
+            $table->rememberToken();
             $table->timestamps();
 
 

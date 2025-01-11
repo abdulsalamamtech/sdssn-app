@@ -19,4 +19,9 @@ class Partner extends Model
     public function user(){
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function banner()
+    {
+        return $this->belongsTo(Assets::class, 'banner_id');
+    }
 }
