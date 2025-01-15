@@ -54,8 +54,9 @@ class PartnerController extends Controller
             }
             $partner->load(['banner']);
 
-            return $this->sendSuccess($partner, 'partner created', 201);
             DB::commit();
+            return $this->sendSuccess($partner, 'partner created', 201);
+
         } catch (\Exception $e) {
             // Handle transaction failure
             DB::rollBack();
@@ -116,9 +117,9 @@ class PartnerController extends Controller
                 return $this->sendError([], 'unable to update partner', 500);
             }
 
+            DB::commit();
             return $this->sendSuccess($partner, 'partner updated', 200);
 
-            DB::commit();
         } catch (\Exception $e) {
             // Handle transaction failure
             DB::rollBack();

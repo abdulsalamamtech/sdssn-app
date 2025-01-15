@@ -17,7 +17,7 @@ class QuestMessage extends Mailable implements ShouldQueue
     /**
      * Create a new message instance.
      */
-    public function __construct(protected Message $message,)
+    public function __construct(protected Message $message)
     {
         
     }
