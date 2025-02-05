@@ -24,7 +24,7 @@ class GalleryRequest extends FormRequest
         return [
             // [1MB 1024, 2MB 2048, 5MB 5120, 10MB 10240]
             'banner' => ['required','image','mimes:jpeg,png,jpg,gif,svg', 'max:5120'], // 5MB limit
-            'title' => ['required','string'],
+            'title' => ['required','string', 'max:500'],
             'description' => ['nullable','string'],
         ];
     }

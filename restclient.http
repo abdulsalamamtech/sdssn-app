@@ -400,11 +400,50 @@ Authorization: Bearer {{token}}
 
 
 ###
+# Add Partners
+
+POST http://127.0.0.1:8000/api/admin/partners/
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "name": "new pat",
+    "description": "Hello world",
+    "banner": ""
+}
+
+
+###
+# Update Partners using POST
+
+POST http://127.0.0.1:8000/api/admin/partners/1/update
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "name": "new pat 0011",
+    "description": "Hello world",
+    "banner": ""
+}
+
+###
+# Update Partners using PUT
+
+PUT http://127.0.0.1:8000/api/admin/partners/1
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "name": "new pat update",
+    "description": "Hello world",
+    "banner": ""
+}
+
+###
 # Get Partners
 
 GET http://127.0.0.1:8000/api/partners/
 content-type: application/json
-
 
 ###
 # Get one Partners

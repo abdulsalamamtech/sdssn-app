@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class QuestMessageRequest extends FormRequest
+class UpdatePartnerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,9 @@ class QuestMessageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'full_name' => ['required','string','min:3', 'max:30'],
-            'email' => ['required','email'],
-            "phone_number" => ['nullable', 'max:14'],
-            'message' => ['required','string', 'max:5000'],
+            'banner' => ['nullable','image','mimes:jpeg,png,jpg,gif,svg', 'max:5120'], // 5MB limit
+            'name' => ['nullable','string','max:255'],
+            'description' => ['nullable','string'],
         ];
     }
 }

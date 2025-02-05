@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\PartnerRequest;
+use App\Http\Requests\Api\UpdatePartnerRequest;
 use App\Models\Assets;
 use App\Models\Partner;
 use Illuminate\Http\Request;
@@ -39,12 +40,15 @@ class PartnerController extends Controller
 
         try {
             DB::beginTransaction();
-            $upload = $this->uploadToImageKit($request,'banner');
 
-            // Add assets
-            $banner = Assets::create($upload);
-            $data['banner_id'] = $banner->id;
-            $data['user_id'] = $user->id;
+            if($request->hasFile('banner')){
+                $upload = $this->uploadToImageKit($request,'banner');
+    
+                // Add assets
+                $banner = Assets::create($upload);
+                $data['banner_id'] = $banner->id;
+                $data['user_id'] = $user->id;
+            }
             
             // Add partner
             $partner = Partner::create($data);
@@ -85,7 +89,7 @@ class PartnerController extends Controller
      * @param string $name
      * @param string $description
      */
-    public function update(Request $request, Partner $partner)
+    public function update(UpdatePartnerRequest $request, Partner $partner)
     {
         $data = $request->validated();
         $user = $request->user();
@@ -118,6 +122,7 @@ class PartnerController extends Controller
             }
 
             DB::commit();
+            return [$partner, $data];
             return $this->sendSuccess($partner, 'partner updated', 200);
 
         } catch (\Exception $e) {

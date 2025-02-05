@@ -24,7 +24,7 @@ class StoreCommentRequest extends FormRequest
         return [
             // 'user_id' => ['required', 'integer', 'exists:users,id'],
             // 'project_id' => ['required', 'integer', 'exists:projects,id'],
-            'content' => ['required','string'],
+            'content' => ['required','string', 'max:5000'],
             // 'likes' => ['nullable', 'integer'],
         ];
     }

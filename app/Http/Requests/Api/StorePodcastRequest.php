@@ -23,7 +23,7 @@ class StorePodcastRequest extends FormRequest
     {
         return [
             'banner' => ['required','image','mimes:jpeg,png,jpg,gif,svg', 'max:5120'],
-            'title' => ['required','string'],
+            'title' => ['required','string', 'max:500'],
             'description' => ['required','string'],
             'video_url' => ['nullable','string'],
             'audio_url' => ['nullable','string'],

@@ -92,7 +92,7 @@ Route::get('/assign-role', function (Request $request) {
         'message' => $message
     ], 201);
     
-})->middleware(['auth:sanctum']);
+})->middleware(['auth:sanctum', 'role:admin']);
 
 
 

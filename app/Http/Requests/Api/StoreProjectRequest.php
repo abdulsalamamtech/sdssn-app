@@ -23,7 +23,7 @@ class StoreProjectRequest extends FormRequest
     {
         return [
             'banner' => ['required','image','mimes:jpeg,png,jpg,gif,svg', 'max:5048'], // 5MB limit
-            'title' => ['required','string', 'max:100'],
+            'title' => ['required','string', 'max:500'],
             'description' => ['required','string'],
             'tags' => ['required','string'],
             'category' => ['required','string'],

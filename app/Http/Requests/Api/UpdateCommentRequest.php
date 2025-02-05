@@ -22,7 +22,7 @@ class UpdateCommentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'content' => ['nullable','string'],
+            'content' => ['nullable','string', 'max:5000'],
             // 'likes' => ['nullable', 'integer'],
         ];
     }

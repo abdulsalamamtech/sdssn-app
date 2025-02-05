@@ -242,6 +242,8 @@ Route::group(['prefix' => 'admin','middleware' => ['auth:sanctum','verified', 'a
 
     // Partners routes
     Route::apiResource('partners', PartnerController::class);
+    Route::post('/partners/{partner}/update', [PartnerController::class, 'update']);
+
 
     // Quest Messages routes
     Route::apiResource('messages', MessageController::class);

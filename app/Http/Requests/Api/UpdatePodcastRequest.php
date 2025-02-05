@@ -23,7 +23,7 @@ class UpdatePodcastRequest extends FormRequest
     {
         return [
             'banner' => ['nullable','image', 'mimes:jpeg,png,jpg,gif,svg', 'max:5120'],
-            'title' => ['nullable','string'],
+            'title' => ['nullable','string', 'max:500'],
             'description' => ['nullable','string'],
             'video_url' => ['nullable','string'],
             'audio_url' => ['nullable','string'],

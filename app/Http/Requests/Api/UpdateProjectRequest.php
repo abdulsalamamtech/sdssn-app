@@ -23,7 +23,7 @@ class UpdateProjectRequest extends FormRequest
     {
         return [
             'banner' => ['nullable','image', 'mimes:jpeg,png,jpg,gif,svg', 'max:5120'],
-            'title' => ['nullable','string', 'max:100'],
+            'title' => ['nullable','string', 'max:500'],
             'description' => ['nullable','string'],
             'tags' => ['nullable','string'],
             'category' => ['nullable','string'],
