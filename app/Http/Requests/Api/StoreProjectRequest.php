@@ -22,12 +22,12 @@ class StoreProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'banner' => ['required','image','mimes:jpeg,png,jpg,gif,svg', 'max:5048'], // 5MB limit
+            'banner' => ['required','image', 'max:5048'], // 5MB limit
             'title' => ['required','string', 'max:500'],
             'description' => ['required','string'],
             'tags' => ['required','string'],
-            'category' => ['required','string'],
-            'status' => ['required','string'],
+            'category' => ['required','string', 'in:map,discussion,link'], 
+            'status' => ['required','string', 'in:public,private,draft'],
             // 'approved_by' => ['required','string'],
             // 'views' => ['required','integer'],
             // 'likes' => ['required','integer'],

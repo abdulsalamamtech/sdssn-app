@@ -44,38 +44,45 @@ class ProjectController extends Controller
         $data = $request->validated();
         $user = $request->user();
 
-        // $upload =  $this->uploadImage($request, 'banner');
-        $upload = $this->uploadToImageKit($request,'banner');
+        try {
+            // $upload =  $this->uploadImage($request, 'banner');
+            $upload = $this->uploadToImageKit($request,'banner');
 
-        // Add assets
-        $banner = Assets::create($upload);
-        $data['banner_id'] = $banner->id;
-        $data['user_id'] = $user->id;
+            // Add assets
+            $banner = Assets::create($upload);
+            $data['banner_id'] = $banner->id;
+            $data['user_id'] = $user->id;
+    
+            // ['public', 'private', 'draft']
+            if($data['status'] == 'public'){
+                $data['approved_by'] = $user->id;
+            }
+    
+            // Generate slug
+            $title = $data['title'];
+            $slug = Str::slug($title);
+    
+            $slug_fund = Project::where('slug', $slug)->first();
+            ($slug_fund)
+            ?$data['slug'] = $slug.'-'.rand(100,999)
+            :$data['slug'] = $slug;
+    
+    
+            // Add project
+            $project = Project::create($data);
+            
+            
+            $project->load(['user', 'comments.user', 'banner']);
 
-        // ['public', 'private', 'draft']
-        if($data['status'] == 'public'){
-            $data['approved_by'] = $user->id;
-        }
+            if (!$project) {
+                return $this->sendError([], 'unable to store project', 500);
+            }
 
-        // Generate slug
-        $title = $data['title'];
-        $slug = Str::slug($title);
+        } catch (\Throwable $th) {
+            //throw $th;
+            info('Exception creating project', [$th->getMessage()]);
+            return $this->sendError([], 'unable to create project', 500);
 
-        $slug_fund = Project::where('slug', $slug)->first();
-        ($slug_fund)
-        ?$data['slug'] = $slug.'-'.rand(100,999)
-        :$data['slug'] = $slug;
-
-
-        // Add project
-        $project = Project::create($data);
-        
-        
-        $project->load(['user', 'comments.user', 'banner']);
-
-
-        if (!$project) {
-            return $this->sendError([], 'unable to update project', 500);
         }
 
         return $this->sendSuccess($project, 'project created', 201);

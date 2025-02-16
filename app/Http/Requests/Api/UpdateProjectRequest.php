@@ -22,13 +22,13 @@ class UpdateProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'banner' => ['nullable','image', 'mimes:jpeg,png,jpg,gif,svg', 'max:5120'],
+            'banner' => ['nullable','image', 'max:5120'],
             'title' => ['nullable','string', 'max:500'],
             'description' => ['nullable','string'],
             'tags' => ['nullable','string'],
-            'category' => ['nullable','string'],
-            'status' => ['nullable','string'],
-            'approved_by' => ['nullable','string'],
+            'category' => ['nullable','string', 'in:map,discussion,link'], 
+            'status' => ['nullable','string', 'in:public,private,draft'],
+            // 'approved_by' => ['nullable','string'],
             // 'views' => ['nullable','integer'],
             // 'likes' => ['nullable','integer']
             // 'shares' => ['nullable','integer'],
