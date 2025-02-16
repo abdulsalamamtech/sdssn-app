@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-
+// Ping the server
 Route::get('/', function () {
 
     $data = [
@@ -142,8 +142,6 @@ Route::group(['prefix' => 'profile','middleware' => ['auth:sanctum','verified']]
     Route::post('/picture/update', [UserProfile::class, 'updatePicture']);
 
 });
-
-
 
 
 
