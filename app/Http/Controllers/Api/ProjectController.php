@@ -45,6 +45,8 @@ class ProjectController extends Controller
         $user = $request->user();
 
         try {
+            DB::beginTransaction();
+
             // $upload =  $this->uploadImage($request, 'banner');
             $upload = $this->uploadToImageKit($request,'banner');
 
@@ -73,6 +75,7 @@ class ProjectController extends Controller
             
             
             $project->load(['user', 'comments.user', 'banner']);
+            DB::commit();
 
             if (!$project) {
                 return $this->sendError([], 'unable to store project', 500);
@@ -80,6 +83,8 @@ class ProjectController extends Controller
 
         } catch (\Throwable $th) {
             //throw $th;
+            // Handle transaction failure
+            DB::rollBack();
             info('Exception creating project', [$th->getMessage()]);
             return $this->sendError([], 'unable to create project', 500);
 
