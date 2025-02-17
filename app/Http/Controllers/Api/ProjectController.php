@@ -76,10 +76,8 @@ class ProjectController extends Controller
             
             $project->load(['user', 'comments.user', 'banner']);
             DB::commit();
+            return $this->sendSuccess($project, 'project created', 201);
 
-            if (!$project) {
-                return $this->sendError([], 'unable to store project', 500);
-            }
 
         } catch (\Throwable $th) {
             //throw $th;
